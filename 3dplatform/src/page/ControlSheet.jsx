@@ -1,0 +1,26 @@
+import Sidebardb from "../component/dashboard/Sidebardb";
+import ControlSheet from "../component/sheetcontrol/ControlSheet";
+import BudgetAvailable from "../component/project/BudgetAvailable";
+import ProjectInformation from "../component/project/ProjectInformation";
+import DataControlSheet from "../component/sheetcontrol/DataControlSheet";
+import KpiByFamily from "../component/project/KpiByFamily";
+
+const ControlSheetMain = () => {
+  return (
+    <div className="flex bg-gradient-to-r from-blue-700 mb-4 ">
+      <div className="flex">
+        <Sidebardb />
+      </div>
+      <div>
+        <ControlSheet />
+        <ProjectInformation />
+        <BudgetAvailable />
+        <KpiByFamily />
+        <div className="mt-4 ml-2"></div>
+      </div>
+      <DataControlSheet />
+    </div>
+  );
+};
+
+export default ControlSheetMain;
