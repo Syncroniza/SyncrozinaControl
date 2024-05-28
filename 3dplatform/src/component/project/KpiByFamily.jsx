@@ -4,11 +4,10 @@ import { ViewerContext } from "../Context";
 const KpiByFamily = () => {
   const {
     getDataBudget,
-    projects,
     selectedProjectId,
-    grandTotal,
     setGrandTotal,
-    invoicesdata
+    invoicesdata,formatCurrency
+    
   } = useContext(ViewerContext);
 
   const [totalsByFamily, setTotalsByFamily] = useState({});
@@ -66,27 +65,25 @@ const KpiByFamily = () => {
 
   return (
     <div className="ml-4 mt-4 bg-white p-2 rounded-lg mr-2 shadow-lg ">
-      <h1 className="text-xl ml-2 font-semibold">VALORES POR FAMILIA</h1>
+      <h1 className="text-sm ml-2 font-semibold">VALORES POR FAMILIA</h1>
       <div className="grid grid-cols-4 gap-4 mr-2">
         {Object.entries(totalsByFamily).map(([family, total]) => {
-        
 
           return (
             <div
               key={family}
-              className="bg-blue-500 p-2 ml-2 rounded-lg text-white shadow-lg">
+              className="bg-blue-500 bg-gradient-to-r from-indigo-500 p-2 ml-2 rounded-lg text-white shadow-lg">
               <p className="text-center text-sm shadow-xl">{family}</p>
-              <div className="text-center text-sm mt-2">
-                Total: ${total.toLocaleString()}
+              <div className="text-center text-lg mt-2">
+                Total: {formatCurrency(total)}
               </div>
-              <div className="text-center mt-2 text-sm">
-                Actual: $
+              <div className="text-center mt-2 text-lg">
+                Actual: 
                 {totalsInvoicesByFamily[family]
-                  ? totalsInvoicesByFamily[family].toLocaleString()
+                  ? formatCurrency(totalsInvoicesByFamily[family])
                   : "Sin Valores "}
               </div>
               <div className="mt-4 p-1 bg-gray-200 rounded-lg">
-               
               </div>
             </div>
           );

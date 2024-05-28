@@ -14,10 +14,10 @@ const ProjectInformation = () => {
     grandTotal,
     aernValueAccumalated,
   } = useContext(ViewerContext);
-    
+
   const openModal = () => setIsMoldalOpen(true);
   const [totalActualCost, setTotalActualCost] = useState("");
-  
+
   useEffect(() => {
     const project = projects.find((p) => p.projectId === selectedProjectId);
     setSelectedProject(project);
@@ -30,7 +30,7 @@ const ProjectInformation = () => {
 
     return passesProjectId;
   });
- 
+
   useEffect(() => {
     const filteredData = aernValueAccumalated.filter(
       (item) => item.projectId === selectedProjectId
@@ -45,16 +45,16 @@ const ProjectInformation = () => {
 
   return (
     <div className="">
-        <h1 className=" text-sm text-center font-semibold p-2 mb-2 ml-4 bg-white  mr-2 mt-6 shadow-xl rounded-lg  ">
-          INFORMACION GENERAL DEL PROYECTO
-        </h1>
+      <h1 className=" text-sm text-center font-semibold p-2 mb-2 ml-4 bg-white  mr-2 mt-6 shadow-xl rounded-lg  ">
+        INFORMACION GENERAL DEL PROYECTO
+      </h1>
       <div className="flex bg-white ml-4 mr-2 mt-6 shadow-xl rounded-lg ">
-
         <div className="col-span-4 mr-2">
           <button
             onClick={openModal}
             type="button"
-            className="flex bg-blue-500 p-2 text-white rounded-lg text-sm gap-2 mt-4 ml-4">
+            className="flex bg-blue-500 bg-gradient-to-r from-indigo-500 p-2 text-white rounded-lg text-sm gap-2 mt-4 ml-4"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -62,7 +62,8 @@ const ProjectInformation = () => {
               strokeWidth={1.5}
               stroke="currentColor"
               dataslot="icon"
-              className="w-4 h-4">
+              className="w-4 h-4"
+            >
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -76,9 +77,10 @@ const ProjectInformation = () => {
             SELECCIONAR PROYECTO
           </h1>
           <select
-            className="bg-blue-500 p-2 ml-4 rounded-xs text-white text-sm"
+            className="bg-blue-500 bg-gradient-to-r from-indigo-500 p-2 ml-4 rounded-lg text-white text-sm"
             value={selectedProjectId}
-            onChange={(e) => setSelectedProjectId(e.target.value)}>
+            onChange={(e) => setSelectedProjectId(e.target.value)}
+          >
             <option value="">Select a Project</option>
             {projects.map((project) => (
               <option key={project._id} value={project.projectId}>
@@ -89,16 +91,16 @@ const ProjectInformation = () => {
           <table className="table-auto mt-4 mb-6 border-collapse border border-slate-300 ml-4 rounded-xs">
             <thead>
               <tr className=" text-gray-600  px-4 text-xs ">
-                <th className="border border-slate-300 px-4 text-xs bg-blue-500 text-white font-normal">
+                <th className="border border-slate-300 px-4 text-xs bg-blue-500 bg-gradient-to-r from-indigo-500 text-white font-normal">
                   ProjectId
                 </th>
-                <th className="border border-slate-300 px-4 text-xs  bg-blue-500 text-white  font-normal ">
+                <th className="border border-slate-300 px-4 text-xs  bg-blue-500 bg-gradient-to-r from-indigo-500 text-white  font-normal ">
                   Nombre Proyecto
                 </th>
-                <th className="border border-slate-300 px-4 text-xs bg-blue-500 text-white font-normal ">
+                <th className="border border-slate-300 px-4 text-xs bg-blue-500 bg-gradient-to-r from-indigo-500 text-white font-normal ">
                   Fecha Inicio
                 </th>
-                <th className="border border-slate-300 px-4 text-xs bg-blue-500 text-white font-normal ">
+                <th className="border border-slate-300 px-4 text-xs bg-blue-500 bg-gradient-to-r from-indigo-500 text-white font-normal ">
                   Fecha Termino
                 </th>
               </tr>
@@ -122,25 +124,23 @@ const ProjectInformation = () => {
           </table>
         </div>
         <div className="grid grid-cols-3 ">
-          <div className=" ">
+          <div className=" flex flex-grow-0 ml-4">
             {filteredDataProject && (
-              <div className="  text-center bg-blue-500 px-10  rounded-xl shadow-xl mt-4 mb-4 mr-3 ">
+              <div className="  text-center bg-blue-500 bg-gradient-to-r from-indigo-500 px-1  rounded-xl shadow-xl mt-4 mb-4 mr-3 ">
                 <div className="text-sm mt-14 text-white ">Presupuesto: </div>
-                <div className="text-lg text-white mt-4">
+                <div className="text-lg text-white mt-4 mr-10 ml-9 flex ">
                   {formatCurrency(grandTotal)}
                 </div>
               </div>
             )}
           </div>
-          <div className=" text-center bg-blue-500 px-10  rounded-xl shadow-xl mt-4 mb-4 mr-3">
-            <h1 className="text-sm mt-14 text-white">
-              Gastado (Facturas) :
-            </h1>
+          <div className=" text-center bg-blue-500 bg-gradient-to-r from-indigo-500 px-10  rounded-xl shadow-xl mt-4 mb-4 mr-3">
+            <h1 className="text-sm mt-14 text-white">Gastado (Facturas) :</h1>
             <div className="text-lg text-white mt-4">
               {formatCurrency(totalActualCost)}
             </div>
           </div>
-          <div className=" text-center bg-blue-500 px-10  rounded-xl shadow-xl mt-4 mb-4 mr-3 ">
+          <div className=" text-center bg-blue-500 bg-gradient-to-r from-indigo-500  px-10  rounded-xl shadow-xl mt-4 mb-4 mr-3 ">
             <h1 className=" text-sm mt-14 text-white">Disponible:</h1>
             <div className="text-lg text-white mt-4">
               {formatCurrency(grandTotal - totalActualCost)}
