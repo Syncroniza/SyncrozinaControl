@@ -5,7 +5,7 @@ import MonthCostaLaborTable from "../component/tables/MonthCostaLaborTable";
 const LaborCostControl = () => {
   return (
     <div>
-      <div className="flex">
+      <div className="flex bg-blue-500">
         <Sidebardb />
         <MonthCostaLaborTable />
         {/* MOnthCostlaborTable depende Costlaborcontroltable ya que tiene el post y get si se borra no renderiza MonthscostLabor ... channn */}

@@ -1,7 +1,8 @@
 import { useContext, useState, useEffect } from "react";
 import { ViewerContext } from "../Context";
+import Select from "react-select";
 import Sidebardb from "../dashboard/Sidebardb";
-import CarInformationSheetControlReport from"../tables/CarInformationSheetControlReport"
+import CarInformationSheetControlReport from "../tables/CarInformationSheetControlReport";
 
 function ReportControlSheet() {
   const {
@@ -18,9 +19,73 @@ function ReportControlSheet() {
     summaryData,
     setSummaryData,
   } = useContext(ViewerContext);
-    console.log("🚀 ~ ReportControlSheet ~ summaryData:", summaryData)
-  console.log("🚀 ~ ReportControlSheet ~ summaryData:", summaryData);
 
+  const [selectedFamilies, setSelectedFamilies] = useState([]);
+
+  //--------------Filtra por cada Familia y muestra los total por una o varias familias -------------//
+  const familyOptions = getDataBudget
+    .map((item) => ({ value: item.family, label: item.family }))
+    .filter(
+      (option, index, self) =>
+        index ===
+        self.findIndex(
+          (t) => t.place === option.place && t.label === option.label
+        )
+    ); // Eliminar duplicados
+
+  const handleFamilyChange = (selectedOptions) => {
+    setSelectedFamilies(selectedOptions);
+  };
+  const customStyles = {
+    control: (base, state) => ({
+      ...base,
+      boxShadow: state.isFocused ? "0 0 0 2px rgba(56, 189, 248, 0.5)" : 0,
+      borderColor: state.isFocused ? "#38bdf8" : "#d1d5db",
+      "&:hover": {
+        borderColor: state.isFocused ? "#38bdf8" : "#d1d5db",
+      },
+      className: "rounded-md",
+    }),
+    menu: (base) => ({
+      ...base,
+      borderRadius: 0,
+      hyphens: "auto",
+      marginTop: 0,
+      textAlign: "left",
+      wordWrap: "break-word",
+    }),
+    menuList: (base) => ({
+      ...base,
+      padding: 0,
+    }),
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isFocused ? "#bfdbfe" : "#ffffff",
+      color: "#1f2937",
+      cursor: "pointer",
+      "&:active": {
+        backgroundColor: "#38bdf8",
+      },
+    }),
+    multiValue: (base) => ({
+      ...base,
+      backgroundColor: "#e0f2fe",
+    }),
+    multiValueLabel: (base) => ({
+      ...base,
+      color: "#0369a1",
+    }),
+    multiValueRemove: (base) => ({
+      ...base,
+      color: "#0369a1",
+      ":hover": {
+        backgroundColor: "#0369a1",
+        color: "#ffffff",
+      },
+    }),
+  };
+
+  //----------------- Obtiene Monto total del Contract Observation por sub familia________________//
   const getMontoContrato = (subfamily) => {
     return contracObservationWhitOutFilter.data.data.reduce((total, item) => {
       const matchesProject =
@@ -33,6 +98,8 @@ function ReportControlSheet() {
       return total;
     }, 0);
   };
+
+  //------------------- Obtiene Monto total del Aumento y Disminuciones al contrato por sub familia----//
   const getRecuperable = (subfamily) => {
     return dataincreaseDisccountwthitoutfilter.data.data.reduce(
       (total, item) => {
@@ -50,33 +117,37 @@ function ReportControlSheet() {
   };
 
   useEffect(() => {
-    const subfamilies = [
-      ...new Set(getDataBudget.map((item) => item.subfamily)),
-    ];
-    const newSummaryData = subfamilies.map((subfamily) => {
-      const filteredData = getDataBudget.filter((item) => {
-        const matchesProject =
-          !selectedProjectId || item.projectId === selectedProjectId;
-        const matchesFamily = !selectedFamily || item.family === selectedFamily;
-        const matchesSubfamily = item.subfamily === subfamily;
-        return matchesProject && matchesFamily && matchesSubfamily;
-      });
+    const selectedFamilyValues = selectedFamilies.map((option) => option.value);
+    const filteredData = getDataBudget.filter(
+      (item) =>
+        selectedFamilyValues.length === 0 ||
+        selectedFamilyValues.includes(item.family)
+    );
 
-      const montoPropuesta = filteredData.reduce(
+    const subfamilies = [
+      ...new Set(filteredData.map((item) => item.subfamily)),
+    ];
+
+    const newSummaryData = subfamilies.map((subfamily) => {
+      const subfamilyData = filteredData.filter(
+        (item) => item.subfamily === subfamily
+      );
+
+      const montoPropuesta = subfamilyData.reduce(
         (total, current) => total + current.totalPrice,
         0
       );
-
       const montoContrato = getMontoContrato(subfamily);
       const getrecuperable = getRecuperable(subfamily);
       const totalconextras = montoContrato + getrecuperable;
-      const ahorro = montoPropuesta - totalconextras;
+      const ahorro = montoContrato === 0 ? 0 : montoPropuesta - totalconextras; // Modificado para manejar montos de contrato cero
 
       return {
+        family: subfamilyData[0]?.family || "No Especificada",
         subfamily,
         projectId: selectedProjectId,
         montoPropuesta,
-        montoContrato: montoContrato,
+        montoContrato,
         recuperable: getrecuperable,
         totalconextras,
         ahorro,
@@ -87,12 +158,8 @@ function ReportControlSheet() {
     setSummaryData(newSummaryData);
   }, [
     getDataBudget,
-    dataIncreaseDiscount,
+    selectedFamilies, // Solo reactúa a cambios en las familias seleccionadas
     selectedProjectId,
-    selectedFamily,
-    selectedSubfamily,
-    contracObservationWhitOutFilter,
-    dataincreaseDisccountwthitoutfilter,
   ]);
 
   return (
@@ -104,16 +171,15 @@ function ReportControlSheet() {
           <div className="flex justify-between mb-1">
             <h1 className="">Elegir Proyecto</h1>
             <select
-              className=" bg-blue-500  text-xs rounded-lg text-white  shadow-lg"
+              className=" bg-blue-500  p-2 text-xs rounded-lg text-white  shadow-lg"
               name="newProjectId"
-              value={selectedProjectId} // Cambia esto para usar selectedProjectId
+              value={selectedProjectId}
               onChange={(e) => {
                 const newProjectId = e.target.value;
-                setSelectedProjectId(newProjectId); // Actualiza el projectId en el contexto o estado
-                // Aquí podrías resetear otros estados dependientes si es necesario
-              }}>
-              <option 
-              value="">Todos los Proyectos</option>
+                setSelectedProjectId(newProjectId);
+              }}
+            >
+              <option value="">Todos los Proyectos</option>
               {projects.map((project) => (
                 <option key={project._id} value={project.id}>
                   {project.projectId}
@@ -121,45 +187,66 @@ function ReportControlSheet() {
               ))}
             </select>
           </div>
+          <div className="p-5">
+            <Select
+              isMulti
+              options={familyOptions}
+              value={selectedFamilies}
+              onChange={(selectedOptions) =>
+                setSelectedFamilies(selectedOptions)
+              }
+              styles={customStyles}
+              className="basic-multi-select"
+              classNamePrefix="select"
+              placeholder="Seleccione Familias..."
+              noOptionsMessage={() => "No hay opciones disponibles"}
+            />
+          </div>
         </div>
         <CarInformationSheetControlReport />
-        <div className="bg-white mt-2 mb-4 shadow-lg rounded-lg   overflow-y-scroll max-h-[1000px] p-1 ">
-          <table className="sticky ">
-            <thead>
-              <tr className="sticky">
-                <th className="sticky border border-slate-500 px-4 text-xs text-black ">
+        <div className="bg-white mt-2 mb-4 shadow-lg rounded-lg p-4 ">
+          <table className=" ml-20 ">
+            <thead className="bg-blue-500 ">
+              <tr className="">
+                <th className=" border-slate-700 p-2 text-xs text-white ">
                   ProjectId
                 </th>
-                <th className="sticky border border-slate-500 px-4 text-xs text-black ">
+                <th className=" border-slate-500  text-xs text-white  ">
+                  Familia
+                </th>
+                <th className=" border-slate-500  text-xs text-white ">
                   Hoja de Control
                 </th>
-                <th className="sticky border border-slate-500 px-4 text-xs text-black ">
+                <th className=" border-slate-500  text-xs text-white gap-2  ">
                   Monto Propuesta
                 </th>
-                <th className="sticky border border-slate-500 px-4 text-xs text-black ">
+                <th className=" border-slate-500  text-xs text-white ">
                   Monto Contrato
                 </th>
-                <th className="sticky border border-slate-500 px-4 text-xs text-black ">
+                <th className=" border-slate-500  text-xs text-white ">
                   Recuperable
                 </th>
-                <th className="sticky border border-slate-500 px-4 text-xs text-black ">
+                <th className=" border-slate-500  text-xs text-white ">
                   Total con Extras
                 </th>
-                <th className="sticky border border-slate-500 px-4 text-xs">
+                <th className=" border-slate-500 px-4 text-xs text-white">
                   Ahorro/Perdida
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="">
               {summaryData.map((item, index) => (
-                <tr key={index}>
-                  <td className="border border-slate-500 text-center text-xs ">
+                <tr key={index} className="">
+                  <td className="border border-slate-500 text-center text-xs px-2">
                     {item.projectId}
+                  </td>
+                  <td className="border border-slate-500 text-center text-xs px-2">
+                    {item.family}
                   </td>
                   <td className="border border-slate-500 text-center text-xs ">
                     {item.subfamily}
                   </td>
-                  <td className="border border-slate-500 text-center text-xs ">
+                  <td className="border border-slate-500 text-center text-xs">
                     {formatCurrency(item.montoPropuesta)}
                   </td>
                   <td className="border border-slate-500 text-center text-xs ">
@@ -173,10 +260,18 @@ function ReportControlSheet() {
                   </td>
                   <td
                     className={`border border-slate-500 text-center text-xs ${
-                      item.ahorro > 0 ? "text-green-500" : item.ahorro < 0 ? "text-red-500" : "text-black"
+                      item.montoContrato === 0
+                        ? "text-black" // Si no hay contrato, el texto será negro
+                        : item.ahorro > 0
+                        ? "text-green-500"
+                        : item.ahorro < 0
+                        ? "text-red-500"
+                        : "text-black"
                     }`}
                   >
-                    {formatCurrency(item.ahorro)}
+                    {item.montoContrato === 0
+                      ? "S/C"
+                      : formatCurrency(item.ahorro)}
                   </td>
                 </tr>
               ))}

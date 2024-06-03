@@ -149,7 +149,7 @@ c-1 29 -137 983 -139 968z"
           </svg>
           Hojas de Control
         </Link>
-        {/* <Link
+        <Link
           to={"/Manodeobra"}
           className=" gap-2 mt-2 mr-3 ml-2 flex text-white p-2 rounded-xl text-sm ">
           <svg
@@ -166,7 +166,7 @@ c-1 29 -137 983 -139 968z"
             />
           </svg>
           Control Mano Obra
-        </Link> */}
+        </Link> 
         {/* <Link
           to={"/eepp"}
           className=" gap-2 mt-2 mr-3 ml-2 flex text-white p-2 rounded-xl text-sm ">
@@ -226,24 +226,7 @@ c-1 29 -137 983 -139 968z"
           </svg>
           Avance
         </Link> */}
-        <Link
-          to={"/ifcviewer"}
-          className=" gap-2 mr-3 ml-3 flex mt-4 text-white ">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"
-            />
-          </svg>
-          3D Viewer
-        </Link>
+       
 
         {/* <Link
           to={"/gantt"}

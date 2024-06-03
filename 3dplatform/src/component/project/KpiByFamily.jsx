@@ -63,10 +63,15 @@ const KpiByFamily = () => {
     setGrandTotal(total);
   }, [totalsByFamily]);
 
+  const Disponible = {};
+  Object.keys(totalsByFamily).forEach((family) => {
+    Disponible[family] = totalsByFamily[family] - (totalsInvoicesByFamily[family] || 0);
+  });
+
   return (
     <div className="ml-4 mt-4 bg-white p-2 rounded-lg mr-2 shadow-lg ">
       <h1 className="text-sm ml-2 font-semibold">VALORES POR FAMILIA</h1>
-      <div className="grid grid-cols-4 gap-4 mr-2">
+      <div className="grid grid-cols-5 gap-4 mr-2">
         {Object.entries(totalsByFamily).map(([family, total]) => {
 
           return (
@@ -81,6 +86,12 @@ const KpiByFamily = () => {
                 Actual: 
                 {totalsInvoicesByFamily[family]
                   ? formatCurrency(totalsInvoicesByFamily[family])
+                  : "Sin Valores "}
+              </div>
+              <div className="text-center mt-2 text-lg">
+                Disponible: 
+                {Disponible[family]
+                  ? formatCurrency(Disponible[family])
                   : "Sin Valores "}
               </div>
               <div className="mt-4 p-1 bg-gray-200 rounded-lg">

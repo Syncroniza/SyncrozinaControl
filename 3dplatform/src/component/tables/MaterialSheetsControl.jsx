@@ -75,12 +75,12 @@ const MaterialSheetsControl = () => {
 
   return (
     <div>
-      <div className="text-sm text-center mt-4 font-semibold bg-white ml-3 mr-2 rounded-xl">
+      <div className="text-sm grid grid-rows-2 text-center mt-4 font-semibold bg-white ml-3 mr-2 rounded-xl">
         <h1 className="text-lg">HOJAS DE CONTROL</h1>
         <div className="flex justify-center">
-          <h1 className="mt-5">Elegir Proyecto</h1>
+          <h1 className="mt-2 ml-2 px-1">Elegir Proyecto</h1>
           <select
-            className="ml-4 bg-blue-500 p-2 rounded-lg text-white mt-4 mb-2 shadow-xl"
+            className="ml-4 bg-blue-500 p-1 rounded-lg text-white  mb-1 shadow-xl"
             name="newProjectId"
             value={selectedProjectId} // Cambia esto para usar selectedProjectId
             onChange={(e) => {
@@ -95,13 +95,11 @@ const MaterialSheetsControl = () => {
               </option>
             ))}
           </select>
-        </div>
-        
         <div>
           <div className="flex justify-center text-sm">
-            <h1 className="mt-5">Elegir Hoja de Control</h1>
+            <h1 className="mt-2 ml-12">Elegir Hoja de Control</h1>
             <select
-              className="ml-4 bg-blue-500 p-2 rounded-lg text-white mt-4 mb-2 shadow-xl"
+              className="ml-4 bg-blue-500 p-2 rounded-lg text-white mt-1 mb-1 shadow-xl"
               name="selectedSubfamily"
               value={selectedSubfamily}
               onChange={(e) => setSelectedSubfamily(e.target.value)}>
@@ -115,6 +113,7 @@ const MaterialSheetsControl = () => {
               ))}
             </select>
           </div>
+        </div>
         </div>
       </div>
     </div>

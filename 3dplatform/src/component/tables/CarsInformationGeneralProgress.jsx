@@ -2,18 +2,21 @@ import { useContext, useEffect, useState } from "react";
 import { ViewerContext } from "../Context";
 
 function CarsInformationGeneralProgress() {
-  const { aernValueAccumalated, totalPlanValue,projectDuration, setProjectDuration } = useContext(ViewerContext);
-   
+  const { aernValueAccumalated, totalPlanValue, projectDuration, setProjectDuration } = useContext(ViewerContext);
+  console.log("🚀 ~ CarsInformationGeneralProgress ~ aernValueAccumalated:", aernValueAccumalated)
 
-  const [selectedWeek, setSelectedWeek] = useState("");
+  const [selectedWeek, setSelectedWeek] = useState([]);
+  console.log("🚀 ~ CarsInformationGeneralProgress ~ selectedWeek:", selectedWeek)
+  
   const [filteredData, setFilteredData] = useState([]);
-    
+  console.log("🚀 ~ CarsInformationGeneralProgress ~ filteredData:", filteredData)
+
 
   useEffect(() => {
     if (!selectedWeek) return;
 
     const filtered = aernValueAccumalated.filter((data) => {
-      return data.week === selectedWeek;
+      return formatedDate(data.finishdate) === selectedWeek; // Usar la misma función de formato
     });
 
     setFilteredData(filtered);
@@ -22,7 +25,6 @@ function CarsInformationGeneralProgress() {
     if (aernValueAccumalated.length > 0) {
       const startDate = new Date(aernValueAccumalated[0].dateStart); // Primera fecha de inicio del proyecto
       const endDate = new Date(aernValueAccumalated[aernValueAccumalated.length - 1].finishdate); // Última fecha de fin del proyecto
-     
       const days = calculateDays(startDate, endDate); // Calcular la duración en días corridos
       setProjectDuration(days);
     }
@@ -43,12 +45,12 @@ function CarsInformationGeneralProgress() {
 
   const SPI = totalEarnValue / currentPlanValue;
 
-  // Función para calcular la duración en días corridos
+  // -------------Función para calcular la duración en días corridos---------------//
   function calculateDays(startDate, endDate) {
     let currentDate = new Date(startDate);
     const end = new Date(endDate);
     let count = 0;
-    
+
     while (currentDate <= end) {
       const dayOfWeek = currentDate.getDay();
       if (dayOfWeek !== "" && dayOfWeek !== "") {
@@ -56,38 +58,61 @@ function CarsInformationGeneralProgress() {
       }
       currentDate.setDate(currentDate.getDate() + 1);
     }
-    
+
     return count;
   }
+  // ---------------- Formato de Fecha ----------------------------//
+  const formatedDate = (isoDate) => {
+    if (!isoDate) return "";
 
+    const date = new Date(isoDate);
+    const day = date.getUTCDate();
+    const month = date.getUTCMonth() + 1;
+    const year = date.getUTCFullYear();
+
+    const formattedDay = String(day).padStart(2, "0");
+    const formattedMonth = String(month).padStart(2, "0");
+
+    return `${formattedDay}/${formattedMonth}/${year}`;
+  };
+  
   return (
     <div>
       <div className="mt-3 ml-4 mr-2">
-        <select
-          className="rounded-lg p-2 bg-blue-500 bg-gradient-to-r from-indigo-500 ml-2 text-sm"
-          value={selectedWeek}
-          onChange={(e) => setSelectedWeek(e.target.value)}>
-          <option 
-          className="text-xs"
-          value="">Seleccione una semana</option>
-          {aernValueAccumalated.map((data) => (
-            <option 
-            className="text-white text-xs" 
-            key={data.week} value={data.week}>
-              {data.week}
-            </option>
-          ))}
-        </select>
         {selectedWeek && (
           <div className="bg-white mt-2 p-1 grid grid-cols-7 rounded-lg shadow-lg">
-            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 m-2 p-1 rounded-xl text-center shadow-xl">
-              <h1 className="text-sm font-semibold text-white mt-4">
+            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 m-2 p-1 mt-2 rounded-xl text-center shadow-xl">
+            <h1 className="text-sm font-semibold text-white mt-4 mb-4">
+                SELECCIONAR FECHA
+              </h1>
+              {/* <h1 className="text-sm font-semibold text-white mt-4">
                 SEMANA DEL PROYECTO
-              </h1>
-              <h1 className="text-xl font-semibold mt-4 text-white">
-                {selectedWeek}
-              </h1>
+                </h1>
+                <h1 className="text-xl font-semibold mt-4 text-white">
+                {formatedDate(selectedWeek)}
+              </h1> */}
+              <select
+                className=""
+                value={selectedWeek}
+                onChange={(e) => setSelectedWeek(e.target.value)}
+              >
+                <option 
+                className="" 
+                value="">
+                  Seleccione una semana
+                </option>
+                {aernValueAccumalated.map((data, index) => (
+                  <option
+                    className=""
+                    key={index}
+                    value={formatedDate(data.finishdate)} 
+                  >
+                    {formatedDate(data.finishdate)}
+                  </option>
+                ))}
+              </select>
             </div>
+
             <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 m-2 p-1 rounded-xl text-center shadow-xl">
               <h1 className="text-sm font-semibold text-white mt-4">
                 % AVANCE PLANIFICADO
@@ -126,8 +151,8 @@ function CarsInformationGeneralProgress() {
               <h1 className="text-sm font-light text-white">
                 Proyeccion a termino
               </h1>
-              <h1 className="text-xl font-semibold text-white mt-4">
-                {((projectDuration/SPI).toFixed(0))} días corridos
+              <h1 className="text-sm font-semibold text-white mt-4">
+                {((projectDuration / SPI).toFixed(0))} días corridos
               </h1>
             </div>
           </div>
@@ -138,5 +163,3 @@ function CarsInformationGeneralProgress() {
 }
 
 export default CarsInformationGeneralProgress;
-
-

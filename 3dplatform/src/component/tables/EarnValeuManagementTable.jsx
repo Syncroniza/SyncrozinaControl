@@ -165,7 +165,7 @@ function EarnValeuManagementTable() {
   // El nuevo arreglo con la información requerida
   console.log(newArray);
 
-  // ---------------------------------------------------------------------------------------------------------//
+  // --------------------------------Formato de Fecha -----------------------------------------------------//
 
   const formatedDate = (isoDate) => {
     if (!isoDate) return "";
@@ -180,7 +180,7 @@ function EarnValeuManagementTable() {
 
     return `${formattedDay}/${formattedMonth}/${year}`;
   };
-  //---------------------------------------SPI---------------------
+  //---------------------------------------SPI----------------------------------------------------------//
 
   return (
     <div className="bg-white ml-4 mt-4 mr-4">

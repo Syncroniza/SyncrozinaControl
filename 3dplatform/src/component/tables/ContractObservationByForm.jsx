@@ -109,12 +109,12 @@ const ContractObservationByForm = () => {
   //---------------------------------------------------------------------------//
 
   return (
-    <div className="bg-white mt-3 ml-3 p-3 rounded-lg ">
+    <div className="bg-white my-2 mr-2 ml-3 pt-2 rounded-lg ">
       <FormContractObservation />
-      <h1 className="text-sm font-semibold ml-3 ">OBSERVACIONES AL CONTRATO</h1>
+      <h1 className="text-sm font-semibold ml-6 ">OBSERVACIONES AL CONTRATO</h1>
       <button
         onClick={openModal}
-        className="flex bg-blue-500 mt-2 ml-2 p-1 text-white rounded-lg text-xs gap-2 ">
+        className="flex bg-blue-500 mt-2 ml-6 p-1 text-white rounded-lg text-xs gap-2 ">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -131,8 +131,8 @@ const ContractObservationByForm = () => {
         </svg>{" "}
         Nuevo Registro
       </button>
-      <div className="flex">
-        <table className=" table-auto mt-4 border-collapse border border-slate-500 ml-2 mr-2  ">
+      <div className="flex ml-4">
+        <table className=" table-auto mt-4 border-collapse border border-slate-500 ml-2 mr-2 mb-2 ">
           <thead className="sticky top-0 bg-blue-500 text-white -z-3">
             <tr className="border border-slate-500 px-2 text-xs ">
               <th className="border border-slate-500 px-2 text-xs  ">

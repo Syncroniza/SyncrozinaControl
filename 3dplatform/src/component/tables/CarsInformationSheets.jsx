@@ -105,25 +105,25 @@ const CarsInformationSheets = () => {
   const porpagar = montoContrato - totalPaidByProjectFamilySubfamily;
 
   const baseStyle = {
-    marginTop: "4px",
-    marginRight:"4px",
-    marginBottom:"4px",
+    margintop: "0px",
+    marginright:"0px",
+    marginBottom:"0px",
     padding: "30px",
     color: "white",
-    fontSize:"40px",
+    fontSize:"0px",
     borderRadius: "15px",
   };
 
   return (
-    <div className="mt-3 ml-4 mr-2  ">
-      <div className="bg-white mt-2  grid grid-cols-7 rounded-lg shadow-lg">
-        <div className="bg-blue-500 m-1 bg-gradient-to-r from-indigo-500 rounded-xl text-white text-center shadow-xl">
-          <h1 className="text-sm font-light  text-white mt-4">MONTO PROPUESTA</h1>
+    <div>
+      <div className="bg-white mt-2 ml-3 mr-2 grid grid-cols-7 rounded-lg shadow-lg py-5 px-10">
+        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-white text-center shadow-xl mx-2 p-2">
+          <h1 className="text-sm font-light  text-white m-2 ">MONTO PROPUESTA</h1>
           <div>
             {Object.entries(newtotalbySubFamily).map(
               ([subfamily, totalProyectado]) => (
                 <div key={subfamily}>
-                  <h2 className="text-lg font-semibold mt-4  ">
+                  <h2 className="text-lg font-semibold">
                     $
                     {totalProyectado.toLocaleString("es-CL", {
                       minimumFractionDigits: 0,
@@ -136,21 +136,21 @@ const CarsInformationSheets = () => {
             )}
           </div>
         </div>
-        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mt-1 mb-1 mr-1">
-          <h1 className="text-sm font-light text-white mt-4">MONTO CONTRATO</h1>
+        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 py-2 ">
+          <h1 className="text-sm font-light text-white mt-1">MONTO CONTRATO</h1>
           <h1 className="text-lg font-semibold  text-white mt-4">
             {formatCurrency(montoContrato)}{" "}
           </h1>
         </div>
 
-        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mt-1 mb-1 mr-1">
-          <h1 className="text-sm font-light text-white mt-4">RECUPERABLE</h1>
+        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
+          <h1 className="text-sm font-light text-white mt-1">RECUPERABLE</h1>
           <h1 className="text-lg font-semibold  text-white mt-4">
             {formatCurrency(recuperable)}
           </h1>
         </div>
-        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mt-1 mb-1 mr-1">
-          <h1 className="text-sm font-light text-white mt-4">TOTAL CON EXTRAS</h1>
+        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
+          <h1 className="text-sm font-light text-white mt-1">TOTAL CON EXTRAS</h1>
           <h1 className="text-lg font-semibold  text-white mt-4">
             {formatCurrency(totalconextras)}
           </h1>
@@ -163,10 +163,10 @@ const CarsInformationSheets = () => {
                 ...baseStyle, // Aplicamos primero el estilo base
                 ...(ahorro >= 0 ? cardStylePositive : cardStyleNegative), // Luego sobreescribimos con el estilo condicional
               }}>
-              <h1 className="text-sm text-center font-light mb-2  text-white">
+              <h1 className="text-lg text-center font-semibold  text-white">
                 {ahorro >= 0 ? "AHORRO" : "PERDIDA"}
               </h1>
-              <h2 className="text-sm text-center font-semibold ">
+              <h2 className="text-lg text-center font-semibold  ">
                 $
                 {ahorro.toLocaleString("es-CL", {
                   minimumFractionDigits: 0,
@@ -174,21 +174,20 @@ const CarsInformationSheets = () => {
                 })}
               </h2>
             </div>
-            {/* Otras tarjetas */}
           </div>
         </div>
 
-        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mt-1 mb-1 mr-1">
+        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
           <div className="text-lg font-semibold ">
-            <h1 className="text-sm font-light text-white mt-4">FACTURAS PAGADAS</h1>
+            <h1 className="text-sm font-light text-white mt-1">FACTURAS PAGADAS</h1>
             <h1 className="text-lg font-semibold  text-white mt-4">
               {formatCurrency(totalPaidByProjectFamilySubfamily)}
             </h1>
           </div>
         </div>
-        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mt-1 mb-1 mr-1">
+        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
           <div className="text-lg font-semibold text-white">
-            <h1 className="text-sm font-light text-white mt-4">SALDO POR PAGAR</h1>
+            <h1 className="text-sm font-light text-white mt-1">SALDO POR PAGAR</h1>
             <h1 className="text-lg font-semibold  text-white mt-4 ">
               {formatCurrency(porpagar)}
             </h1>

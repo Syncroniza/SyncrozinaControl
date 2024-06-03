@@ -156,7 +156,7 @@ const ProjectData = () => {
         <div className=" overflow-y-auto mb-4 ">
           <Exceltransform UrlEndpoint="http://localhost:8000/sheet/" />
           <table className="table-auto mt-4 border-collapse border border-slate-500 ml-2 mr-2  ">
-            <thead className="sticky top-0 bg-blue-500 text-white -z-3">
+            <thead className=" bg-blue-500 text-white -z-3">
               <tr className="border border-slate-500 px-4 text-xs ">
                 <th className="border border-slate-500 px-2   ">ProjectId</th>
                 <th className="border border-slate-500 px-2   ">Fecha</th>

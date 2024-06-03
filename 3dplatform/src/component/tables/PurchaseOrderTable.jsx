@@ -72,7 +72,7 @@ const PurchaseOrderTable = () => {
     setTotalPurchaseOrders(total);
   }, [newfilteredMaterialSheets]);
   return (
-    <div className="bg-white p-3 rounded-xl ml-3 flex flex-col">
+    <div className="bg-white p-3 rounded-xl my-2 ml-3 mr-2 flex flex-col">
       <div className="flex justify-end p-4 ">
         <h1 className="bg-blue-500 text-sm text-white p-6 rounded-xl ">
           {formatCurrency(newAccumulatedPurchaseOrders)}

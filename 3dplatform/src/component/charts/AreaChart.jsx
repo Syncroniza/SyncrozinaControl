@@ -1,4 +1,4 @@
-import {  useContext } from "react";
+import { useContext } from "react";
 import { ViewerContext } from "../Context";
 import FormAreaChart from "../sheetcontrol/FormAreaChart";
 import {
@@ -12,19 +12,27 @@ import {
 } from "recharts";
 
 const MainAreaChart = () => {
-  const {
-  
-    aernValueAccumalated,
+  const { aernValueAccumalated } = useContext(ViewerContext);
 
-  } = useContext(ViewerContext);
+  // Función para formatear la fecha
+  const formatedDate = (isoDate) => {
+    if (!isoDate) return "";
 
+    const date = new Date(isoDate);
+    const day = date.getUTCDate();
+    const month = date.getUTCMonth() + 1;
+    const year = date.getUTCFullYear();
+
+    const formattedDay = String(day).padStart(2, "0");
+    const formattedMonth = String(month).padStart(2, "0");
+
+    return `${formattedDay}/${formattedMonth}/${year}`;
+  };
 
   return (
-    <div className=" mt-10 ml-10">
+    <div className="mt-10 ml-10">
       <FormAreaChart />
-      <h2 className="text-indigo-800 font-bold text-2xl">
-        Planed Value vs Earn Value
-      </h2>
+      <h2 className="text-indigo-800 font-bold text-2xl">Planned Value vs Earn Value</h2>
       <LineChart
         width={1200}
         height={500}
@@ -35,66 +43,45 @@ const MainAreaChart = () => {
           left: 20,
           bottom: 5,
         }}
-        style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }} // Cambia el color de fondo del canvas del gráfico
-        
-        >
+        style={{ backgroundColor: 'rgba(255, 255, 255, 0.8)' }}
+      >
         <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
         <XAxis
-          dataKey="dateStart"
+          dataKey="finishdate"
           tick={{ fontSize: "12px" }}
           stroke="#8884d8"
-          tickFormatter={(date) => new Date(date).toLocaleDateString()}
+          tickFormatter={formatedDate}  // Usar formatedDate para formatear las fechas en el eje X
         />
         <YAxis
-          tick={{ fontSize: "10px" }} 
-          stroke="#8884d8"// Tamaño de la fuente en el eje Y
+          tick={{ fontSize: "10px" }}
+          stroke="#8884d8"
+          tickCount={10}
           tickFormatter={(value) =>
             value.toLocaleString("es-CL", {
               style: "currency",
               currency: "CLP",
             })
-          } // Personaliza el formato de los valores del eje Y
-          tickCount={10} // Controla la cantidad de marcas en el eje Y
+          }
         />
         <Tooltip
           contentStyle={{
             backgroundColor: "rgba(255, 255, 255, 0.8)",
-            boxShadow: "10px 10px 10px rgba(0, 0, 0, 0.1)", // Añade una sombra al tooltip
+            boxShadow: "10px 10px 10px rgba(0, 0, 0, 0.1)",
           }}
-          labelFormatter={(date) => new Date(date).toLocaleDateString()} // Personaliza el formato de la fecha en el tooltip
-          formatter={(value, name, props) => {
-            // Personaliza el contenido del tooltip
-            return [
-              
-              `${name}: ${value.toLocaleString("es-CL", {
-                style: "currency",
-                currency: "CLP",
-              })}`, // Formato de moneda
-            ];
-          }}
+          labelFormatter={formatedDate}  // Usar formatedDate para formatear las fechas en el tooltip
+          formatter={(value, name) => [
+            `${name}: ${value.toLocaleString("es-CL", {
+              style: "currency",
+              currency: "CLP",
+            })}`,
+          ]}
         />
         <Legend />
-        <Line
-          type="monotone"
-          dataKey="acumuladoPlanValue"
-          stroke="#8884d8"
-          name="PlanValue"
-        />
-        <Line
-          type="monotone"
-          dataKey="acumuladoActualCost"
-          stroke="#e4122e"
-          name="ActualCost"
-        />
-        <Line
-          type="monotone"
-          dataKey="acumuladoEarn"
-          stroke="#82ca9d"
-          name="EarnValue"
-        />
+        <Line type="monotone" dataKey="acumuladoPlanValue" stroke="#8884d8" name="PlanValue" />
+        <Line type="monotone" dataKey="acumuladoActualCost" stroke="#e4122e" name="ActualCost" />
+        <Line type="monotone" dataKey="acumuladoEarn" stroke="#82ca9d" name="EarnValue" />
       </LineChart>
-
-     </div>
+    </div>
   );
 };
 

@@ -112,7 +112,7 @@ const IncreaseAndDiscountByForm = () => {
     }
   };
   return (
-    <div className="bg-white mt-3 ml-3 p-3 rounded-xl">
+    <div className="bg-white my-2 ml-3 mr-2 p-3 rounded-xl">
       <FormIncreaseAndDiscount />
       <h1 className="text-sm font-semibold ml-3 ">
         AUMENTO / DISMINUCIONES AL CONTRATO

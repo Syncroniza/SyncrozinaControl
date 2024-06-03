@@ -1,5 +1,5 @@
-import IFCViewer from "./component/ifcviewer/IFCViewer";
-import SideBar from "./component/SideBarIFC";
+
+
 import ControlSheet from "./page/ControlSheet";
 import LaborCostControl from "./page/LaborCostControl";
 import ViewerProvider from "./component/Context";
@@ -21,8 +21,8 @@ function App() {
             path="/ifcviewer"
             element={
               <div className="flex h-min-screen">
-                <SideBar />
-                <IFCViewer />
+               
+              
               </div>
             }
           />

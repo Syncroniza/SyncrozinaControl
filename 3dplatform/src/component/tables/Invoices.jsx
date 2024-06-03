@@ -89,7 +89,7 @@ const Invoices = () => {
   ]);
 
   return (
-    <div className="bg-white mt-3 mb-3 p-2 rounded-xl ml-3 ">
+    <div className="bg-white my-2 ml-3 mr-2 p-2 rounded-xl ">
       <h1 className="text-sm font-semibold ml-3 ">FACTURAS</h1>
       <div className="grid grid-cols-[3fr_1fr] overflow-y-visible">
         <table className="table-auto mt-4 border-collapse border border-slate-500 ml-2 mr-2  ">

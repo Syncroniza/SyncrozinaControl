@@ -10,23 +10,27 @@ import AlertInvoicePurchaseOrder from "../component/alert/AlertInvoicePurchaseOr
 
 const HojadeControl = () => {
   return (
-    <div className="flex bg-gradient-to-r from-blue-700 py-4 w-600 md:w-3/4 xl:w-full">
-      <Sidebardb />
+    <div>
       <div>
-        <MaterialSheetsControl />
-        <IdentificationHeader />
-        <div>
-        <CarsInformationSheets />
+        <div className=" flex bg-blue-500  top-0 left-1 right-0 z-10 shadow-md">
+          <Sidebardb />
+          <div>
+              <MaterialSheetsControl />
+              <IdentificationHeader />
+              <CarsInformationSheets />
+              <ContractObservationByForm />
+              <IncreaseAndDiscountByForm />
+              <Invoices />
+              <PurchaseOrderTable />
+          </div>
         </div>
-        <AlertInvoicePurchaseOrder />
-        <div>
-          <ContractObservationByForm />
+          <div className="mt-30 overflow-auto">
+            <div className="pt-40">
+            </div>
+            <AlertInvoicePurchaseOrder />
+          </div>
         </div>
-          <IncreaseAndDiscountByForm />
-        <Invoices />
-        <PurchaseOrderTable />
       </div>
-    </div>
   );
 };
 

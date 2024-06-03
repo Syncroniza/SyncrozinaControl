@@ -163,47 +163,52 @@ const MonthCostaLaborTable = () => {
   });
 
   return (
-    <div className=" mt-4 p-2 py-2 rounded-tr-xl flex">
-      <div className="p-4">
-        <div className="bg-white text-xl font-semibold rounded-xl text-center">
+    <div className="  mt-4 p-1 rounded-lg ">
+      <div className="p-2">
+        <div className="bg-white p-1 text-lg font-semibold rounded-lg text-center ">
           <h1>Control Mano de Obra (Proyectado vs Real)</h1>
-        </div>
-        <div>
-          <div>
-            {/* <h1 className="text-lg bg-cyan-700 p-6 rounded-xl mr-2">
-              Disponible
-            </h1> */}
-          </div>
-          <div>
-            {/* <h1 className="text-lg bg-cyan-700 p-6 rounded-xl">
-              Gastado a la Fecha
-            </h1> */}
-          </div>
-          <div>
-            {/* <h1 className="text-lg bg-cyan-700 p-6 rounded-xl ml-2">
-              Por Gastar
-            </h1> */}
-          </div>
-          <div>
-            {/* <h1 className="text-lg bg-cyan-700 p-6 rounded-xl ml-2">
-              % Gastado
-            </h1> */}
-          </div>
-        </div>
         <select
-          className="ml-4 bg-blue-500 p-2 rounded-lg text-white mt-4 mb-2 shadow-xl"
+          className="ml-2 bg-blue-500 text-white p-2 text-sm fonr-semibold rounded-lg  mt-1 mb-1 shadow-xl"
           value={selectedByProjectId}
           name="selectedByProjectId"
           onChange={(e) => setSelectedByProjectId(e.target.value)}>
-          <option value="">Selecciona un Proyecto</option>
+          <option 
+          value="">Selecciona un Proyecto</option>
           {projectIds.map((id) => (
             <option key={id} value={id}>
               {id}
             </option>
           ))}
         </select>
+        </div>
+        <div className="grid grid-cols-4 bg-white p-4 mt-2 rounded-lg ">
+          <div>
+             <h1 className="text-lg bg-blue-500 p-6 rounded-xl mr-2">
+              Disponible
+            </h1> 
+          </div>
+          <div>
+            <h1 className="text-lg bg-blue-500 p-6 rounded-xl">
+              Gastado a la Fecha
+            </h1> 
+          </div>
+          <div>
+            <h1 className="text-lg bg-blue-500 p-6 rounded-xl ml-2">
+              Por Gastar
+            </h1> 
+          </div>
+          <div>
+            <h1 className="text-lg bg-blue-500 p-6 rounded-xl ml-2">
+              % Gastado
+            </h1> 
+          </div>
+        </div>
+        </div>
+        
         <Exceltransform UrlEndpoint="http://localhost:8000/labor/" />
-        <div className="mt-4 ml-4"></div>
+        <div className=" mt-2 p-1"></div>
+          {/* ---------------------- React Table --------------------------- */}
+        {/* <div>
         <Table
           data={dataNode}
           theme={theme}
@@ -215,7 +220,7 @@ const MonthCostaLaborTable = () => {
           {() => (
             <>
               <Header>
-                <HeaderRow>
+                <HeaderRow className="text-xs">
                   <HeaderCell>ProjectId</HeaderCell>
                   <HeaderCell>Item</HeaderCell>
                   <HeaderCell>Periodo</HeaderCell>
@@ -234,10 +239,10 @@ const MonthCostaLaborTable = () => {
                     );
 
                     return (
-                      <Row key={y}>
-                        <Cell className="text-xl">{total.projectId}</Cell>
-                        <Cell className="text-xl">{y + 1}</Cell>
-                        <Cell>{total.period}</Cell>
+                      <Row key={y} className="text-xs">
+                        <Cell className="">{total.projectId}</Cell>
+                        <Cell className="">{y + 1}</Cell>
+                        <Cell className="">{total.period}</Cell>
                         <Cell>{formatCurrency(total.totalLabor)}</Cell>
                         <Cell>{formatCurrency(total.accumulated)}</Cell>
                         <Cell>
@@ -257,10 +262,12 @@ const MonthCostaLaborTable = () => {
             </>
           )}
         </Table>
-      </div>
+      </div> */}
+
+      {/*------------------------ Grafico -----------------------  */}
       <div className="mt-4 ml-4 bg-white">
         <LineChart
-          width={800}
+          width={1200}
           height={500}
           data={combinedData}
           margin={{
@@ -282,6 +289,12 @@ const MonthCostaLaborTable = () => {
           <Line type="monotone" dataKey="realAccumulated" stroke="#82ca9d" />
         </LineChart>
       </div>
+      {/* ------------------------Tabla mano de obra ------------------- */}
+
+
+
+
+      
     </div>
   );
 };

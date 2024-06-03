@@ -38,4 +38,4 @@ const BudgetSchema = new mongoose.Schema(
   }
 );
 
-export const BudgetModel = mongoose.model("budgetcostupdated", BudgetSchema);
+export const BudgetModel = mongoose.model("budgetcostreal", BudgetSchema);
