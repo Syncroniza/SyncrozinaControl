@@ -21,12 +21,17 @@ const PurchaseOrderTable = () => {
     formatCurrency,
     setTotalPurchaseOrders,
   } = useContext(ViewerContext);
+  console.log("🚀 ~ PurchaseOrderTable ~ materialSheets:", materialSheets);
   const [newfilteredMaterialSheets, setNewFilteredMaterialSheets] = useState(
     []
   );
   const [newAccumulatedPurchaseOrders, setNewAccumulatedPurchaseOrders] =
     useState([]);
 
+  console.log(
+    "🚀 ~ PurchaseOrderTable ~ newfilteredMaterialSheets:",
+    newfilteredMaterialSheets
+  );
   const theme = useTheme({
     HeaderRow: `
                 background-color: #eaf5fd;
@@ -71,48 +76,68 @@ const PurchaseOrderTable = () => {
 
     setTotalPurchaseOrders(total);
   }, [newfilteredMaterialSheets]);
+
+
+  // ----------------------------  JSX -----------------------------------------//
   return (
-    <div className="bg-white p-3 rounded-xl my-2 ml-3 mr-2 flex flex-col">
-      <div className="flex justify-end p-4 ">
+    <div className="bg-white p-3 flex flex-col rounded-xl my-2 ml-3 mr-2">
+      <h1 className="text-sm font-semibold ">ORDENES DE COMPRA</h1>
+      <div className=" justify-end p-4 ">
         <h1 className="bg-blue-500 text-sm text-white p-6 rounded-xl ">
           {formatCurrency(newAccumulatedPurchaseOrders)}
         </h1>
       </div>
-      <h1 className="text-sm font-semibold ">ORDENES DE COMPRA</h1>
-      <div>
-        <Table data={dataNode} theme={theme}>
-          {() => (
-            <>
-              <Header>
-                <HeaderRow className="text-xs">
-                  <HeaderCell>ProjectId</HeaderCell>
-                  <HeaderCell>OC</HeaderCell>
-                  <HeaderCell>Fecha Emision </HeaderCell>
-                  <HeaderCell>Descripcion </HeaderCell>
-                  <HeaderCell>Proveedor</HeaderCell>
-                  <HeaderCell>Monto neto</HeaderCell>
-                  <HeaderCell>Acumulado </HeaderCell>
-                  <HeaderCell>Hoja de Control </HeaderCell>
-                </HeaderRow>
-              </Header>
-
-              <Body>
-                {newfilteredMaterialSheets.map((sheet) => (
-                  <Row key={sheet._id}>
-                    <Cell>{sheet.projectId}</Cell>
-                    <Cell>{sheet.cod}</Cell>
-                    <Cell>{new Date(sheet.date).toLocaleDateString()}</Cell>
-                    <Cell>{sheet.description}</Cell>
-                    <Cell>{sheet.subcontractorOffers}</Cell>
-                    <Cell>{formatCurrency(sheet.total)}</Cell>
-                    <Cell>{formatCurrency(sheet.acumulado)}</Cell>
-                    <Cell>{sheet.subfamily}</Cell>
-                  </Row>
-                ))}
-              </Body>
-            </>
-          )}
-        </Table>
+     
+     
+      {/* -------------------------- Table ------------------------------------ */}
+      <div
+        className=" ml-4 overflow-auto"
+        style={{ height: "250px", width:"1450px"}}
+      >
+        <table className="mt-4 ml-2 mb-2 w-full">
+          <thead className="sticky top-0 bg-blue-500 text-white ">
+            <tr className="text-xxs">
+              <th className="border border-slate-300 p-1">ProjectId</th>
+              <th className="border border-slate-300">OC</th>
+              <th className="border border-slate-300">SubFamilia</th>
+              <th className="border border-slate-300">Glosa</th>
+              <th className="border border-slate-300">Descripcion</th>
+              <th className="border border-slate-300">Proyectado</th>
+              <th className="border border-slate-300 px-1">Borrar</th>
+              <th className="border border-slate-300 px-1">Editar</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array.isArray(newfilteredMaterialSheets) &&
+              newfilteredMaterialSheets.map((sheet) => (
+                <tr
+                  key={sheet._id}
+                  className="border border-slate-300 text-xxs text-center"
+                >
+                  <td className="border border-slate-300">{sheet.projectId}</td>
+                  <td className="border border-slate-300 px-2">{sheet.cod}</td>
+                  <td className="border border-slate-300 px-2">
+                    {new Date(sheet.date).toLocaleDateString()}
+                  </td>
+                  <td className="border border-slate-300 px-2">
+                    {sheet.description}
+                  </td>
+                  <td className="border border-slate-300 px-2">
+                    {sheet.subcontractorOffers}
+                  </td>
+                  <td className="border border-slate-300 px-2">
+                    {formatCurrency(sheet.total)}
+                  </td>
+                  <td className="border border-slate-300 px-2">
+                    {formatCurrency(sheet.acumulado)}
+                  </td>
+                  <td className="border border-slate-300 px-2">
+                    {sheet.subfamily}
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

@@ -163,10 +163,10 @@ function ReportControlSheet() {
   ]);
 
   return (
-    <div className="flex bg-gradient-to-r from-blue-500">
+    <div className="flex bg-gradient-to-r from-blue-500 ">
       <Sidebardb />
       <div className="ml-3 mt-6">
-        <div className="grid grid-rows-2 justify-center align-middle bg-white shadow-xl rounded-xl">
+        <div className="grid grid-rows-2 justify-center align-middle bg-white shadow-xl rounded-xl mr-3">
           <h1 className="text-lg font-bold">INFORME HOJAS DE CONTROL</h1>
           <div className="flex justify-between mb-1">
             <h1 className="">Elegir Proyecto</h1>
@@ -204,58 +204,43 @@ function ReportControlSheet() {
           </div>
         </div>
         <CarInformationSheetControlReport />
-        <div className="bg-white mt-2 mb-4 shadow-lg rounded-lg p-4 ">
-          <table className=" ml-20 ">
-            <thead className="bg-blue-500 ">
-              <tr className="">
-                <th className=" border-slate-700 p-2 text-xs text-white ">
-                  ProjectId
-                </th>
-                <th className=" border-slate-500  text-xs text-white  ">
-                  Familia
-                </th>
-                <th className=" border-slate-500  text-xs text-white ">
-                  Hoja de Control
-                </th>
-                <th className=" border-slate-500  text-xs text-white gap-2  ">
-                  Monto Propuesta
-                </th>
-                <th className=" border-slate-500  text-xs text-white ">
-                  Monto Contrato
-                </th>
-                <th className=" border-slate-500  text-xs text-white ">
-                  Recuperable
-                </th>
-                <th className=" border-slate-500  text-xs text-white ">
-                  Total con Extras
-                </th>
-                <th className=" border-slate-500 px-4 text-xs text-white">
-                  Ahorro/Perdida
-                </th>
+        <div
+          className="bg-white mt-4 mb-4 shadow-lg rounded-lg  mr-3 overflow-y-auto "
+          style={{ height: "600px" }}
+        >
+          <table className="w-full">
+            <thead className="bg-blue-500 sticky top-0 ">
+              <tr className=" text-sm text-white ">
+                <th className=" border-slate-700 p-2  ">ProjectId</th>
+                <th className=" border-slate-500   ">Familia</th>
+                <th className=" border-slate-500  ">Hoja de Control</th>
+                <th className=" border-slate-500    ">Monto Propuesta</th>
+                <th className=" border-slate-500  ">Monto Contrato</th>
+                <th className=" border-slate-500  ">Recuperable</th>
+                <th className=" border-slate-500  ">Total con Extras</th>
+                <th className=" border-slate-500 ">Ahorro/Perdida</th>
               </tr>
             </thead>
             <tbody className="">
               {summaryData.map((item, index) => (
-                <tr key={index} className="">
-                  <td className="border border-slate-500 text-center text-xs px-2">
+                <tr key={index} className="text-center text-xs">
+                  <td className="border border-slate-500  ">
                     {item.projectId}
                   </td>
-                  <td className="border border-slate-500 text-center text-xs px-2">
-                    {item.family}
-                  </td>
-                  <td className="border border-slate-500 text-center text-xs ">
+                  <td className="border border-slate-500  ">{item.family}</td>
+                  <td className="border border-slate-500   ">
                     {item.subfamily}
                   </td>
-                  <td className="border border-slate-500 text-center text-xs">
+                  <td className="border border-slate-500 ">
                     {formatCurrency(item.montoPropuesta)}
                   </td>
-                  <td className="border border-slate-500 text-center text-xs ">
+                  <td className="border border-slate-500  ">
                     {formatCurrency(item.montoContrato)}
                   </td>
-                  <td className="border border-slate-500 text-center text-xs ">
+                  <td className="border border-slate-500  ">
                     {formatCurrency(item.recuperable)}
                   </td>
-                  <td className="border border-slate-500 text-center text-xs ">
+                  <td className="border border-slate-500  ">
                     {formatCurrency(item.totalconextras)}
                   </td>
                   <td

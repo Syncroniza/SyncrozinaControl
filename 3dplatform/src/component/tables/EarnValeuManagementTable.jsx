@@ -21,18 +21,13 @@ function EarnValeuManagementTable() {
     setTotalPlanValue,
     projectDuration,
   } = useContext(ViewerContext);
-  console.log(
-    "🚀 ~ MainAreaChart ~ aernValueAccumalated:",
-    aernValueAccumalated
-  );
-  console.log("🚀 ~ MainAreaChart ~ combinedData:", combinedData);
+    console.log("🚀 ~ EarnValeuManagementTable ~ aernValueAccumalated:", aernValueAccumalated)
+ 
 
   const [dataProgress, setDataProgress] = useState([]);
 
   const [totalEarnValue, setTotalEarnValue] = useState("");
-  console.log("🚀 ~ MainAreaChart ~ totalEarnValue:", totalEarnValue);
-  console.log("🚀 ~ MainAreaChart ~ totalPlanValue:", totalPlanValue);
-
+ 
   // const openModal = () => setIsModalOpenProgress(true);
 
   //---------------------Open and  Update Form ----------------------//
@@ -68,6 +63,7 @@ function EarnValeuManagementTable() {
             planValue: item.planValue,
             earnValue: item.earnValue,
             actualCost: item.actualCost,
+            eepp:item.eepp
           }));
 
           // Ordenar las fechas por dateStart de manera ascendente
@@ -97,6 +93,7 @@ function EarnValeuManagementTable() {
       planValue: item.planValue,
       totalByWeekValue: totalByWeek[item.week] || 0,
       earnValue: item.earnValue,
+      eepp:item.eepp
     }));
 
     setCombinedData(combinedData);
@@ -121,12 +118,18 @@ function EarnValeuManagementTable() {
       (acc, item) => acc + (item.planValue || 0),
       0
     );
+    // Calcula el total de planValue
+    const totalEEPP = combinedData.reduce(
+      (acc, item) => acc + (item.eepp || 0),
+      0
+    );
     setTotalPlanValue(totalPlanValue);
 
     const newArray = combinedData.map((item) => {
       acumuladoEarn += item.earnValue || 0;
       acumuladoActualCost += totalByWeek[item.week] || 0;
       acumuladoPlanValue += item.planValue || 0;
+      // acumuladoEEPP += item.eepp || 0;
 
       return {
         ...item,
@@ -184,9 +187,9 @@ function EarnValeuManagementTable() {
 
   return (
     <div className="bg-white ml-4 mt-4 mr-4">
-         <FormAreaChart />
-         <MainAreaChart />
-         
+      <FormAreaChart />
+      <MainAreaChart />
+
       <div>
         <Exceltransform UrlEndpoint="http://localhost:8000/progress/" />
       </div>
@@ -194,96 +197,83 @@ function EarnValeuManagementTable() {
         <h1 className="text-2xl text-blue-800 font-bold mt-4 ">
           Progress Information
         </h1>
-        <table className="sticky">
-          <thead>
-            <tr className="sticky">
-              <th className="sticky border border-slate-300 px-1 text-xs text-black ">
-                ProjectId
+        <table className="mr-2">
+          <thead className="bg-blue-500 sticky top-0 ">
+            <tr className="text-xs text-white">
+              <th className=" border border-slate-300   ">Id Projecto</th>
+              <th className=" border border-slate-300  p-1 ">Fecha Inicio</th>
+              <th className=" border border-slate-300  p-1 ">Fecha Termino</th>
+              <th className=" border border-slate-300  p-1">Valor Planificado $</th>
+              <th className=" border border-slate-300  ">
+                Valor Planificado Acumulado
               </th>
-              <th className="sticky border border-slate-300 px-1 text-xs text-black ">
-                Project Week
+              <th className=" border border-slate-300  ">% Valor Planificado $</th>
+              <th className="   ">Valor Ganado  $</th>
+              <th className="   "></th>
+              <th className=" border border-slate-300  ">
+                Valor Ganado Acumulado
               </th>
-              <th className="sticky border border-slate-300 px-1 text-xs text-black ">
-                Start Date
+              <th className="   ">% Valor Ganado </th>
+              <th className=" border border-slate-300  ">Costo Actual $</th>
+              <th className=" border border-slate-300  ">
+                Coato Actual Acumulado
               </th>
-              <th className="sticky border border-slate-300 px-1 text-xs text-black ">
-                Finish Date
+              <th className=" border border-slate-300  ">
+                % Costo Actual Acumulado 
               </th>
-              <th className="sticky border border-slate-300 px-1 text-xs">
-                Plan Value
-              </th>
-              <th className="sticky border border-slate-300 px-1 text-xs">
-                Plan Value Accumulated
-              </th>
-              <th className="sticky border border-slate-300 px-1 text-xs">
-                % Plan Value
-              </th>
-              <th className="sticky border border-slate-300 px-1 text-xs">
-                Earn Value
-              </th>
-              <th className="sticky border border-slate-300 px-1 text-xs">
-                Earn Value Accumulated
-              </th>
-              <th className="sticky border border-slate-300 px-1 text-xs">
-                % Earn Value
-              </th>
-              <th className="sticky border border-slate-300 px-1 text-xs">
-                Actual Cost
-              </th>
-              <th className="sticky border border-slate-300 px-1 text-xs">
-                Actual Cost Accumulated
-              </th>
-              <th className="sticky border border-slate-300 px-1 text-xs">
-                % Actual Cost Accumulated
-              </th>
-              <th className="sticky border border-slate-300 px-1 text-xs">
-                SPI (EV/PV)
-              </th>
-              <th className="sticky border border-slate-300 px-1 text-xs">
+              <th className=" border border-slate-300  ">SPI (EV/PV)</th>
+              <th className=" border border-slate-300 px-1 ">
                 EAC (Estimacion a termino)días
+              </th>
+              <th className=" border border-slate-300 px-1 ">
+                EEPP 
               </th>
             </tr>
           </thead>
           <tbody>
             {aernValueAccumalated.map((progress) => (
-              <tr key={progress._id}>
-                <td className="border border-slate-300 text-center text-xs ">
+              <tr
+                key={progress._id}
+                className="border border-slate-300 text-center text-xxs"
+              >
+                <td className="border border-slate-300 p-1 ">
                   {progress.projectId}
                 </td>
-                <td className="border border-slate-300 text-center text-xs ">
-                  {progress.week}
-                </td>
-                <td className="border border-slate-300 text-center text-xs ">
+                <td className="border border-slate-300 p-1 ">
                   {formatedDate(progress.dateStart)}
                 </td>
-                <td className="border border-slate-300 text-center text-xs ">
+                <td className="border border-slate-300  ">
                   {formatedDate(progress.finishdate)}
                 </td>
-                <td className="border border-slate-300 text-center text-xs ">
+                <td className="border border-slate-300 p-1 ">
                   {formatCurrency(progress.planValue)}
                 </td>
-                <td className="border border-slate-300 text-center text-xs ">
+                <td className="border border-slate-300  ">
                   {formatCurrency(progress.acumuladoPlanValue)}
                 </td>
-                <td className="border border-slate-300 text-center text-xs ">
+                <td className="border border-slate-300  ">
                   {(
                     (progress.acumuladoPlanValue / totalPlanValue) *
                     100
                   ).toFixed(2)}
                   %
                 </td>
-                <td className="border border-slate-300 text-center text-xs flex flex-row ">
+                <td className=" flex flex-row ">
                   {formatCurrency(progress.earnValue)}
+                </td>
+                <td>
                   <button
-                    className=" text-black rounded-lg text-xs "
-                    onClick={() => openFormAndCurrentProgressId(progress._id)}>
+                    className=" text-black rounded-lg text-xs bg-green-400 p-1"
+                    onClick={() => openFormAndCurrentProgressId(progress._id)}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth={1.5}
                       stroke="currentColor"
-                      className="w-4 h-4 ">
+                      className="w-4 h-4 "
+                    >
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -292,38 +282,43 @@ function EarnValeuManagementTable() {
                     </svg>
                   </button>
                 </td>
-                <td className="border border-slate-300 text-center text-xs">
+
+                <td className="border border-slate-300 ">
                   {formatCurrency(progress.acumuladoEarn)}
                 </td>
-                <td className="border border-slate-300 text-center text-xs">
+                <td className="border border-slate-300 ">
                   {((progress.acumuladoEarn / totalPlanValue) * 100).toFixed(2)}
                   %
                 </td>
-                <td className="border border-slate-300 text-center text-xs">
+                <td className="border border-slate-300 ">
                   {formatCurrency(progress.totalByWeekValue)}
                 </td>
-                <td className="border border-slate-300 text-center text-xs">
+                <td className="border border-slate-300 ">
                   {formatCurrency(progress.acumuladoActualCost)}
                 </td>
-                <td className="border border-slate-300 text-center text-xs">
+                <td className="border border-slate-300 ">
                   {(
                     (progress.acumuladoActualCost / totalPlanValue) *
                     100
                   ).toFixed(2)}
                   %
                 </td>
-                <td className="border border-slate-300 text-center text-xs">
+                <td className="border border-slate-300 ">
                   {(
                     progress.acumuladoEarn / progress.acumuladoPlanValue
                   ).toFixed(2)}
                 </td>
-                <td className="border border-slate-300 text-center text-xs">
+                <td className="border border-slate-300 ">
                   {(
                     projectDuration /
                     (progress.acumuladoEarn / progress.acumuladoPlanValue)
                   ).toFixed(2)}
                 </td>
-                <td></td>
+                <td>
+                <td className="border border-slate-300 ">
+                  {formatCurrency(progress.eepp)}
+                </td>
+                </td>
               </tr>
             ))}
           </tbody>

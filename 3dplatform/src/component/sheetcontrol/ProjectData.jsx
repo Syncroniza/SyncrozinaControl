@@ -31,7 +31,7 @@ const ProjectData = () => {
   };
 
   useEffect(() => {
-    // Función para obtener proyectos junto con las sheets .. sheets viene anodado en projects
+    // Función para obtener proyectos junto con las sheets .. sheets viene anidado en projects
     const fetchProjects = async () => {
       try {
         const response = await axios.get("http://localhost:8000/project/");
@@ -102,12 +102,11 @@ const ProjectData = () => {
       allSheets = allSheets.concat(project.sheets);
     });
     allSheets.sort((a, b) => comparateDates(a.date, b.date));
-    // Aquí suponemos que tienes un estado para almacenar todas las sheets recopiladas
-    setAllSheets(allSheets); // Asegúrate de tener un estado llamado allSheets definido para esto
-  }, [projects]); // Este efecto se ejecutará cada vez que el arreglo de proyectos cambie
+    setAllSheets(allSheets);
+  }, [projects]);
 
   return (
-    <div className=" ml-2 mr-6 mt-4 shadow-xl rounded-xl flex bg-gradient-to-r from-blue-700">
+    <div className=" shadow-xl rounded-xl flex bg-gradient-to-r from-blue-700">
       <Sidebardb />
       <FormBudget />
       <div className="bg-white rounded-xl ml-4 mt-5 mb-6">
@@ -115,7 +114,7 @@ const ProjectData = () => {
           MAESTRO DE COMPRAS
         </h1>
         <div className="flex grow">
-          <div className="ml-10 mt-4 text-lg bg-blue-500 text-white p-1  w-50 rounded-lg ">
+          {/* <div className="ml-10 mt-4 text-lg bg-blue-500 text-white p-1  w-50 rounded-lg ">
             <div>
               <label className="text-xs p-1" htmlFor="filterType">
                 Filter Type
@@ -128,11 +127,11 @@ const ProjectData = () => {
                 ></input>
               </label>
             </div>
-          </div>
+          </div> */}
           <div className="">
             <button
               onClick={openModal}
-              className="flex  bg-blue-500 mt-4 ml-4 p-2 text-white rounded-lg text-sm gap-2 "
+              className="flex  bg-blue-500 mt-4 ml-4 p-2 text-white rounded-lg text-xs  "
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -153,77 +152,53 @@ const ProjectData = () => {
             </button>
           </div>
         </div>
-        <div className=" overflow-y-auto mb-4 ">
+        <div
+          className=" overflow-y-auto mb-4 text-center"
+          style={{ height: "800px",width:"1450px" }}
+        >
           <Exceltransform UrlEndpoint="http://localhost:8000/sheet/" />
-          <table className="table-auto mt-4 border-collapse border border-slate-500 ml-2 mr-2  ">
-            <thead className=" bg-blue-500 text-white -z-3">
-              <tr className="border border-slate-500 px-4 text-xs ">
-                <th className="border border-slate-500 px-2   ">ProjectId</th>
-                <th className="border border-slate-500 px-2   ">Fecha</th>
-                <th className="border border-slate-500 px-2   ">Familia</th>
-                <th className="border border-slate-500 px-2   ">OC</th>
-                <th className="border border-slate-500 px-2  "> Description</th>
-                <th className="border border-slate-500 px-2   ">Qty</th>
-                <th className="border border-slate-500 px-2   ">Unit</th>
-                <th className="border border-slate-500 px-2   ">
-                  Precio Unitario
-                </th>
-
-                <th className="border border-slate-500 px-2   ">
+          <table className=" mr-8  w-full sticky ">
+            <thead className="sticky top-0 bg-blue-500 text-white">
+              <tr className="border border-slate-00  text-xxs  ">
+                <th className="border border-slate-500 p-2">ProjectId</th>
+                <th className="border border-slate-500">Fecha</th>
+                <th className="border border-slate-500">Familia</th>
+                <th className="border border-slate-500 ">O/C</th>
+                <th className="border border-slate-500"> Description</th>
+                <th className="border border-slate-500">Precio Unitario</th>
+                <th className="border border-slate-500">
                   Subcontrato/Proveedor
                 </th>
-                <th className="border border-slate-500 px-2   ">Total</th>
-                <th className="border border-slate-500 px-2   ">
-                  Hoja Control
-                </th>
-                <th className="border border-slate-500 px-2   ">
-                  Borrar
-                </th>
-                <th className="border border-slate-500 px-2  ">
-                  Editar
-                </th>
+                <th className="border border-slate-500">Total</th>
+                {/* <th className="border border-slate-500">Hoja Control</th> */}
+                <th className="border border-slate-500">Borrar</th>
+                <th className="border border-slate-500">Editar</th>
               </tr>
             </thead>
             <tbody>
               {allSheets.map((item, z) => (
-                <tr key={z}>
-                  <td className="border border-slate-500 px-2 text-xs ">
-                    {item.projectId}
-                  </td>
-                  <td className="border border-slate-500 px-2 text-xs ">
+                <tr key={z} className=" text-xxx-small ">
+                  <td className="border border-slate-300 ">{item.projectId}</td>
+                  <td className="border border-slate-300">
                     {formatedDate(item.date)}
                   </td>
-                  <td className="border border-slate-500 px-2 text-xs ">
-                    {item.family}
-                  </td>
-                  <td className="border border-slate-500 px-2 text-xs ">
-                    {item.cod}
-                  </td>
-                  <td className="border border-slate-500 px-2 text-xs ">
+                  <td className="border border-slate-300">{item.family}</td>
+                  <td className="border border-slate-300 ">{item.cod}</td>
+                  <td className="border border-slate-300">
                     {item.description}
                   </td>
-                  <td className="border border-slate-500 px-4 text-xs ">
-                    {item.qty}
-                  </td>
-                  <td className="border border-slate-500 px-2 text-xs ">
-                    {item.unit}
-                  </td>
-                  <td className="border border-slate-500 px-2 text-xs ">
+                  <td className="border border-slate-300">
                     {formatCurrency(item.unitPrice)}
                   </td>
-                  <td className="border border-slate-500 px-2 text-xs ">
+                  <td className="border border-slate-300">
                     {item.subcontractorOffers}
                   </td>
-                  <td className="border border-slate-500 px-2 text-xs ">
+                  <td className="border border-slate-300">
                     {formatCurrency(item.total)}
                   </td>
-                  <td className="border border-slate-500 px-2 text-xs ">
-                    {item.subfamily}
-                  </td>
-
-                  <td className="flex justify-center">
+                  <td className=" border border-slate-300">
                     <button
-                      className=" bg-red-500   p-1 text-white rounded-lg text-xs"
+                      className=" bg-red-500  p-1 text-white rounded-lg text-xs"
                       onClick={() => handleDeleteOC(item._id || item.id)}
                     >
                       <svg
@@ -232,7 +207,7 @@ const ProjectData = () => {
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-4 h-4 "
+                        className="w-4 h-3 "
                       >
                         <path
                           strokeLinecap="round"
@@ -242,10 +217,10 @@ const ProjectData = () => {
                       </svg>
                     </button>
                   </td>
-                  <td className="">
+                  <td className="border border-slate-300">
                     <button
                       onClick={() => openEditForm(item)}
-                      className=" flex justify-center bg-green-500  p-1 text-white rounded-lg text-xs  "
+                      className=" bg-green-500 p-1 text-white rounded-lg  "
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -253,7 +228,7 @@ const ProjectData = () => {
                         viewBox="0 0 24 24"
                         strokeWidth={1.5}
                         stroke="currentColor"
-                        className="w-4 h-4"
+                        className="w-4 h-3"
                       >
                         <path
                           strokeLinecap="round"

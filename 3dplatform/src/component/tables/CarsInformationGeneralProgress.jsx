@@ -92,7 +92,7 @@ function CarsInformationGeneralProgress() {
                 {formatedDate(selectedWeek)}
               </h1> */}
               <select
-                className=""
+                className=" text-white text-center "
                 value={selectedWeek}
                 onChange={(e) => setSelectedWeek(e.target.value)}
               >

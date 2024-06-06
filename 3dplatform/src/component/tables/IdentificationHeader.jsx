@@ -2,13 +2,19 @@ import { useContext } from "react";
 import { ViewerContext } from "../Context";
 
 const IdentificationHeader = () => {
-  const { selectedFamily, selectedSubfamily, materialSheets , selectedProjectId} =
-    useContext(ViewerContext);
+  const {
+    selectedFamily,
+    selectedSubfamily,
+    materialSheets,
+    selectedProjectId,
+  } = useContext(ViewerContext);
 
   const aggregateData = (sheets) => {
     const groupedData = {};
-    
-    sheets = sheets.filter((sheet) => !selectedProjectId || sheet.projectId === selectedProjectId);
+
+    sheets = sheets.filter(
+      (sheet) => !selectedProjectId || sheet.projectId === selectedProjectId
+    );
 
     sheets.forEach((sheet) => {
       if (
@@ -44,7 +50,6 @@ const IdentificationHeader = () => {
 
   const aggregatedSheets = aggregateData(materialSheets);
 
-  
   let totalGastado = 0;
   aggregatedSheets.forEach((project) => {
     Object.values(project.families)
@@ -63,11 +68,8 @@ const IdentificationHeader = () => {
         {aggregatedSheets.map((project) => (
           <div
             key={project.projectId}
-            className="bg-white shadow-lg  px-6 py-2 rounded-xl mb-4">
-            <h2 className="text-center text-xl font-semibold">
-              Proyecto: {project.projectId}
-            </h2>
-
+            className="bg-white shadow-lg  px-6 py-2 rounded-lg mb-4"
+          >
             {Object.values(project.families)
               .filter(
                 (family) =>
@@ -76,21 +78,24 @@ const IdentificationHeader = () => {
               )
               .map((family, index) => (
                 <div key={index}>
-                  <div className="flex">
+                  <div className="flex text-sm font-semibold mt-2 ">
                     <p>Proveedores:</p>
-                    <p className="text-lg font-semibold ml-2">
+
+                    <p className="text-xs font-light ml-2 mt-1">
                       {[...family.subcontractorOffers].join(",")}
                     </p>
                   </div>
-                  <div className="flex">
+
+                  <div className="flex text-sm font-semibold mt-2">
                     <h1>Familia:</h1>
-                    <h1 className="text-lg font-semibold ml-2">
+                    <h1 className="text-xs font-light ml-2 mt-1">
                       {family.family}
                     </h1>
                   </div>
-                  <div className="flex">
+
+                  <div className="flex text-sm font-semibold mt-2">
                     <h1 className="">Subfamilia:</h1>
-                    <h1 className="text-lg font-semibold ml-2">
+                    <h1 className="text-xs font-light ml-2 mt-1">
                       {family.subfamily}
                     </h1>
                   </div>

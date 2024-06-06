@@ -37,7 +37,6 @@ const MonthCostaLaborTable = () => {
           sheet.family === "Mano_Obra" &&
           (!selectedByProjectId || sheet.projectId === selectedByProjectId)
       );
-
     const manoobraData = filteredSheets.sort(
       (a, b) => new Date(a.date) - new Date(b.date)
     );
@@ -167,48 +166,34 @@ const MonthCostaLaborTable = () => {
       <div className="p-2">
         <div className="bg-white p-1 text-lg font-semibold rounded-lg text-center ">
           <h1>Control Mano de Obra (Proyectado vs Real)</h1>
-        <select
-          className="ml-2 bg-blue-500 text-white p-2 text-sm fonr-semibold rounded-lg  mt-1 mb-1 shadow-xl"
-          value={selectedByProjectId}
-          name="selectedByProjectId"
-          onChange={(e) => setSelectedByProjectId(e.target.value)}>
-          <option 
-          value="">Selecciona un Proyecto</option>
-          {projectIds.map((id) => (
-            <option key={id} value={id}>
-              {id}
-            </option>
-          ))}
-        </select>
+          <select
+            className="ml-2 bg-blue-500 text-white p-2 text-sm fonr-semibold rounded-lg  mt-1 mb-1 shadow-xl"
+            value={selectedByProjectId}
+            name="selectedByProjectId"
+            onChange={(e) => setSelectedByProjectId(e.target.value)}
+          >
+            <option value="">Selecciona un Proyecto</option>
+            {projectIds.map((id) => (
+              <option key={id} value={id}>
+                {id}
+              </option>
+            ))}
+          </select>
         </div>
-        <div className="grid grid-cols-4 bg-white p-4 mt-2 rounded-lg ">
-          <div>
-             <h1 className="text-lg bg-blue-500 p-6 rounded-xl mr-2">
-              Disponible
-            </h1> 
-          </div>
-          <div>
-            <h1 className="text-lg bg-blue-500 p-6 rounded-xl">
-              Gastado a la Fecha
-            </h1> 
-          </div>
-          <div>
-            <h1 className="text-lg bg-blue-500 p-6 rounded-xl ml-2">
-              Por Gastar
-            </h1> 
-          </div>
-          <div>
-            <h1 className="text-lg bg-blue-500 p-6 rounded-xl ml-2">
-              % Gastado
-            </h1> 
+        <div className=" bg-white p-4 mt-2 rounded-lg ">
+          <div className="flex flex-row grow text-lg bg-blue-500 p-6 rounded-xl">
+            <h1 className=" mr-2">Disponible</h1>
+            <h1 className="">Gastado a la Fecha</h1>
+            <h1 className="">Por Gastar</h1>
+            <h1 className="">% Gastado</h1>
           </div>
         </div>
-        </div>
-        
-        <Exceltransform UrlEndpoint="http://localhost:8000/labor/" />
-        <div className=" mt-2 p-1"></div>
-          {/* ---------------------- React Table --------------------------- */}
-        {/* <div>
+      </div>
+
+      <Exceltransform UrlEndpoint="http://localhost:8000/labor/" />
+      <div className=" mt-2 p-1"></div>
+      {/* ---------------------- React Table --------------------------- */}
+      {/* <div>
         <Table
           data={dataNode}
           theme={theme}
@@ -263,6 +248,41 @@ const MonthCostaLaborTable = () => {
           )}
         </Table>
       </div> */}
+      {/* ------------------------Tabla de Mano de Obra--------------- */}
+      <div
+        className="bg-white mb-4 mt-4 mr-3 shadow-lg rounded-lg  overflow-y-auto "
+        style={{ height: "400px" }}
+      >
+        <table className="w-full ">
+          <thead className="bg-white sticky top-0 ">
+            <tr className="text-black text-sm pb-2 border-slate-500">
+              <th className=" border-slate-700 p-3 ml-4 text-sm ">ProjectId</th>
+              <th>Item</th>
+              <th>Periodo</th>
+              <th>Mensual Planificado</th>
+              <th>Acumulado Planificado</th>
+              <th>Mensual Real</th>
+              <th>Acumulado Real</th>
+            </tr>
+          </thead>
+          <tbody className="">
+            {totalsWithAccumulated.map((item, index) => (
+              <tr
+                key={index}
+                className="border border-slate-500 text-center text-xs"
+              >
+                <td className="p-1">{item.projectId}</td>
+                <td className=" "></td>
+                <td className="  ">{item.period}</td>
+                <td className="">{formatCurrency(item.totalLabor)}</td>
+                <td className=" ">{formatCurrency(item.montoContrato)}</td>
+                <td className=" ">{formatCurrency(item.recuperable)}</td>
+                <td className="">{formatCurrency(item.totalconextras)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/*------------------------ Grafico -----------------------  */}
       <div className="mt-4 ml-4 bg-white">
@@ -275,7 +295,8 @@ const MonthCostaLaborTable = () => {
             right: 30,
             left: 20,
             bottom: 5,
-          }}>
+          }}
+        >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="month" />
           <YAxis />
@@ -290,11 +311,6 @@ const MonthCostaLaborTable = () => {
         </LineChart>
       </div>
       {/* ------------------------Tabla mano de obra ------------------- */}
-
-
-
-
-      
     </div>
   );
 };

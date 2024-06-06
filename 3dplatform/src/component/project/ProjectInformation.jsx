@@ -45,7 +45,10 @@ const ProjectInformation = () => {
 
   return (
     <div className="">
-      <h1 className=" text-sm text-center font-semibold p-2 mb-2 ml-4 bg-white  mr-2 mt-6 shadow-xl rounded-lg  ">
+      <h1
+        className=" text-lg text-center font-semibold p-2 mb-2 ml-4 bg-white  mr-2 mt-6 shadow-xl rounded-lg "
+        style={{ width: "1450px" }}
+      >
         INFORMACION GENERAL DEL PROYECTO
       </h1>
       <div className="flex bg-white ml-4 mr-2 mt-6 shadow-xl rounded-lg ">
@@ -88,21 +91,15 @@ const ProjectInformation = () => {
               </option>
             ))}
           </select>
-          <table className="table-auto mt-4 mb-6 border-collapse border border-slate-300 ml-4 rounded-xs">
+          <table className=" mt-4 mb-6 border border-slate-300 ml-4 rounded-lg">
             <thead>
-              <tr className=" text-gray-600  px-4 text-xs ">
-                <th className="border border-slate-300 px-4 text-xs bg-blue-500 bg-gradient-to-r from-indigo-500 text-white font-normal">
-                  ProjectId
-                </th>
-                <th className="border border-slate-300 px-4 text-xs  bg-blue-500 bg-gradient-to-r from-indigo-500 text-white  font-normal ">
+              <tr className="  px-4 text-xs bg-blue-500 bg-gradient-to-r from-indigo-500 text-white font-normal ">
+                <th className="border border-slate-300 px-4 ">ProjectId</th>
+                <th className="border border-slate-300 px-4 ">
                   Nombre Proyecto
                 </th>
-                <th className="border border-slate-300 px-4 text-xs bg-blue-500 bg-gradient-to-r from-indigo-500 text-white font-normal ">
-                  Fecha Inicio
-                </th>
-                <th className="border border-slate-300 px-4 text-xs bg-blue-500 bg-gradient-to-r from-indigo-500 text-white font-normal ">
-                  Fecha Termino
-                </th>
+                <th className="border border-slate-300 px-4">Fecha Inicio</th>
+                <th className="border border-slate-300 px-4">Fecha Termino</th>
               </tr>
             </thead>
             <tbody>
@@ -123,7 +120,7 @@ const ProjectInformation = () => {
             </tbody>
           </table>
         </div>
-        <div className="grid grid-cols-3 ">
+        <div className="grid grid-cols-3 ml-14 ">
           <div className=" flex flex-grow-0 ml-4">
             {filteredDataProject && (
               <div className="  text-center bg-blue-500 bg-gradient-to-r from-indigo-500 px-1  rounded-xl shadow-xl mt-4 mb-4 mr-3 ">

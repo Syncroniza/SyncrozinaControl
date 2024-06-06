@@ -55,7 +55,7 @@ const Invoices = () => {
       return { ...invoice, totalAcumulado: acumulado };
     });
     const totalPaid = filteredInvoices
-      .filter((invoice) => invoice.invoiceStatus === "Pagado")
+      .filter((invoice) => invoice.invoiceStatus === "Pagada")
       .reduce(
         (sum, invoice) => sum + parseFloat(invoice.totalInvoices || 0),
         0
@@ -89,88 +89,90 @@ const Invoices = () => {
   ]);
 
   return (
-    <div className="bg-white my-2 ml-3 mr-2 p-2 rounded-xl ">
+    <div className="bg-white my-2 ml-3 mr-2 p-2 rounded-lg ">
       <h1 className="text-sm font-semibold ml-3 ">FACTURAS</h1>
-      <div className="grid grid-cols-[3fr_1fr] overflow-y-visible">
-        <table className="table-auto mt-4 border-collapse border border-slate-500 ml-2 mr-2  ">
-          <thead className="sticky top-0 bg-blue-500 text-white -z-3">
-            <tr className="border border-slate-500 px-4 text-xl ">
-              <th className="border border-slate-500 px-4 text-xs  ">
+      <div className="overflow-auto" style={{height:"400px"}}>
+        <table className=" mt-2 border border-slate-500 ml-2 mr-2 ">
+          <thead className="sticky top-0 bg-blue-500 text-white ">
+            <tr className="border border-slate-300  text-xxs">
+              <th className="border border-slate-300px-4   ">
                 ProjectId
               </th>
-              <th className="border border-slate-500 px-4 text-xs  ">
+              <th className="border border-slate-300 px-4  ">
                 Familia
               </th>
-              <th className="border border-slate-500 px-4 text-xs  ">
+              <th className="border border-slate-300 px-4  ">
                 SubFamila
               </th>
-              <th className="border border-slate-500 px-4  text-xs ">
+              <th className="border border-slate-300 px-4  ">
                 N° Factura
               </th>
-              <th className="border border-slate-500 px-4 text-xs  ">
+              <th className="border border-slate-300 px-4  ">
                 Fecha de emision
               </th>
-              <th className="border border-slate-500 px-4  text-xs">
+              <th className="border border-slate-300 px-4 ">
                 Proveedor
               </th>
-              <th className="border border-slate-500 px-4  text-xs ">
+              <th className="border border-slate-300 px-4  ">
                 Glosa/EEPP
               </th>
-              <th className="border border-slate-500 px-4 text-xs  ">
+              <th className="border border-slate-300 px-4  ">
                 $ Factura
               </th>
-              <th className="border border-slate-500 px-4 text-xs  ">
+              <th className="border border-slate-300 px-4  ">
                 $ AcumuladoFactura
               </th>
-              <th className="border border-slate-500 px-4  text-xs ">
+              <th className="border border-slate-300 px-4  ">
                 Fecha Pago
               </th>
-              <th className="border border-slate-500 px-4  text-xs ">
+              <th className="border border-slate-300 px-4  ">
                 Estado Factura
               </th>
 
-              <th className="border border-slate-500 px-4  text-xs ">
+              <th className="border border-slate-300 px-4  ">
                 Observaciones
               </th>
             </tr>
           </thead>
           <tbody>
             {newfilteredInvoices.map((invoice) => (
-              <tr key={invoice._id}>
-                <td className="border border-slate-500 px-4 text-xs ">
+              <tr key={invoice._id}
+              className="text-xxs"
+              >
+                <td className="border border-slate-300 px-4  ">
                   {invoice.projectId}
                 </td>
-                <td className="border border-slate-500 px-4 text-xs ">
+                <td className="border border-slate-300 px-4  ">
                   {invoice.family}
                 </td>
-                <td className="border border-slate-500 px-4 text-xs ">
+                <td className="border border-slate-300 px-4  ">
                   {invoice.subfamily}
                 </td>
-                <td className="border border-slate-500 px-4 text-xs ">
+                <td className="border border-slate-300 px-4  ">
                   {invoice.invoices}
                 </td>
-                <td className="border border-slate-500 px-4 text-xs ">
+                <td className="border border-slate-300 px-4  ">
                   {formatedDate(invoice.dateInvoices)}
                 </td>
-                <td className="border border-slate-500 px-4 text-xs ">
+                <td className="border border-slate-300 px-4  ">
                   {invoice.subcontractorOffers}
                 </td>
-                <td className="border border-slate-500 px-4 text-xs ">
+                <td className="border border-slate-300 px-4  ">
                   {invoice.description}
                 </td>
-                <td className="border border-slate-500 px-4 text-xs ">
+                <td className="border border-slate-300 px-4  ">
                   {formatCurrency(invoice.totalInvoices)}
                 </td>
-                <td className="border border-slate-500 px-4 text-xs ">
+                <td className="border border-slate-300 px-4  ">
                   {formatCurrency(invoice.totalAcumulado)}
                 </td>
-                <td className="border border-slate-500 px-4 text-xs ">
+                <td className="border border-slate-300 px-4  ">
                   {formatedDate(invoice.dueDate)}
                 </td>
-                <td className="border border-slate-500 px-4 text-xs ">
+                <td className="border border-slate-300 px-4  ">
                   {invoice.invoiceStatus}
                 </td>
-                <td className="border border-slate-500 px-4 text-xs ">
+                <td className="border border-slate-300 px-4  ">
                   {invoice.observations}
                 </td>
               </tr>

@@ -29,9 +29,7 @@ const BudgetSchema = new mongoose.Schema(
     subfamily: {
       type: String,
     },
-    // item: {
-    //   type: String,
-    // },
+   
   },
   {
     timestamps: true,

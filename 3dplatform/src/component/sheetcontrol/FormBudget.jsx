@@ -101,14 +101,14 @@ const FormBudget = () => {
   return (
     <div className=" ">
       <Modal className="" isOpen={isModalOpenBudget}>
-        <h1 className="text-2xl font-blod mb-2 text-white">
+        <h1 className="text-lg font-blod mb-2 text-white">
           {isEditMode ? "Modo Editar" : "Modo Crear"}
         </h1>
         <form className="" onSubmit={handleSubmitSheet}>
           <div className="bg-slate-900 ">
             <div className="flex gap-2 ">
               <div className="">
-                <label className="text-lg text-white font-bolt mb-2 ">
+                <label className="text-sm text-white font-bolt mb-2 ">
                   ProjectId
                   <input
                     className="  bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-2 text-white border-solid border-4 border-gray-500  "
@@ -121,7 +121,7 @@ const FormBudget = () => {
                 </label>
               </div>
               <div className="">
-                <label className="text-lg text-white font-bolt mb-2  ">
+                <label className="text-sm text-white font-bolt mb-2  ">
                   Fecha
                   <input
                     className="  bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-2 text-white border-solid border-4 border-gray-500"
@@ -136,10 +136,10 @@ const FormBudget = () => {
             </div>
             <div className="flex gap-2 ">
               <div className="">
-                <label className="text-lg text-white font-bolt mb-2  ">
+                <label className="text-sm text-white font-bolt mb-2  ">
                   Familia
                   <select
-                    className="text-lg  font-bolt   bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-2 text-white border-solid border-4 border-gray-500"
+                    className="text-sm  font-bolt   bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-2 text-white border-solid border-4 border-gray-500"
                     name="family"
                     value={family}
                     onChange={(e) => setFamily(e.target.value)}>
@@ -154,7 +154,7 @@ const FormBudget = () => {
                 </label>
               </div>
               <div className="">
-                <label className="text-lg text-white font-bolt mb-2 ">
+                <label className="text-sm text-white font-bolt mb-2 ">
                   OC
                   <input
                     className=" bg-slate-700 rounded-lg mb-2 mt-2 flex  mr-2 p-2 text-white border-solid border-4 border-gray-500 w-full"
@@ -168,7 +168,7 @@ const FormBudget = () => {
               </div>
             </div>
             <div>
-              <label className="text-lg text-white font-bolt mb-2 ">
+              <label className="text-sm text-white font-bolt mb-2 ">
                 Descripcion
                 <input
                   className=" bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-2 text-white border-solid border-4 border-gray-500 w-full"
@@ -183,7 +183,7 @@ const FormBudget = () => {
             <div className="">
               <div className="flex">
                 <div className="">
-                  <label className="text-lg text-white font-bolt mb-2 ">
+                  <label className="text-sm text-white font-bolt mb-2 ">
                     Cantidad
                     <input
                       className=" bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-2 text-white border-solid border-4 border-gray-500  w-full"
@@ -198,7 +198,7 @@ const FormBudget = () => {
                 <div className="">
                   <div>
                     Unidad
-                    <label className="text-lg text-white font-bolt mb-2 ">
+                    <label className="text-sm text-white font-bolt mb-2 ">
                       <input
                         className=" bg-slate-700 rounded-lg mb-2 mt-2 flex  mr-2 p-2 text-white border-solid border-4 border-gray-500 w-full "
                         placeholder="Unit"
@@ -212,7 +212,7 @@ const FormBudget = () => {
                 </div>
               </div>
               <div className="">
-                <label className="text-lg text-white font-bolt mb-2 ">
+                <label className="text-sm text-white font-bolt mb-2 ">
                   Precio unitario
                   <input
                     className=" bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2  text-white border-solid border-4 border-gray-500 p-2"
@@ -226,7 +226,7 @@ const FormBudget = () => {
               </div>
 
               <div className="">
-                <label className="text-lg text-white font-bolt mb-2 ">
+                <label className="text-sm text-white font-bolt mb-2 ">
                   Subcontrato/Proveedor
                   <input
                     className=" bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-2 text-white border-solid border-4 border-gray-500 w-full"
@@ -239,7 +239,7 @@ const FormBudget = () => {
                 </label>
               </div>
               <div className="">
-                <label className="text-lg text-white font-bolt mb-2 ">
+                <label className="text-sm text-white font-bolt mb-2 ">
                   Hoja de Control
                   <select
                     className=" bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-2 text-white border-solid border-4 border-gray-500 w-full"
@@ -318,7 +318,7 @@ const FormBudget = () => {
                 </label>
               </div>
               <div className="">
-                <label className="text-lg text-white font-bolt mb-2 ">
+                <label className="text-sm text-white font-bolt mb-2 ">
                   Total
                   <input
                     className=" bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-2 text-white border-solid border-4 border-gray-500"
@@ -334,13 +334,13 @@ const FormBudget = () => {
           </div>
           <div className="flex justify-between">
             <button
-              className="bg-green-500 font-semibold rounded-xl text-white p-3 mt-2  mb-2"
+              className="bg-green-500 text-sm font-semibold rounded-xl text-white p-3 mt-2  mb-2"
               type="submit">
               Submit Tasks
             </button>
             <button
               onClick={closeModelBudget}
-              className="bg-red-500 rounded-xl text-white font-semibold p-3 mt-2  mb-2">
+              className="bg-red-500 text-sm rounded-xl text-white font-semibold p-3 mt-2  mb-2">
               Close Form
             </button>
           </div>

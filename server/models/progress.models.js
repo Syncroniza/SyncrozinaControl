@@ -26,6 +26,10 @@ const ProgressSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    eepp: {
+      type: Number,
+      default: 0,
+    },
     actualCost: {
       type: Number,
       default: 0,
@@ -38,4 +42,4 @@ const ProgressSchema = new mongoose.Schema(
   }
 );
 
-export const ProgressModel = mongoose.model("earnvalueupdated", ProgressSchema);
+export const ProgressModel = mongoose.model("earnvalue", ProgressSchema);

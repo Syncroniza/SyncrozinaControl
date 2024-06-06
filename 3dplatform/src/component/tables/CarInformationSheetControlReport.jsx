@@ -45,7 +45,7 @@ const CarInformationSheetControlReport = () => {
           <h1 key={index}></h1>
         ))}
       </div>
-      <div className="grid grid-cols-5 bg-white shadow-xl rounded-xl">
+      <div className="grid grid-cols-5 bg-white shadow-xl rounded-xl mr-3">
         <div className="bg-blue-500 ml-8 mr-8 mt-4 mb-4 p-6 rounded-xl text-center shadow-xl bg-gradient-to-r from-indigo-500">
           <h1 className="text-sm font-light text-white">
             TOTAL MONTO PROPUESTA

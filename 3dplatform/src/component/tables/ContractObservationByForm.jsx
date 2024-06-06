@@ -22,7 +22,6 @@ const ContractObservationByForm = () => {
     contracObservationWhitOutFilter,
     setContracObservationWhitOutFilter,
   } = useContext(ViewerContext);
- 
 
   // const [editingContract, setEditingContract] = useState("");
 
@@ -114,7 +113,8 @@ const ContractObservationByForm = () => {
       <h1 className="text-sm font-semibold ml-6 ">OBSERVACIONES AL CONTRATO</h1>
       <button
         onClick={openModal}
-        className="flex bg-blue-500 mt-2 ml-6 p-1 text-white rounded-lg text-xs gap-2 ">
+        className="flex bg-blue-500 mt-2 ml-6 p-1 text-white rounded-lg text-xs gap-2 "
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -122,7 +122,8 @@ const ContractObservationByForm = () => {
           strokeWidth={1.5}
           stroke="currentColor"
           dataslot="icon"
-          className="w-3 h-3">
+          className="w-3 h-3"
+        >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -131,72 +132,61 @@ const ContractObservationByForm = () => {
         </svg>{" "}
         Nuevo Registro
       </button>
-      <div className="flex ml-4">
-        <table className=" table-auto mt-4 border-collapse border border-slate-500 ml-2 mr-2 mb-2 ">
-          <thead className="sticky top-0 bg-blue-500 text-white -z-3">
-            <tr className="border border-slate-500 px-2 text-xs ">
-              <th className="border border-slate-500 px-2 text-xs  ">
-                ProjectId
-              </th>
-              <th className="border border-slate-500  text-xs  ">
-                Familia
-              </th>
-              <th className="border border-slate-500  text-xs  ">
-                SubFamila
-              </th>
-              <th className="border border-slate-500   text-xs ">
-                Glosa
-              </th>
-              <th className="border border-slate-500  text-xs  ">
-                Descripcion
-              </th>
-              <th className="border border-slate-500   text-xs">
-                Proyectado
-              </th>
-              <th className="border border-slate-500   text-xs">
-                Borrar
-              </th>
-              <th className="border border-slate-500   text-xs">
-                Editar{" "}
-              </th>
+      <div className="flex ml-4 overflow-auto"style={{ height:"150px"}}>
+        <table className=" mt-4  ml-2  mb-2 ">
+          <thead className="sticky top-0 bg-blue-500 text-white -z-3 ">
+            <tr className=" text-xxs ">
+              <th className="border border-slate-300 p-1  ">ProjectId</th>
+              <th className="border border-slate-300 ">Familia</th>
+              <th className="border border-slate-300">SubFamila</th>
+              <th className="border border-slate-300">Glosa</th>
+              <th className="border border-slate-300">Descripcion</th>
+              <th className="border border-slate-300">Proyectado</th>
+              <th className="border border-slate-300 px-1">Borrar</th>
+              <th className="border border-slate-300 px-1">Editar</th>
             </tr>
           </thead>
           <tbody className=" ">
             {Array.isArray(data)
               ? data.map((contract) => (
-                  <tr key={contract._id}>
-                    <td className="border border-slate-500 p-1 text-xs ">
+                  <tr
+                    key={contract._id}
+                    className="border border-slate-300 text-xxs text-center  "
+                  >
+                    <td className="border border-slate-300  ">
                       {contract.projectId}
                     </td>
-                    <td className="border border-slate-500 p-1 text-xs ">
+                    <td className="border border-slate-300 px-2 ">
                       {contract.family}
                     </td>
-                    <td className="border border-slate-500 p-1 text-xs ">
+                    <td className="border border-slate-300 px-2">
                       {contract.subfamily}
                     </td>
-                    <td className="border border-slate-500 p-1 text-xs ">
+                    <td className="border border-slate-300 px-2">
                       {contract.Glosa}
                     </td>
-                    <td className="border border-slate-500 p-1 text-xs ">
+                    <td className="border border-slate-300 px-2">
                       {contract.Descripcion}
                     </td>
-                    <td className="border border-slate-500 p-1 text-xs ">
+                    <td className="border border-slate-300 px-2">
                       {formatCurrency(contract.Proyectado)}
                     </td>
 
-                    <td>
+                    <td className="border border-slate-300">
                       <button
-                        className=" bg-red-500  p-1 text-white rounded-lg text-sm "
+                        className=" bg-red-500  px-1 text-white rounded-lg   "
                         onClick={() =>
                           handleDeleContractObservations(contract._id)
-                        }>
+                        }
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
                           stroke="currentColor"
-                          className="w-4 h-3 ">
+                          className="w-4 h-3 "
+                        >
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
@@ -207,10 +197,11 @@ const ContractObservationByForm = () => {
                     </td>
                     <td>
                       <button
-                        className="bg-green-500 p-1 text-white rounded-lg text-sm"
+                        className="bg-green-500 px-1 text-white rounded-lg "
                         onClick={() =>
                           openFormAndCurrentContractId(contract._id)
-                        }>
+                        }
+                      >
                         {/* Icono de edición */}
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -218,7 +209,8 @@ const ContractObservationByForm = () => {
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
                           stroke="currentColor"
-                          className="w-4 h-3">
+                          className="w-4 h-3"
+                        >
                           <path
                             strokeLinecap="round"
                             strokeLinejoin="round"

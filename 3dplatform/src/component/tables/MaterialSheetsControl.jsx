@@ -15,8 +15,7 @@ const MaterialSheetsControl = () => {
     selectedProjectId,
     setTotalBySubFamily,
   } = useContext(ViewerContext);
-    console.log("🚀 ~ MaterialSheetsControl ~ selectedSubfamily:", selectedSubfamily);
-    console.log("🚀 ~ MaterialSheetsControl ~ selectedProjectId:", selectedProjectId);
+
   const [familySubfamilyMap, setFamilySubfamilyMap] = useState({});
 
   useEffect(() => {
@@ -54,7 +53,7 @@ const MaterialSheetsControl = () => {
     });
 
     setTotalBySubFamily(totalsBySubfamily);
-  }, [getDataBudget, selectedSubfamily, projectId]); // Incluye projectId en la lista de dependencias
+  }, [getDataBudget, selectedSubfamily, projectId]);
 
   useEffect(() => {
     const mapa = {};
@@ -68,8 +67,9 @@ const MaterialSheetsControl = () => {
     setFamilySubfamilyMap(mapa); // Actualiza el estado con el nuevo mapa
   }, [getDataBudget]);
 
-  const uniqueSubfamilies = Array.from(new Set(getDataBudget.map((y) => y.subfamily))).sort();
-
+  const uniqueSubfamilies = Array.from(
+    new Set(getDataBudget.map((y) => y.subfamily))
+  ).sort();
 
   useEffect(() => {}, [accumatedValue]);
 
@@ -86,34 +86,37 @@ const MaterialSheetsControl = () => {
             onChange={(e) => {
               const newProjectId = e.target.value;
               setSelectedProjectId(newProjectId); // Actualiza el projectId en el contexto o estado
-              
-            }}>
-            <option value="" className="">Todos los Proyectos</option>
+            }}
+          >
+            <option value="" className="">
+              Todos los Proyectos
+            </option>
             {projects.map((project) => (
               <option key={project._id} value={project.id}>
                 {project.projectId}
               </option>
             ))}
           </select>
-        <div>
-          <div className="flex justify-center text-sm">
-            <h1 className="mt-2 ml-12">Elegir Hoja de Control</h1>
-            <select
-              className="ml-4 bg-blue-500 p-2 rounded-lg text-white mt-1 mb-1 shadow-xl"
-              name="selectedSubfamily"
-              value={selectedSubfamily}
-              onChange={(e) => setSelectedSubfamily(e.target.value)}>
-              <option className="" value="Elegir Hoja de Control">
-                Elegir Hoja de Control
-              </option>
-              {uniqueSubfamilies.map((subfamily) => (
-                <option key={subfamily} value={subfamily}>
-                  {subfamily}
+          <div>
+            <div className="flex justify-center text-sm">
+              <h1 className="mt-2 ml-12">Elegir Hoja de Control</h1>
+              <select
+                className="ml-4 bg-blue-500 p-2 rounded-lg text-white mt-1 mb-1 shadow-xl"
+                name="selectedSubfamily"
+                value={selectedSubfamily}
+                onChange={(e) => setSelectedSubfamily(e.target.value)}
+              >
+                <option className="" value="Elegir Hoja de Control">
+                  Elegir Hoja de Control
                 </option>
-              ))}
-            </select>
+                {uniqueSubfamilies.map((subfamily) => (
+                  <option key={subfamily} value={subfamily}>
+                    {subfamily}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>

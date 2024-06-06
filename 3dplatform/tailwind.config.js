@@ -6,9 +6,14 @@ export default {
   ],
   theme: {
     extend: {
-      backgroundColor: { // Agrega la clase de fondo personalizada
+      fontSize: {
+        'xxs': '.65rem',  // 10.4px, más pequeño que text-xs
+        'xxx-small': '.5rem'  // 8px, extremadamente pequeño
+      },
+      backgroundColor: {
         'custom': '#fffff', // Reemplaza con tu color deseado
       },
+      // Puedes seguir extendiendo otras propiedades aquí
     },
   },
   plugins: [],
