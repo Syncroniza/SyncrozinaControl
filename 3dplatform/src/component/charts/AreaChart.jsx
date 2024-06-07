@@ -100,9 +100,9 @@ const MainAreaChart = () => {
         />
         <Line
           type="monotone"
-          dataKey="eepp"
-          stroke="#82ca9d"
-          name="EarnValue"
+          dataKey="acumuladoEEPP"
+          stroke="#000"
+          name="EE.PP."
         />
       </LineChart>
     </div>

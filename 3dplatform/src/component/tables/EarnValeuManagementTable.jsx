@@ -105,6 +105,7 @@ function EarnValeuManagementTable() {
     let acumuladoEarn = 0;
     let acumuladoActualCost = 0;
     let acumuladoPlanValue = 0;
+    let acumuladoEEPP = 0;
 
     // Calcula el total de EarnValue
     const totalEarnValue = combinedData.reduce(
@@ -118,24 +119,27 @@ function EarnValeuManagementTable() {
       (acc, item) => acc + (item.planValue || 0),
       0
     );
+    setTotalPlanValue(totalPlanValue);
+
     // Calcula el total de planValue
     const totalEEPP = combinedData.reduce(
       (acc, item) => acc + (item.eepp || 0),
       0
     );
-    setTotalPlanValue(totalPlanValue);
+
 
     const newArray = combinedData.map((item) => {
       acumuladoEarn += item.earnValue || 0;
       acumuladoActualCost += totalByWeek[item.week] || 0;
       acumuladoPlanValue += item.planValue || 0;
-      // acumuladoEEPP += item.eepp || 0;
+      acumuladoEEPP += item.eepp || 0;
 
       return {
         ...item,
         acumuladoEarn,
         acumuladoActualCost,
         acumuladoPlanValue,
+        acumuladoEEPP
       };
     });
 

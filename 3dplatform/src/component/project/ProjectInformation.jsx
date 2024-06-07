@@ -1,9 +1,11 @@
 import { useEffect, useContext, useState } from "react";
 import { ViewerContext } from "../Context";
+import axios from "axios";
 
 const ProjectInformation = () => {
   const {
     projects,
+    setProjects,
     setSelectedProject,
     selectedProject,
     selectedProjectId,
@@ -17,6 +19,28 @@ const ProjectInformation = () => {
 
   const openModal = () => setIsMoldalOpen(true);
   const [totalActualCost, setTotalActualCost] = useState("");
+
+  useEffect(() => {
+    // Función para obtener proyectos junto con las sheets .. sheets viene anodado en projects
+    const fetchProjects = async () => {
+      try {
+        const response = await axios.get("http://localhost:8000/project/");
+
+        if (
+            Array.isArray(response.data.data) &&
+            response.data.data.length > 0
+        ) {
+          setProjects(response.data.data); // Actualiza el estado de proyectos
+        } else {
+          console.error("Empty array of projects", response);
+        }
+      } catch (error) {
+        console.error("Error fetching projects", error);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   useEffect(() => {
     const project = projects.find((p) => p.projectId === selectedProjectId);

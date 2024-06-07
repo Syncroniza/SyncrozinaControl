@@ -26,6 +26,13 @@ function CarsInformationGeneralProgress() {
       const startDate = new Date(aernValueAccumalated[0].dateStart); // Primera fecha de inicio del proyecto
       const endDate = new Date(aernValueAccumalated[aernValueAccumalated.length - 1].finishdate); // Última fecha de fin del proyecto
       const days = calculateDays(startDate, endDate); // Calcular la duración en días corridos
+
+      const now = new Date();
+      let currentWeek = aernValueAccumalated.filter((data) => {
+        return now >= new Date(data.dateStart) && now <= new Date(data.finishdate);
+      })
+      setSelectedWeek(formatedDate(currentWeek[0].finishdate));
+
       setProjectDuration(days);
     }
   }, [selectedWeek, aernValueAccumalated]);
