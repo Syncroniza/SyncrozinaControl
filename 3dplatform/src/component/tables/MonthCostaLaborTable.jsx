@@ -318,12 +318,13 @@ const MonthCostaLaborTable = () => {
     accumulatedRealMonthCost,
     setAccumulatedRealMonthCost,
   } = useContext(ViewerContext);
-    console.log("🚀 ~ MonthCostaLaborTable ~ accumulatedRealMonthCost:", accumulatedRealMonthCost)
+ 
   const [totalsWithAccumulated, setTotalsWithAccumulated] = useState([]);
 
   const [monthlyCosts, setMonthlyCosts] = useState([]);
   const [selectedByProjectId, setSelectedByProjectId] = useState("");
   const [combinedData, setCombinedData] = useState("");
+  console.log("🚀 ~ MonthCostaLaborTable ~ combinedData:", combinedData)
   const [totalRealMonthCost, setTotalRealMonthCost] = useState(0);
 
   const [disponible, setDisponible] = useState(0);
@@ -554,7 +555,6 @@ const MonthCostaLaborTable = () => {
       // Actualizar el estado con los nuevos datos
       setTotalsWithAccumulated((prev) =>
         prev.map((item, index) => {
-          console.log("uI", updatedItems);
           const changes = updatedItems.find(
             (change) => parseInt(change.index, 10) === index
           );
@@ -626,7 +626,7 @@ const MonthCostaLaborTable = () => {
             </option>
           ))}
         </select>
-        <Exceltransform UrlEndpoint="http://localhost:8000/labor/" />
+        {/* <Exceltransform UrlEndpoint="http://localhost:8000/labor/" /> */}
 
         {/* -------------------  Table ----------------------------- */}
         <div className="mt-4 ml-4"></div>
@@ -641,6 +641,8 @@ const MonthCostaLaborTable = () => {
                   <HeaderCell>Acumulado Planificado</HeaderCell>
                   <HeaderCell>Mensual Real</HeaderCell>
                   <HeaderCell>Acumulado Real</HeaderCell>
+                  <HeaderCell>Resultado</HeaderCell>
+                  <HeaderCell>Acumulado Resultado</HeaderCell>
                   <HeaderCell>Edit</HeaderCell>
                 </HeaderRow>
               </Header>
@@ -660,6 +662,8 @@ const MonthCostaLaborTable = () => {
                         }
                       />
                     </Cell>
+                    <Cell>{formatCurrency(item.realAccumulated)}</Cell>
+                    <Cell>{formatCurrency((item.totalLabor)-(item.realmonthcost))}</Cell>
                     <Cell>{formatCurrency(item.realAccumulated)}</Cell>
                     <Cell>
                       <button onClick={() => handleSave(index)}>Grabar</button>
