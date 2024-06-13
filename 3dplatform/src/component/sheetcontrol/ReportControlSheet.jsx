@@ -139,8 +139,8 @@ function ReportControlSheet() {
       );
       const montoContrato = getMontoContrato(subfamily);
       const getrecuperable = getRecuperable(subfamily);
-      const totalconextras = montoContrato + getrecuperable;
-      const ahorro = montoContrato === 0 ? 0 : montoPropuesta - totalconextras; // Modificado para manejar montos de contrato cero
+      const totalconextras = montoPropuesta + getrecuperable;
+      const ahorro = montoContrato === 0 ? 0 : totalconextras - montoContrato; // Modificado para manejar montos de contrato cero
 
       return {
         family: subfamilyData[0]?.family || "No Especificada",

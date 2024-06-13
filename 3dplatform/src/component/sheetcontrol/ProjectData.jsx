@@ -9,12 +9,9 @@ const ProjectData = () => {
   const {
     setProjects,
     setSelectedProject,
-    filterType,
-    setFilterType,
     isModalOpenBudget,
     setIsModalOpenBudget,
     setIsEditMode,
-    openEditForm,
     formatCurrency,
     projects,
     formatedDate,
@@ -53,7 +50,6 @@ const ProjectData = () => {
   }, [setProjects, isModalOpenBudget]);
 
   const handleDeleteOC = async (sheetid) => {
-    console.log("🚀 ~ handleDeleteOC ~ sheetid:", sheetid);
     const isConfirmed = window.confirm("¿Está seguro de que quiere borrar?");
 
     if (!isConfirmed) {
@@ -80,19 +76,7 @@ const ProjectData = () => {
     }
   };
 
-  // Encuentra el proyecto seleccionado basado en el ID
-  // useEffect(() => {
-  //   const project = projects.find((p) => p.projectId === selectedProjectId);
-  //   setSelectedProject(project); // Actualiza el estado del proyecto seleccionado
-  // }, [setSelectedProject, projects]);
 
-  // filtro de Actual Cost
-  // const filteredSheets =
-  //   selectedProject?.sheets?.filter((sheet) =>
-  //     filterType
-  //       ? sheet.family.toLowerCase().includes(filterType.toLowerCase())
-  //       : true
-  //   ) || [];
 
   useEffect(() => {
     // Crear un nuevo arreglo para almacenar todas las sheets de todos los proyectos
@@ -111,7 +95,7 @@ const ProjectData = () => {
       <FormBudget />
       <div className="bg-white rounded-xl ml-4 mt-5 mb-6">
         <h1 className="text-lg ml-8 font-semibold mt-4 text-center ">
-          MAESTRO DE COMPRAS
+          MAESTRO DE ORDENES DE COMPRAS
         </h1>
         <div className="flex grow">
           {/* <div className="ml-10 mt-4 text-lg bg-blue-500 text-white p-1  w-50 rounded-lg ">
@@ -131,7 +115,7 @@ const ProjectData = () => {
           <div className="">
             <button
               onClick={openModal}
-              className="flex  bg-blue-500 mt-4 ml-4 p-2 text-white rounded-lg text-xs  "
+              className="flex  bg-blue-500 mt-1 ml-4 p-2 text-white rounded-lg text-xs  "
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -153,10 +137,10 @@ const ProjectData = () => {
           </div>
         </div>
         <div
-          className=" overflow-y-auto mb-4 text-center"
-          style={{ height: "800px",width:"1450px" }}
+          className=" overflow-y-auto mb-4 mt-4 text-center ml-2 mr-2"
+          style={{ height: "800px",width:"1200px" }}
         >
-          <Exceltransform UrlEndpoint="http://localhost:8000/sheet/" />
+          {/* <Exceltransform UrlEndpoint="http://localhost:8000/sheet/" /> */}
           <table className=" mr-8  w-full sticky ">
             <thead className="sticky top-0 bg-blue-500 text-white">
               <tr className="border border-slate-00  text-xxs  ">
@@ -164,20 +148,20 @@ const ProjectData = () => {
                 <th className="border border-slate-500">Fecha</th>
                 <th className="border border-slate-500">Familia</th>
                 <th className="border border-slate-500 ">O/C</th>
-                <th className="border border-slate-500"> Description</th>
+                {/* <th className="border border-slate-500"> Description</th> */}
                 <th className="border border-slate-500">Precio Unitario</th>
                 <th className="border border-slate-500">
                   Subcontrato/Proveedor
                 </th>
                 <th className="border border-slate-500">Total</th>
                 {/* <th className="border border-slate-500">Hoja Control</th> */}
-                <th className="border border-slate-500">Borrar</th>
-                <th className="border border-slate-500">Editar</th>
+                {/* <th className="border border-slate-500">Borrar</th>
+                <th className="border border-slate-500">Editar</th> */}
               </tr>
             </thead>
             <tbody>
               {allSheets.map((item, z) => (
-                <tr key={z} className=" text-xxx-small ">
+                <tr key={z} className=" text-xxs ">
                   <td className="border border-slate-300 ">{item.projectId}</td>
                   <td className="border border-slate-300">
                     {formatedDate(item.date)}
@@ -187,16 +171,16 @@ const ProjectData = () => {
                   <td className="border border-slate-300">
                     {item.description}
                   </td>
-                  <td className="border border-slate-300">
+                  {/* <td className="border border-slate-300">
                     {formatCurrency(item.unitPrice)}
-                  </td>
+                  </td> */}
                   <td className="border border-slate-300">
                     {item.subcontractorOffers}
                   </td>
                   <td className="border border-slate-300">
                     {formatCurrency(item.total)}
                   </td>
-                  <td className=" border border-slate-300">
+                  {/* <td className=" border border-slate-300">
                     <button
                       className=" bg-red-500  p-1 text-white rounded-lg text-xs"
                       onClick={() => handleDeleteOC(item._id || item.id)}
@@ -216,8 +200,8 @@ const ProjectData = () => {
                         />
                       </svg>
                     </button>
-                  </td>
-                  <td className="border border-slate-300">
+                  </td> */}
+                  {/* <td className="border border-slate-300">
                     <button
                       onClick={() => openEditForm(item)}
                       className=" bg-green-500 p-1 text-white rounded-lg  "
@@ -237,7 +221,7 @@ const ProjectData = () => {
                         />
                       </svg>
                     </button>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>

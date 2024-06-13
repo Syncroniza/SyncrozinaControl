@@ -13,13 +13,9 @@ const Invoices = () => {
     setTotalPaidByProjectFamilySubfamily,
     accumatedValue,
   } = useContext(ViewerContext);
-  console.log("🚀 ~ Invoices ~ invoicesdata:", invoicesdata);
   const [newfilteredInvoices, setNewFilteredInvoices] = useState([]);
-
-  console.log(
-    "🚀 ~ Invoices ~ totalPaidByProjectFamilySubfamily:",
-    totalPaidByProjectFamilySubfamily
-  );
+  const [totalInvoices, setTotalInvoices] = useState(0);
+  console.log("🚀 ~ Invoices ~ totalInvoices:", totalInvoices)
   const [percentagePaid, setPercentagePaid] = useState([]);
 
   const formatedDate = (isoDate) => {
@@ -49,19 +45,25 @@ const Invoices = () => {
         (!selectedFamily || invoice.family === selectedFamily) &&
         (!selectedSubfamily || invoice.subfamily === selectedSubfamily)
     );
+
+    // Ordenar las facturas por fecha de más antigua a más nueva
+    filteredInvoices.sort(
+      (a, b) => new Date(a.dateInvoices) - new Date(b.dateInvoices)
+    );
+
     let acumulado = 0;
     const invoicesWithAccumulated = filteredInvoices.map((invoice) => {
       acumulado += parseFloat(invoice.totalInvoices) || 0;
       return { ...invoice, totalAcumulado: acumulado };
     });
+
     const totalPaid = filteredInvoices
       .filter((invoice) => invoice.invoiceStatus === "Pagada")
       .reduce(
         (sum, invoice) => sum + parseFloat(invoice.totalInvoices || 0),
         0
       );
-    // Calculamos el porcentaje pagado.
-    // Calculamos el total facturado de las facturas filtradas.
+
     const totalInvoiced = filteredInvoices.reduce(
       (sum, invoice) => sum + parseFloat(invoice.totalInvoices || 0),
       0
@@ -71,74 +73,48 @@ const Invoices = () => {
       totalInvoiced > 0
         ? Number(((totalPaid / totalInvoiced) * 100).toFixed(2))
         : 0;
+    setTotalInvoices(totalInvoiced);
     setPercentagePaid(percentagePaid);
-
     setTotalPaidByProjectFamilySubfamily(totalPaid);
-
     setNewFilteredInvoices(invoicesWithAccumulated);
     setAccumatedValue(acumulado);
-  }, [
-    selectedSubfamily,
-    invoicesdata,
-    selectedProjectId,
-    selectedFamily,
-    setPercentagePaid,
-    setTotalPaidByProjectFamilySubfamily,
-    setNewFilteredInvoices,
-    setAccumatedValue,
-  ]);
+  }, [invoicesdata, selectedProjectId, selectedFamily, selectedSubfamily]);
 
   return (
-    <div className="bg-white my-2 ml-3 mr-2 p-2 rounded-lg ">
+    <div
+      className="bg-white my-2 ml-3 mr-2 p-2 rounded-lg "
+      style={{ width: "1200px" }}
+    >
       <h1 className="text-sm font-semibold ml-3 ">FACTURAS</h1>
-      <div className="overflow-auto" style={{height:"400px"}}>
+      <h1 className="bg-blue-500 text-xl text-white p-6 rounded-xl ml-1 mb-4 mt-2">
+        {formatCurrency(totalInvoices)}
+      </h1>
+      <div className="overflow-auto" style={{ height: "400px" }}>
         <table className=" mt-2 border border-slate-500 ml-2 mr-2 ">
           <thead className="sticky top-0 bg-blue-500 text-white ">
             <tr className="border border-slate-300  text-xxs">
-              <th className="border border-slate-300px-4   ">
-                ProjectId
-              </th>
-              <th className="border border-slate-300 px-4  ">
-                Familia
-              </th>
-              <th className="border border-slate-300 px-4  ">
-                SubFamila
-              </th>
-              <th className="border border-slate-300 px-4  ">
-                N° Factura
-              </th>
+              <th className="border border-slate-300px-4   ">ProjectId</th>
+              <th className="border border-slate-300 px-4  ">Familia</th>
+              <th className="border border-slate-300 px-4  ">SubFamila</th>
+              <th className="border border-slate-300 px-4  ">N° Factura</th>
               <th className="border border-slate-300 px-4  ">
                 Fecha de emision
               </th>
-              <th className="border border-slate-300 px-4 ">
-                Proveedor
-              </th>
-              <th className="border border-slate-300 px-4  ">
-                Glosa/EEPP
-              </th>
-              <th className="border border-slate-300 px-4  ">
-                $ Factura
-              </th>
+              <th className="border border-slate-300 px-4 ">Proveedor</th>
+              <th className="border border-slate-300 px-4  ">Glosa/EEPP</th>
+              <th className="border border-slate-300 px-4  ">$ Factura</th>
               <th className="border border-slate-300 px-4  ">
                 $ AcumuladoFactura
               </th>
-              <th className="border border-slate-300 px-4  ">
-                Fecha Pago
-              </th>
-              <th className="border border-slate-300 px-4  ">
-                Estado Factura
-              </th>
+              <th className="border border-slate-300 px-4  ">Fecha Pago</th>
+              <th className="border border-slate-300 px-4  ">Estado Factura</th>
 
-              <th className="border border-slate-300 px-4  ">
-                Observaciones
-              </th>
+              <th className="border border-slate-300 px-4  ">Observaciones</th>
             </tr>
           </thead>
           <tbody>
             {newfilteredInvoices.map((invoice) => (
-              <tr key={invoice._id}
-              className="text-xxs"
-              >
+              <tr key={invoice._id} className="text-xxs">
                 <td className="border border-slate-300 px-4  ">
                   {invoice.projectId}
                 </td>

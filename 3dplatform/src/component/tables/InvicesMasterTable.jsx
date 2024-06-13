@@ -21,6 +21,7 @@ const InvicesMasterTable = () => {
   const fetchInvoices = async () => {
     try {
       const response = await axios.get("http://localhost:8000/invoices/");
+      const sortedInvoices = response.data.data.sort((a, b) => new Date(a.dateInvoices) - new Date(b.dateInvoices));
       if (Array.isArray(response.data.data) && response.data.data.length > 0) {
         setInvoicesData(response.data.data); // Actualiza el estado de proyectos
       } else {
@@ -81,10 +82,11 @@ const InvicesMasterTable = () => {
       <Sidebardb />
       <FormInvoices />
       <div className="  b-4 bg-white mt-4 ml-3 mb-6 p-4 rounded-lg">
-        <h1 className="text-sm text-center font-semibold">
+        <h1 className="text-lg mb-4 text-center font-semibold">
           MAESTRO DE FACTURAS
         </h1>
-        <div className="flex">
+        {/* --------------------- Nuevo Registro ----------------- */}
+        {/* <div className="flex">
           <button
             onClick={openModal}
             className="flex  bg-blue-500 mt-2 ml-2 p-1 text-white rounded-lg text-xs  "
@@ -96,7 +98,7 @@ const InvicesMasterTable = () => {
               strokeWidth={1.5}
               stroke="currentColor"
               dataslot="icon"
-              className="w-4 h-4"
+              className="w-2 h-2"
             >
               <path
                 strokeLinecap="round"
@@ -106,8 +108,8 @@ const InvicesMasterTable = () => {
             </svg>{" "}
             Nuevo Registro
           </button>
-        </div>
-        <div className="overflow-auto text-center " style={{ width: "1450px",height:"1000px" }}>
+        </div> */}
+        <div className="overflow-auto text-center " style={{ width: "1200px",height:"1000px" }}>
           <table className="w-full">
             <thead className="sticky top-0 bg-blue-500 text-white ">
               <tr className="border border-slate-300  text-xxs ">
@@ -120,10 +122,10 @@ const InvicesMasterTable = () => {
                 <th className="border border-slate-300 px-2   ">Glosa/EEPP</th>
                 <th className="border border-slate-300 px-2  ">$ Factura</th>
                 <th className="border border-slate-300 px-2  ">Estado Factura</th>
-                <th className="border border-slate-300 px-2  ">Fecha Pago</th>
-                <th className="border border-slate-300 px-2  ">Observaciones</th>
+                <th className="border border-slate-300 px-2  ">Fecha Vencimiento</th>
+                {/* <th className="border border-slate-300 px-2  ">Observaciones</th>
                 <th className="border border-slate-300 px-2  ">Borrar</th>
-                <th className="border border-slate-300 px-2   ">Editar</th>
+                <th className="border border-slate-300 px-2   ">Editar</th> */}
               </tr>
             </thead>
             <tbody>
@@ -159,7 +161,7 @@ const InvicesMasterTable = () => {
                   <td className="border border-slate-300  px-2  ">
                     {formatedDate(invoices.dueDate)}
                   </td>
-                  <td className="border border-slate-300  px-2  ">
+                  {/* <td className="border border-slate-300  px-2  ">
                     {invoices.observations}
                   </td>
                   <td className="border border-slate-300 px-2">
@@ -209,7 +211,7 @@ const InvicesMasterTable = () => {
                         />
                       </svg>
                     </button>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>

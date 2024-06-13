@@ -15,6 +15,7 @@ const CostLaborControlTable = () => {
           Array.isArray(response.data.data) &&
           response.data.data.length > 0
         ) {
+          console.log("🚀 ~ fetchLabor ~ response:", response)
           setDataNode({ nodes: response.data.data });
         } else {
           console.error("No se encontraron datos", response);

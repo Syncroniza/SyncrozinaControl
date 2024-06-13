@@ -75,17 +75,17 @@ const MaterialSheetsControl = () => {
 
   return (
     <div>
-      <div className="text-sm grid grid-rows-2 text-center mt-4 font-semibold bg-white ml-3 mr-2 rounded-xl">
+      <div className="text-sm grid grid-rows-2 text-center mt-4 font-semibold bg-white ml-3 mr-2 rounded-xl"style={{ width: "1200px" }}>
         <h1 className="text-lg">HOJAS DE CONTROL</h1>
         <div className="flex justify-center">
           <h1 className="mt-2 ml-2 px-1">Elegir Proyecto</h1>
           <select
             className="ml-4 bg-blue-500 p-1 rounded-lg text-white  mb-1 shadow-xl"
             name="newProjectId"
-            value={selectedProjectId} // Cambia esto para usar selectedProjectId
+            value={selectedProjectId} 
             onChange={(e) => {
               const newProjectId = e.target.value;
-              setSelectedProjectId(newProjectId); // Actualiza el projectId en el contexto o estado
+              setSelectedProjectId(newProjectId); 
             }}
           >
             <option value="" className="">

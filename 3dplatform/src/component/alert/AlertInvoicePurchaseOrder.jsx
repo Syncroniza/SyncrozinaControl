@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { ViewerContext } from "../Context";
 import axios from "axios";
-import AlertMail from "../alert/AlertMail";
+// import AlertMail from "../alert/AlertMail";
 
 function AlertInvoicePurchaseOrder() {
   const {
@@ -63,13 +63,13 @@ function AlertInvoicePurchaseOrder() {
 
   return (
     <div>
-      {showAlert && (
+      {/* {showAlert && (
         <AlertMail
           message="Se ha enviado un correo electrónico a Gerencia ."
           showAlert={showAlert}
           onClose={() => setShowAlert(false)}
         />
-      )}
+      )} */}
     </div>
   );
 }

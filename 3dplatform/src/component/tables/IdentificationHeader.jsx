@@ -63,13 +63,13 @@ const IdentificationHeader = () => {
   });
 
   return (
-    <div className="ml-4 mr-2">
-      <div className="mt-4 ">
+    <div className="ml-4 mr-2" >
+      <div className="mt-4" >
         {aggregatedSheets.map((project) => (
           <div
             key={project.projectId}
-            className="bg-white shadow-lg  px-6 py-2 rounded-lg mb-4"
-          >
+            className="bg-white shadow-lg  px-6 py-2 rounded-lg mb-4" style={{width:"1200px"}}
+            >
             {Object.values(project.families)
               .filter(
                 (family) =>
