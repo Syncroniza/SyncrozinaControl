@@ -32,9 +32,9 @@ const Exceltransform = ({ UrlEndpoint }) => {
   return (
     <div>
       <div className=" bg-white  rounded-lg  flex mt-2 mr-2 ml-2">
-        <h2 className="text-xs mt-1 gap-2 ml-2">Cargar Datos Excel</h2>
+        <h2 className="text-xxs mt-1 gap-2 ml-2">Cargar Datos Excel</h2>
         <input
-          className="  text-xs bg-gray-300 mr-2 rounded-lg 
+          className="  text-xxs bg-gray-300 mr-2 rounded-lg 
            "
           type="file"
           accept=".xlsx"
@@ -42,7 +42,7 @@ const Exceltransform = ({ UrlEndpoint }) => {
         />
         <button
           type="button"
-          className=" text-xs mt-1 bg-blue-500 p-1 rounded-lg text-white"
+          className=" text-xxs mt-1 bg-blue-500 p-1 rounded-lg text-white"
           onClick={handleUpload}
         >
           Subir Excel

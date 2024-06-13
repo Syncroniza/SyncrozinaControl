@@ -2,17 +2,26 @@ import { useContext, useEffect, useState } from "react";
 import { ViewerContext } from "../Context";
 
 function CarsInformationGeneralProgress() {
-  const { aernValueAccumalated, totalPlanValue, projectDuration, setProjectDuration } = useContext(ViewerContext);
-  console.log("🚀 ~ CarsInformationGeneralProgress ~ aernValueAccumalated:", aernValueAccumalated)
+  const {
+    aernValueAccumalated,
+    totalPlanValue,
+    projectDuration,
+    setProjectDuration,
+    totalAvanceReal,
+    setAvanceRealTotal,
+  } = useContext(ViewerContext);
+  
 
   const [selectedWeek, setSelectedWeek] = useState([]);
-  console.log("🚀 ~ CarsInformationGeneralProgress ~ selectedWeek:", selectedWeek)
-  
   const [filteredData, setFilteredData] = useState([]);
-  console.log("🚀 ~ CarsInformationGeneralProgress ~ filteredData:", filteredData)
 
+  console.log(
+    "🚀 ~ CarsInformationGeneralProgress ~ totalAvanceReal:",
+    totalAvanceReal
+  );
 
   useEffect(() => {
+
     if (!selectedWeek) return;
 
     const filtered = aernValueAccumalated.filter((data) => {
@@ -24,23 +33,40 @@ function CarsInformationGeneralProgress() {
     // Calcular la duración del proyecto en días corridos
     if (aernValueAccumalated.length > 0) {
       const startDate = new Date(aernValueAccumalated[0].dateStart); // Primera fecha de inicio del proyecto
-      const endDate = new Date(aernValueAccumalated[aernValueAccumalated.length - 1].finishdate); // Última fecha de fin del proyecto
+      const endDate = new Date(
+        aernValueAccumalated[aernValueAccumalated.length - 1].finishdate
+      ); // Última fecha de fin del proyecto
       const days = calculateDays(startDate, endDate); // Calcular la duración en días corridos
 
       const now = new Date();
       let currentWeek = aernValueAccumalated.filter((data) => {
-        return now >= new Date(data.dateStart) && now <= new Date(data.finishdate);
-      })
-      setSelectedWeek(formatedDate(currentWeek[0].finishdate));
+        return (
+          now >= new Date(data.dateStart) && now <= new Date(data?.finishdate)
+        );
+      });
+      setSelectedWeek(formatedDate(currentWeek[0]?.finishdate));
 
       setProjectDuration(days);
     }
   }, [selectedWeek, aernValueAccumalated]);
 
+  useEffect(() => {}, []);
   const calculatePercentage = (value, total) => {
     return total !== 0 ? ((value / total) * 100).toFixed(2) : 0;
   };
 
+  useEffect(() => {
+
+    const totalEarnValue =
+    filteredData.length > 0 ? filteredData[0].acumuladoEarn : 0;
+
+
+
+    const avanceRealTotal =
+      totalPlanValue > 0 ? (totalEarnValue / totalPlanValue) * 100 : 0;
+    setAvanceRealTotal(avanceRealTotal);
+  }, []);
+  
   const currentPlanValue =
     filteredData.length > 0 ? filteredData[0].acumuladoPlanValue : 0;
 
@@ -49,8 +75,10 @@ function CarsInformationGeneralProgress() {
 
   const totalActualCost =
     filteredData.length > 0 ? filteredData[0].acumuladoActualCost : 0;
+    
+    const SPI = totalEarnValue / currentPlanValue;
+    
 
-  const SPI = totalEarnValue / currentPlanValue;
 
   // -------------Función para calcular la duración en días corridos---------------//
   function calculateDays(startDate, endDate) {
@@ -82,14 +110,14 @@ function CarsInformationGeneralProgress() {
 
     return `${formattedDay}/${formattedMonth}/${year}`;
   };
-  
+
   return (
     <div>
       <div className="mt-3 ml-4 mr-2">
         {selectedWeek && (
-          <div className="bg-white mt-2 p-1 grid grid-cols-7 rounded-lg shadow-lg">
-            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 m-2 p-1 mt-2 rounded-xl text-center shadow-xl">
-            <h1 className="text-sm font-semibold text-white mt-4 mb-4">
+          <div className="bg-white  grid grid-cols-7 rounded-lg shadow-lg">
+            <div className="bg-blue-500 from-indigo-500 grid grid-rows-2  p-1  rounded-lg text-center shadow-xl">
+              <h1 className="text-sm font-semibold text-white ">
                 SELECCIONAR FECHA
               </h1>
               {/* <h1 className="text-sm font-semibold text-white mt-4">
@@ -103,16 +131,14 @@ function CarsInformationGeneralProgress() {
                 value={selectedWeek}
                 onChange={(e) => setSelectedWeek(e.target.value)}
               >
-                <option 
-                className="" 
-                value="">
+                <option className="" value="">
                   Seleccione una semana
                 </option>
                 {aernValueAccumalated.map((data, index) => (
                   <option
                     className=""
                     key={index}
-                    value={formatedDate(data.finishdate)} 
+                    value={formatedDate(data.finishdate)}
                   >
                     {formatedDate(data.finishdate)}
                   </option>
@@ -120,46 +146,50 @@ function CarsInformationGeneralProgress() {
               </select>
             </div>
 
-            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 m-2 p-1 rounded-xl text-center shadow-xl">
-              <h1 className="text-sm font-semibold text-white mt-4">
+            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 m-2 p-1 grid grid-rows-2 rounded-xl text-center shadow-xl">
+              <h1 className="text-sm mt-2 font-semibold text-white">
                 % AVANCE PLANIFICADO
               </h1>
-              <h1 className="text-xl font-semibold text-white mt-4">
+              <h1 className="text-lg font-semibold text-white mt-2">
                 {((currentPlanValue / totalPlanValue) * 100).toFixed(2)} %
               </h1>
             </div>
-            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 m-2 p-1 rounded-xl text-center shadow-xl">
-              <h1 className="text-sm font-semibold text-white mt-4">% AVANCE REAL</h1>
-              <h1 className="text-xl font-semibold text-white mt-4">
+            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 m-2 p-1 rounded-xl text-center shadow-xl">
+              <h1 className="text-sm font-semibold text-white mt-2">
+                % AVANCE REAL
+              </h1>
+              <h1 className="text-lg font-semibold text-white mt-2">
                 {calculatePercentage(totalEarnValue, totalPlanValue)} %
               </h1>
             </div>
-            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 m-2 p-1 rounded-xl text-center shadow-xl">
-              <h1 className="text-sm font-semibold text-white mt-4">% COSTO ACTUAL</h1>
-              <h1 className="text-xl font-semibold text-white mt-4">
+            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 m-2 p-1 rounded-xl text-center shadow-xl">
+              <h1 className="text-sm font-semibold text-white mt-2">
+                % COSTO ACTUAL
+              </h1>
+              <h1 className="text-lg font-semibold text-white mt-2">
                 {calculatePercentage(totalActualCost, totalPlanValue)} %
               </h1>
             </div>
-            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 m-2 p-1 rounded-xl text-center shadow-xl">
-              <h1 className="text-sm font-semibold text-white mt-4">SPI</h1>
-              <h1 className="text-xl font-semibold text-white mt-4">
+            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 m-2 p-1 rounded-xl text-center shadow-xl">
+              <h1 className="text-sm font-semibold text-white mt-2">SPI</h1>
+              <h1 className="text-lg font-semibold text-white mt-2">
                 {SPI.toFixed(2)} %
               </h1>
             </div>
-            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 m-2 p-1 rounded-xl text-center shadow-xl">
-              <h1 className="text-sm font-semobold text-white mt-4">
+            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500  grid grid-rows-2 m-2 p-1 rounded-xl text-center shadow-xl">
+              <h1 className="text-sm font-semobold text-white mt-2">
                 Duración del Proyecto
               </h1>
-              <h1 className="text-xl font-semibold text-white mt-4">
+              <h1 className="text-lg font-semibold text-white mt-2">
                 {projectDuration} días corridos
               </h1>
             </div>
-            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 ml-2 mr-2 mt-2 mb-2 p-6 rounded-xl text-center shadow-xl">
+            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 ml-2 mr-2 mt-2 mb-2 p-1 rounded-xl text-center shadow-xl">
               <h1 className="text-sm font-light text-white">
                 Proyeccion a termino
               </h1>
-              <h1 className="text-sm font-semibold text-white mt-4">
-                {((projectDuration / SPI).toFixed(0))} días corridos
+              <h1 className="text-lg font-semibold text-white mt-2">
+                {(projectDuration / SPI).toFixed(0)} días corridos
               </h1>
             </div>
           </div>

@@ -103,7 +103,7 @@ const IncreaseAndDiscountByForm = () => {
     }
   };
   return (
-    <div className="bg-white my-2 ml-3 mr-2 p-3 rounded-xl">
+    <div className="bg-white my-2 ml-3 mr-2 p-3 rounded-xl"style={{ width: "1200px" }}>
       <FormIncreaseAndDiscount />
       <h1 className="text-sm font-semibold ml-3 ">
         AUMENTO / DISMINUCIONES AL CONTRATO
@@ -131,11 +131,11 @@ const IncreaseAndDiscountByForm = () => {
       </button>
       <div
         className="mt-4 overflow-auto ml-2 mr-2  "
-        style={{ height: "150px" }}
+        style={{ height: "300px" }}
       >
-        <table>
+        <table className="w-full">
           <thead className="sticky top-0 bg-blue-500 text-white ">
-            <tr className="border border-slate-500 px-4 text-xxs ">
+            <tr className="border border-slate-500 px-4 text-xs ">
               <th className="border border-slate-500 p-1   ">ProjectId</th>
               <th className="border border-slate-500 p-1   ">Familia</th>
               <th className="border border-slate-500 p-1   ">SubFamila</th>
@@ -153,7 +153,7 @@ const IncreaseAndDiscountByForm = () => {
           <tbody>
             {Array.isArray(data)
               ? dataIncreaseDiscount.map((increasediscount) => (
-                  <tr className="border border-slate-300 text-xxs text-center " key={increasediscount._id}>
+                  <tr className="border border-slate-300 text-xs text-center " key={increasediscount._id}>
                     <td className="border border-slate-300 px-1  ">
                       {increasediscount.projectId}
                     </td>
@@ -181,7 +181,7 @@ const IncreaseAndDiscountByForm = () => {
 
                     <td className="border border-slate-300"> 
                       <button
-                        className=" bg-red-500  px-1 text-white rounded-lg  "
+                        className=" bg-red-500  p-2 text-white rounded-lg  "
                         onClick={() =>
                           handleDeleIncreaseAndDiscount(increasediscount._id)
                         }
@@ -204,7 +204,7 @@ const IncreaseAndDiscountByForm = () => {
                     </td>
                     <td className="border border-slate-300">
                       <button
-                        className="bg-green-500 px-1 text-white rounded-lg "
+                        className="bg-green-500 p-2 text-white rounded-lg "
                         onClick={() =>
                           openFormAndCurrentIncreaseDiscountId(
                             increasediscount._id

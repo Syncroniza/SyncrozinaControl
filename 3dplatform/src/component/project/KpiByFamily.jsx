@@ -6,15 +6,16 @@ const KpiByFamily = () => {
     getDataBudget,
     selectedProjectId,
     setGrandTotal,
-    invoicesdata,formatCurrency
-    
+    invoicesdata,
+    formatCurrency,
+    accumulatedRealMonthCost,
   } = useContext(ViewerContext);
+  console.log("🚀 ~ KpiByFamily ~ accumulatedRealMonthCost:", accumulatedRealMonthCost);
 
   const [totalsByFamily, setTotalsByFamily] = useState({});
-  const [totalsInvoicesByFamily,setTotalsInvoicesByFamily]=useState("")
-  
+  const [totalsInvoicesByFamily, setTotalsInvoicesByFamily] = useState({});
 
-  // calcula el presupuesto  total por familia
+  // Calcula el presupuesto total por familia
   useEffect(() => {
     const totals = {};
     // Filtrar los elementos por el projectId seleccionado
@@ -34,7 +35,7 @@ const KpiByFamily = () => {
     setTotalsByFamily(totals);
   }, [getDataBudget, selectedProjectId]);
 
-
+  // Calcula lo facturado por familia, lo que no incluye la mano de obra
   useEffect(() => {
     const totals = {};
     // Filtrar los elementos por el projectId seleccionado
@@ -54,7 +55,7 @@ const KpiByFamily = () => {
     setTotalsInvoicesByFamily(totals);
   }, [invoicesdata, selectedProjectId]);
 
-
+  // Calcula el total general del Proyecto 
   useEffect(() => {
     const total = Object.values(totalsByFamily).reduce(
       (acc, curr) => acc + curr,
@@ -65,37 +66,36 @@ const KpiByFamily = () => {
 
   const Disponible = {};
   Object.keys(totalsByFamily).forEach((family) => {
-    Disponible[family] = totalsByFamily[family] - (totalsInvoicesByFamily[family] || 0);
+    Disponible[family] =
+      totalsByFamily[family] - (totalsInvoicesByFamily[family] || 0);
   });
 
   return (
-    <div className="ml-4 mt-4 bg-white p-2 rounded-lg mr-2 shadow-lg ">
+    <div className="ml-4 mt-4 bg-white p-2 rounded-lg mr-2 shadow-lg" style={{width:"1250px"}}>
       <h1 className="text-sm ml-2 font-semibold">VALORES POR FAMILIA</h1>
       <div className="grid grid-cols-5 gap-4 mr-2">
         {Object.entries(totalsByFamily).map(([family, total]) => {
+          const actual = family === "Mano_Obra"
+            ? accumulatedRealMonthCost
+            : totalsInvoicesByFamily[family] || 0;
+          const disponible = total - actual;
 
           return (
             <div
               key={family}
-              className="bg-blue-500 bg-gradient-to-r from-indigo-500 p-2 ml-2 rounded-lg text-white shadow-lg">
+              className="bg-blue-500 bg-gradient-to-r from-indigo-500  ml-2 rounded-lg text-white shadow-lg"
+            >
               <p className="text-center text-sm shadow-xl">{family}</p>
               <div className="text-center text-lg mt-2">
                 Total: {formatCurrency(total)}
               </div>
               <div className="text-center mt-2 text-lg">
-                Actual: 
-                {totalsInvoicesByFamily[family]
-                  ? formatCurrency(totalsInvoicesByFamily[family])
-                  : "Sin Valores "}
+                Actual: {formatCurrency(actual)}
               </div>
               <div className="text-center mt-2 text-lg">
-                Disponible: 
-                {Disponible[family]
-                  ? formatCurrency(Disponible[family])
-                  : "Sin Valores "}
+                Disponible: {formatCurrency(disponible)}
               </div>
-              <div className="mt-4 p-1 bg-gray-200 rounded-lg">
-              </div>
+              <div className="mt-4 p-1 bg-gray-200 rounded-lg"></div>
             </div>
           );
         })}

@@ -14,11 +14,9 @@ const CarsInformationSheets = () => {
     newtotalbySubFamily,
     setNewTottalBySubFamily,
   } = useContext(ViewerContext);
-    console.log("🚀 ~ CarsInformationSheets ~ totalPaidByProjectFamilySubfamily:", totalPaidByProjectFamilySubfamily)
 
   // se genero una nueva forma de calcular el total por subfamily
   const [totalTodosContratos, setTotalTodosContratos] = useState(0);
-  
 
   useEffect(() => {
     const filteredData = getDataBudget.filter((item) => {
@@ -103,7 +101,7 @@ const CarsInformationSheets = () => {
     margintop: "0px",
     marginright: "0px",
     marginBottom: "0px",
-    padding: "30px",
+    padding: "20px",
     color: "white",
     fontSize: "0px",
     borderRadius: "15px",
@@ -111,12 +109,13 @@ const CarsInformationSheets = () => {
 
   return (
     <div>
-      <div className="bg-white mt-2 ml-3 mr-2 grid grid-cols-7 rounded-lg shadow-lg py-5 px-10">
-        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-white text-center shadow-xl mx-2 p-2">
-          <h1 className="text-sm font-light  text-white m-2 ">
-            MONTO PROPUESTA
-          </h1>
-          <div>
+      <div
+        className="bg-white mt-2 ml-3 mr-2 grid grid-cols-7 rounded-lg shadow-lg py-5 px-10"
+        style={{ width: "1200px" }}
+      >
+        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-white text-center shadow-xl mx-2 p-2 grid grid-rows-2">
+          <h1 className="text-sm font-light  text-white  ">MONTO PROPUESTA</h1>
+          <div className="">
             {Object.entries(newtotalbySubFamily).map(
               ([subfamily, totalProyectado]) => (
                 <div key={subfamily}>
@@ -133,37 +132,36 @@ const CarsInformationSheets = () => {
             )}
           </div>
         </div>
-        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 py-2 ">
+        <div className="bg-blue-500 grid grid-rows-2 bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 py-2 ">
           <h1 className="text-sm font-light text-white mt-1">MONTO CONTRATO</h1>
-          <h1 className="text-lg font-semibold  text-white mt-4">
+          <h1 className="text-lg font-semibold  text-white ">
             {formatCurrency(montoContrato)}{" "}
           </h1>
         </div>
 
-        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
+        <div className="bg-blue-500 grid grid-rows-2 bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
           <h1 className="text-sm font-light text-white mt-1">RECUPERABLE</h1>
-          <h1 className="text-lg font-semibold  text-white mt-4">
+          <h1 className="text-lg font-semibold  text-white ">
             {formatCurrency(recuperable)}
           </h1>
         </div>
-        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
-          <h1 className="text-sm font-light text-white mt-1">
-            TOTAL CON EXTRAS
-          </h1>
-          <h1 className="text-lg font-semibold  text-white mt-4">
+        <div className="bg-blue-500 grid grid-rows-2 bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
+          <h1 className="text-sm font-light text-white">TOTAL CON EXTRAS</h1>
+          <h1 className="text-lg font-semibold  text-white ">
             {formatCurrency(totalconextras)}
           </h1>
         </div>
 
-        <div className=" shadow-xl">
+        <div className=" shadow-xl ">
           <div className="">
             <div
+              className="grid grid-rows-2"
               style={{
                 ...baseStyle, // Aplicamos primero el estilo base
                 ...(ahorro >= 0 ? cardStylePositive : cardStyleNegative), // Luego sobreescribimos con el estilo condicional
               }}
             >
-              <h1 className="text-lg text-center font-semibold  text-white">
+              <h1 className="text-lg text-center font-semibold py-2 text-white">
                 {ahorro >= 0 ? "AHORRO" : "PERDIDA"}
               </h1>
               <h2 className="text-lg text-center font-semibold  ">
@@ -177,25 +175,25 @@ const CarsInformationSheets = () => {
           </div>
         </div>
 
-        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
-          <div className="text-lg font-semibold ">
+        <div className="bg-blue-500 grid grid-rows-2 bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
+          <div className="text-lg font-semibold  ">
             <h1 className="text-sm font-light text-white mt-1">
               FACTURAS PAGADAS
             </h1>
-            <h1 className="text-lg font-semibold  text-white mt-4">
-              {formatCurrency(totalPaidByProjectFamilySubfamily)}
-            </h1>
           </div>
+          <h1 className="text-lg font-semibold  text-white ">
+            {formatCurrency(totalPaidByProjectFamilySubfamily)}
+          </h1>
         </div>
-        <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
-          <div className="text-lg font-semibold text-white">
+        <div className="bg-blue-500 grid grid-rows-2  bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
+          <div className="text-lg  font-semibold text-white">
             <h1 className="text-sm font-light text-white mt-1">
               SALDO POR PAGAR
             </h1>
-            <h1 className="text-lg font-semibold  text-white mt-4 ">
-              {formatCurrency(porpagar)}
-            </h1>
           </div>
+          <h1 className="text-lg font-semibold  text-white ">
+            {formatCurrency(porpagar)}
+          </h1>
         </div>
       </div>
     </div>

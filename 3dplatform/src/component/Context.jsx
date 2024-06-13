@@ -82,6 +82,9 @@ const ViewerProvider = ({ children }) => {
   const [summaryData, setSummaryData] = useState([]);
   const [grandTotal, setGrandTotal] = useState(0);
   const [totalActualCost, setTotalActualCost] = useState(0);
+  const [currentPeriodId, setCurrentPeriodId] = useState("");
+  const [accumulatedRealMonthCost, setAccumulatedRealMonthCost] = useState(0);
+  const [totalAvanceReal, setAvanceRealTotal] = useState("");
 
   const [filters, setFilters] = useState({
     projectId: "",
@@ -391,7 +394,14 @@ const ViewerProvider = ({ children }) => {
         setSummaryData,
         grandTotal,
         setGrandTotal,
-      }}>
+        currentPeriodId,
+        setCurrentPeriodId,
+        accumulatedRealMonthCost,
+        setAccumulatedRealMonthCost,
+        totalAvanceReal,
+        setAvanceRealTotal,
+      }}
+    >
       {children}
     </ViewerContext.Provider>
   );

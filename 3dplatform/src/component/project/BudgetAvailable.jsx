@@ -31,7 +31,7 @@ const BudgetAvailable = () => {
 
   return (
     <div className="bg-white ml-4 mr-2 mt-4 mb-2 shadow-lg  rounded-lg">
-      <Exceltransform UrlEndpoint="http://localhost:8000/budget/" />
+      {/* <Exceltransform UrlEndpoint="http://localhost:8000/budget/" /> */}
     </div>
   );
 };

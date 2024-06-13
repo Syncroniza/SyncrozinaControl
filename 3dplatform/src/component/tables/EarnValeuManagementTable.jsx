@@ -21,7 +21,6 @@ function EarnValeuManagementTable() {
     setTotalPlanValue,
     projectDuration,
   } = useContext(ViewerContext);
-    console.log("🚀 ~ EarnValeuManagementTable ~ aernValueAccumalated:", aernValueAccumalated)
  
 
   const [dataProgress, setDataProgress] = useState([]);
@@ -195,7 +194,7 @@ function EarnValeuManagementTable() {
       <MainAreaChart />
 
       <div>
-        <Exceltransform UrlEndpoint="http://localhost:8000/progress/" />
+        {/* <Exceltransform UrlEndpoint="http://localhost:8000/progress/" /> */}
       </div>
       <div className="ml-5 overflow-y-scroll max-h-[500px] sticky">
         <h1 className="text-2xl text-blue-800 font-bold mt-4 ">
