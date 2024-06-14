@@ -12,11 +12,14 @@ const Invoices = () => {
     totalPaidByProjectFamilySubfamily,
     setTotalPaidByProjectFamilySubfamily,
     accumatedValue,
+    totalUnpaidInvoices,
+    setTotalUnpaidInvoices,
   } = useContext(ViewerContext);
+ 
   const [newfilteredInvoices, setNewFilteredInvoices] = useState([]);
   const [totalInvoices, setTotalInvoices] = useState(0);
-  console.log("🚀 ~ Invoices ~ totalInvoices:", totalInvoices)
   const [percentagePaid, setPercentagePaid] = useState([]);
+
 
   const formatedDate = (isoDate) => {
     if (!isoDate) return "Fecha no disponible";
@@ -69,6 +72,15 @@ const Invoices = () => {
       0
     );
 
+    const totalUnpaid = filteredInvoices
+      .filter((invoice) => invoice.invoiceStatus !== "Pagada")
+      .reduce(
+        (sum, invoice) => sum + parseFloat(invoice.totalInvoices || 0),
+        0
+      );
+
+      const totalInvoicespaidUnPaid = totalPaid + totalUnpaid
+
     const percentagePaid =
       totalInvoiced > 0
         ? Number(((totalPaid / totalInvoiced) * 100).toFixed(2))
@@ -76,6 +88,7 @@ const Invoices = () => {
     setTotalInvoices(totalInvoiced);
     setPercentagePaid(percentagePaid);
     setTotalPaidByProjectFamilySubfamily(totalPaid);
+    setTotalUnpaidInvoices(totalInvoicespaidUnPaid);
     setNewFilteredInvoices(invoicesWithAccumulated);
     setAccumatedValue(acumulado);
   }, [invoicesdata, selectedProjectId, selectedFamily, selectedSubfamily]);

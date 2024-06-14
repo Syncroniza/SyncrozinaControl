@@ -13,6 +13,8 @@ const CarsInformationSheets = () => {
     totalPaidByProjectFamilySubfamily,
     newtotalbySubFamily,
     setNewTottalBySubFamily,
+    totalUnpaidInvoices,
+    setTotalUnpaidInvoices,
   } = useContext(ViewerContext);
 
   // se genero una nueva forma de calcular el total por subfamily
@@ -95,7 +97,7 @@ const CarsInformationSheets = () => {
 
   const totalconextras = montoPropuesta + newGetTotalRecuperableFiltered();
   const ahorro = totalconextras - montoContrato;
-  const porpagar = montoContrato - totalPaidByProjectFamilySubfamily;
+  const porpagar = totalUnpaidInvoices - totalPaidByProjectFamilySubfamily;
 
   const baseStyle = {
     margintop: "0px",
@@ -110,7 +112,7 @@ const CarsInformationSheets = () => {
   return (
     <div>
       <div
-        className="bg-white mt-2 ml-3 mr-2 grid grid-cols-7 rounded-lg shadow-lg py-5 px-10"
+        className="bg-white mt-2 ml-3 mr-2 grid grid-cols-8 rounded-lg shadow-lg py-5 px-10"
         style={{ width: "1200px" }}
       >
         <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-white text-center shadow-xl mx-2 p-2 grid grid-rows-2">
@@ -119,7 +121,7 @@ const CarsInformationSheets = () => {
             {Object.entries(newtotalbySubFamily).map(
               ([subfamily, totalProyectado]) => (
                 <div key={subfamily}>
-                  <h2 className="text-lg font-semibold">
+                  <h2 className="text-sm font-semibold">
                     $
                     {totalProyectado.toLocaleString("es-CL", {
                       minimumFractionDigits: 0,
@@ -134,20 +136,20 @@ const CarsInformationSheets = () => {
         </div>
         <div className="bg-blue-500 grid grid-rows-2 bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 py-2 ">
           <h1 className="text-sm font-light text-white mt-1">MONTO CONTRATO</h1>
-          <h1 className="text-lg font-semibold  text-white ">
+          <h1 className="text-sm font-semibold  text-white ">
             {formatCurrency(montoContrato)}{" "}
           </h1>
         </div>
 
         <div className="bg-blue-500 grid grid-rows-2 bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
           <h1 className="text-sm font-light text-white mt-1">RECUPERABLE</h1>
-          <h1 className="text-lg font-semibold  text-white ">
+          <h1 className="text-sm font-semibold  text-white ">
             {formatCurrency(recuperable)}
           </h1>
         </div>
         <div className="bg-blue-500 grid grid-rows-2 bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
           <h1 className="text-sm font-light text-white">TOTAL CON EXTRAS</h1>
-          <h1 className="text-lg font-semibold  text-white ">
+          <h1 className="text-sm font-semibold  text-white ">
             {formatCurrency(totalconextras)}
           </h1>
         </div>
@@ -161,10 +163,10 @@ const CarsInformationSheets = () => {
                 ...(ahorro >= 0 ? cardStylePositive : cardStyleNegative), // Luego sobreescribimos con el estilo condicional
               }}
             >
-              <h1 className="text-lg text-center font-semibold py-2 text-white">
+              <h1 className="text-sm text-center font-semibold py-2 text-white">
                 {ahorro >= 0 ? "AHORRO" : "PERDIDA"}
               </h1>
-              <h2 className="text-lg text-center font-semibold  ">
+              <h2 className="text-sm text-center font-semibold  ">
                 $
                 {ahorro.toLocaleString("es-CL", {
                   minimumFractionDigits: 0,
@@ -178,10 +180,20 @@ const CarsInformationSheets = () => {
         <div className="bg-blue-500 grid grid-rows-2 bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
           <div className="text-lg font-semibold  ">
             <h1 className="text-sm font-light text-white mt-1">
+              FACTURAS EMITIDAS
+            </h1>
+          </div>
+          <h1 className="text-sm font-semibold  text-white ">
+            {formatCurrency(totalUnpaidInvoices)}
+          </h1>
+        </div>
+        <div className="bg-blue-500 grid grid-rows-2 bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
+          <div className="text-lg font-semibold  ">
+            <h1 className="text-sm font-light text-white mt-1">
               FACTURAS PAGADAS
             </h1>
           </div>
-          <h1 className="text-lg font-semibold  text-white ">
+          <h1 className="text-sm font-semibold  text-white ">
             {formatCurrency(totalPaidByProjectFamilySubfamily)}
           </h1>
         </div>
@@ -191,7 +203,7 @@ const CarsInformationSheets = () => {
               SALDO POR PAGAR
             </h1>
           </div>
-          <h1 className="text-lg font-semibold  text-white ">
+          <h1 className="text-sm font-semibold  text-white ">
             {formatCurrency(porpagar)}
           </h1>
         </div>

@@ -3,6 +3,7 @@ import { ViewerContext } from "../Context";
 
 const CarInformationSheetControlReport = () => {
   const { summaryData, formatCurrency } = useContext(ViewerContext);
+  console.log("🚀 ~ CarInformationSheetControlReport ~ summaryData:", summaryData)
 
   const [totals, setTotals] = useState({
     montoPropuesta: 0,
@@ -13,20 +14,35 @@ const CarInformationSheetControlReport = () => {
   });
 
   useEffect(() => {
-    const totalPropuesta = summaryData.reduce(
-      (sum, item) => sum + item.montoPropuesta,
-      0
-    );
-    const totalContrato = summaryData.reduce(
-      (sum, item) => sum + item.montoContrato,
-      0
-    );
-    const totalRecuperable = summaryData.reduce(
-      (sum, item) => sum + item.recuperable,
-      0
-    );
-  
-    const totalAhorro = summaryData.reduce((sum, item) => sum + item.ahorro, 0);
+    // Filtrar datos para eliminar duplicados
+    const uniqueData = Array.from(new Set(summaryData.map(item => JSON.stringify(item))))
+      .map(item => JSON.parse(item));
+
+    console.log("Unique Data:", uniqueData);
+
+    const totalPropuesta = uniqueData.reduce((sum, item) => {
+      const value = Number(item.montoPropuesta);
+      console.log(`Adding montoPropuesta: ${value}`);
+      return sum + value;
+    }, 0);
+
+    const totalContrato = uniqueData.reduce((sum, item) => {
+      const value = Number(item.montoContrato);
+      console.log(`Adding montoContrato: ${value}`);
+      return sum + value;
+    }, 0);
+
+    const totalRecuperable = uniqueData.reduce((sum, item) => {
+      const value = Number(item.recuperable);
+      console.log(`Adding recuperable: ${value}`);
+      return sum + value;
+    }, 0);
+
+    const totalAhorro = uniqueData.reduce((sum, item) => {
+      const value = Number(item.ahorro);
+      console.log(`Adding ahorro: ${value}`);
+      return sum + value;
+    }, 0);
 
     setTotals({
       montoPropuesta: totalPropuesta,
@@ -36,7 +52,6 @@ const CarInformationSheetControlReport = () => {
       ahorro: totalAhorro,
     });
   }, [summaryData]);
-
   return (
     <div >
       <div className="ml-3 mt-3 bg-gradient-to-r from-indigo-500">

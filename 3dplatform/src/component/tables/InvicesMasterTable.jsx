@@ -86,7 +86,7 @@ const InvicesMasterTable = () => {
           MAESTRO DE FACTURAS
         </h1>
         {/* --------------------- Nuevo Registro ----------------- */}
-        {/* <div className="flex">
+        <div className="flex">
           <button
             onClick={openModal}
             className="flex  bg-blue-500 mt-2 ml-2 p-1 text-white rounded-lg text-xs  "
@@ -108,7 +108,7 @@ const InvicesMasterTable = () => {
             </svg>{" "}
             Nuevo Registro
           </button>
-        </div> */}
+        </div> 
         <div className="overflow-auto text-center " style={{ width: "1200px",height:"1000px" }}>
           <table className="w-full">
             <thead className="sticky top-0 bg-blue-500 text-white ">
@@ -123,9 +123,9 @@ const InvicesMasterTable = () => {
                 <th className="border border-slate-300 px-2  ">$ Factura</th>
                 <th className="border border-slate-300 px-2  ">Estado Factura</th>
                 <th className="border border-slate-300 px-2  ">Fecha Vencimiento</th>
-                {/* <th className="border border-slate-300 px-2  ">Observaciones</th>
+                 <th className="border border-slate-300 px-2  ">Observaciones</th>
                 <th className="border border-slate-300 px-2  ">Borrar</th>
-                <th className="border border-slate-300 px-2   ">Editar</th> */}
+                <th className="border border-slate-300 px-2   ">Editar</th> 
               </tr>
             </thead>
             <tbody>
@@ -161,7 +161,7 @@ const InvicesMasterTable = () => {
                   <td className="border border-slate-300  px-2  ">
                     {formatedDate(invoices.dueDate)}
                   </td>
-                  {/* <td className="border border-slate-300  px-2  ">
+                  <td className="border border-slate-300  px-2  ">
                     {invoices.observations}
                   </td>
                   <td className="border border-slate-300 px-2">
@@ -211,7 +211,7 @@ const InvicesMasterTable = () => {
                         />
                       </svg>
                     </button>
-                  </td> */}
+                  </td> 
                 </tr>
               ))}
             </tbody>

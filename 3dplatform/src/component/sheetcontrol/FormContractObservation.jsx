@@ -76,6 +76,7 @@ const FormContractObservation = () => {
     "CORNISA",
     "GRUPO ELECTROGENO",
     "PAPEL MURAL",
+    "PAPEL MURAL SUBCONTRATO",
     "YESO PUENTE ADHERENTE",
     "MORTEROS EN GENERAL",
     "MITIGACION DE RUIDOS",
@@ -209,8 +210,10 @@ const FormContractObservation = () => {
               <select
                 className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-2 text-white border-solid border-4 border-gray-500"
                 name="subfamily"
-              
+                value={subfamily}
+                onChange={(e) => setSubfamily(e.target.value)}
               >
+                <option value="">Seleccionar Subfamilia</option>
                 {subFamilies.map((subFamily) => (
                   <option key={subFamily} value={subFamily}>
                     {subFamily}

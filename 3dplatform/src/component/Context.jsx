@@ -85,6 +85,7 @@ const ViewerProvider = ({ children }) => {
   const [currentPeriodId, setCurrentPeriodId] = useState("");
   const [accumulatedRealMonthCost, setAccumulatedRealMonthCost] = useState(0);
   const [totalAvanceReal, setAvanceRealTotal] = useState("");
+  const [totalUnpaidInvoices, setTotalUnpaidInvoices] = useState(0);
 
   const [filters, setFilters] = useState({
     projectId: "",
@@ -400,6 +401,8 @@ const ViewerProvider = ({ children }) => {
         setAccumulatedRealMonthCost,
         totalAvanceReal,
         setAvanceRealTotal,
+        totalUnpaidInvoices,
+        setTotalUnpaidInvoices,
       }}
     >
       {children}

@@ -320,6 +320,7 @@ const MonthCostaLaborTable = () => {
   } = useContext(ViewerContext);
  
   const [totalsWithAccumulated, setTotalsWithAccumulated] = useState([]);
+  console.log("🚀 ~ MonthCostaLaborTable ~ totalsWithAccumulated:", totalsWithAccumulated)
 
   const [monthlyCosts, setMonthlyCosts] = useState([]);
   const [selectedByProjectId, setSelectedByProjectId] = useState("");

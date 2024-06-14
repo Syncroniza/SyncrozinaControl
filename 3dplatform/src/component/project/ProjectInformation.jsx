@@ -77,7 +77,7 @@ const ProjectInformation = () => {
       <div className="flex bg-white ml-4 mr-2 mt-6 shadow-xl rounded-lg ">
         <div className="col-span-4 mr-2">
           {/* --------------------  NO BORRRAR SE OCULTO AL USUARIO ------------------ */}
-          {/* <button
+           <button
             onClick={openModal}
             type="button"
             className="flex bg-blue-500 bg-gradient-to-r from-indigo-500 p-2 text-white rounded-lg text-xs gap-2 mt-4 ml-4"
@@ -98,7 +98,7 @@ const ProjectInformation = () => {
               />
             </svg>{" "}
             Crear Nuevo Proyecto
-          </button> */}
+          </button> 
 
           <h1 className="text-xs font-semibold ml-4 mt-2 ">
             SELECCIONAR PROYECTO
