@@ -55,16 +55,18 @@ export const createLaborExcel = async (req, res) => {
   } else {
     // Proceso para manejar datos JSON normales
     try {
-      let response = req.body.map(async (dtm) => {
-        return await LaborCostModel.findOneAndUpdate(
-          {deadline: dtm.deadline},
-          dtm,
-          {
-            new: true,
-            upsert: true
-          }
-        )
+      let promises = await req.body.map(async (dtm) => {
+        return LaborCostModel.findOneAndUpdate(
+            {deadline: dtm.deadline},
+            dtm,
+            {
+              new: true,
+              upsert: true
+            }
+        );
       });
+
+        const response = await Promise.all(promises);
 
       // const createdData = await LaborCostModel.create({
       //   realmonthcost: realDatum.value,

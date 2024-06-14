@@ -313,6 +313,7 @@ import axios from "axios";
 const MonthCostaLaborTable = () => {
   const {
     dataNode,
+    setDataNode,
     projects,
     formatCurrency,
     accumulatedRealMonthCost,
@@ -550,17 +551,30 @@ const MonthCostaLaborTable = () => {
           };
         })
       );
-      console.log("Response Data:", response.data); // Verificar la estructura de la respuesta
+      // Verificar la estructura de la respuesta
 
-      // Actualizar el estado con los nuevos datos
-      setTotalsWithAccumulated((prev) =>
-        prev.map((item, index) => {
-          const changes = updatedItems.find(
-            (change) => parseInt(change.index, 10) === index
-          );
-          return changes ? { ...item, ...changes.updates } : item;
-        })
-      );
+      let newNodes = [...dataNode.nodes];
+
+      response.data.data.map((node) => {
+        let index = newNodes.findIndex((n) => n._id === node._id);
+        if (index > -1) {
+          newNodes[index] = node;
+        } else {
+          newNodes.push(node);
+        }
+      })
+
+      setDataNode({ ...dataNode, nodes: newNodes });
+
+      // // Actualizar el estado con los nuevos datos
+      // setTotalsWithAccumulated((prev) =>
+      //   prev.map((item, index) => {
+      //     const changes = updatedItems.find(
+      //       (change) => parseInt(change.index, 10) === index
+      //     );
+      //     return changes ? { ...item, ...changes.updates } : item;
+      //   })
+      // );
 
       // Limpiar editables después de guardar
       setEditables({});
