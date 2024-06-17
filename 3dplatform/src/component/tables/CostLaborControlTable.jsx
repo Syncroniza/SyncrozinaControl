@@ -11,11 +11,11 @@ const CostLaborControlTable = () => {
     const fetchLabor = async () => {
       try {
         const response = await axios.get("http://localhost:8000/labor/");
+        console.log("🚀 ~ fetchLabor ~ response:", response)
         if (
           Array.isArray(response.data.data) &&
           response.data.data.length > 0
         ) {
-          console.log("🚀 ~ fetchLabor ~ response:", response)
           setDataNode({ nodes: response.data.data });
         } else {
           console.error("No se encontraron datos", response);

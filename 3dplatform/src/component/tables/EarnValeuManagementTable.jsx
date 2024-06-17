@@ -20,7 +20,12 @@ function EarnValeuManagementTable() {
     totalPlanValue,
     setTotalPlanValue,
     projectDuration,
+    totalActualCostByWeek
+    
   } = useContext(ViewerContext);
+    console.log("🚀 ~ EarnValeuManagementTable ~ aernValueAccumalated:", aernValueAccumalated)
+    console.log("🚀 ~ EarnValeuManagementTable ~ totalActualCostByWeek:", totalActualCostByWeek)
+    console.log("🚀 ~ EarnValeuManagementTable ~ totalByWeek:", totalByWeek)
  
 
   const [dataProgress, setDataProgress] = useState([]);
@@ -90,7 +95,7 @@ function EarnValeuManagementTable() {
       finishdate: item.finishdate,
       week: item.week,
       planValue: item.planValue,
-      totalByWeekValue: totalByWeek[item.week] || 0,
+      totalActualCostByWeek: totalActualCostByWeek[item.week] || 0,
       earnValue: item.earnValue,
       eepp:item.eepp
     }));
@@ -129,7 +134,7 @@ function EarnValeuManagementTable() {
 
     const newArray = combinedData.map((item) => {
       acumuladoEarn += item.earnValue || 0;
-      acumuladoActualCost += totalByWeek[item.week] || 0;
+      acumuladoActualCost += totalActualCostByWeek[item.week] || 0;
       acumuladoPlanValue += item.planValue || 0;
       acumuladoEEPP += item.eepp || 0;
 
@@ -204,6 +209,7 @@ function EarnValeuManagementTable() {
           <thead className="bg-blue-500 sticky top-0 ">
             <tr className="text-xs text-white">
               <th className=" border border-slate-300   ">Id Projecto</th>
+              <th className=" border border-slate-300   ">week</th>
               <th className=" border border-slate-300  p-1 ">Fecha Inicio</th>
               <th className=" border border-slate-300  p-1 ">Fecha Termino</th>
               <th className=" border border-slate-300  p-1">Valor Planificado $</th>
@@ -241,6 +247,9 @@ function EarnValeuManagementTable() {
               >
                 <td className="border border-slate-300 p-1 ">
                   {progress.projectId}
+                </td>
+                <td className="border border-slate-300 p-1 ">
+                  {progress.week}
                 </td>
                 <td className="border border-slate-300 p-1 ">
                   {formatedDate(progress.dateStart)}
@@ -294,7 +303,7 @@ function EarnValeuManagementTable() {
                   %
                 </td>
                 <td className="border border-slate-300 ">
-                  {formatCurrency(progress.totalByWeekValue)}
+                  {formatCurrency(progress.totalActualCostByWeek)}
                 </td>
                 <td className="border border-slate-300 ">
                   {formatCurrency(progress.acumuladoActualCost)}

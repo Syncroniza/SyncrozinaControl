@@ -119,10 +119,10 @@ const Invoices = () => {
               <th className="border border-slate-300 px-4  ">
                 $ AcumuladoFactura
               </th>
-              <th className="border border-slate-300 px-4  ">Fecha Pago</th>
+              <th className="border border-slate-300 px-4  ">Fecha vencimiento</th>
               <th className="border border-slate-300 px-4  ">Estado Factura</th>
 
-              <th className="border border-slate-300 px-4  ">Observaciones</th>
+              {/* <th className="border border-slate-300 px-4  ">Observaciones</th> */}
             </tr>
           </thead>
           <tbody>
@@ -161,9 +161,9 @@ const Invoices = () => {
                 <td className="border border-slate-300 px-4  ">
                   {invoice.invoiceStatus}
                 </td>
-                <td className="border border-slate-300 px-4  ">
+                {/* <td className="border border-slate-300 px-4  ">
                   {invoice.observations}
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>

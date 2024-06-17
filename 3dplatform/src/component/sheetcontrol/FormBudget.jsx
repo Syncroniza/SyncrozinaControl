@@ -33,6 +33,98 @@ const FormBudget = () => {
     setSubfamily,
   } = useContext(ViewerContext);
 
+  const subFamilies = [
+    "INSTALACIÓN DE FAENA",
+    "SOCALZADO",
+    "MOVIMIENTO DE TIERRA",
+    "GRUA",
+    "TOPOGRAFO",
+    "ARRIENDO DE MOLDAJE",
+    "INSTALACIÓN ELECTRICA",
+    "INSTALACIÓN SANITARIA",
+    "BOMBA DE HORMIGÓN",
+    "ENFIERRADOR",
+    "MANO DE OBRA MOLDAJE",
+    "PERFILADO EXCAVACIÓN",
+    "BASURA",
+    "CCDD Y TELECOM",
+    "AFINADO DE LOSA",
+    "CLIMA",
+    "CERRAJERÍA",
+    "PISCINA",
+    "HOJALATERIA",
+    "PINTURA",
+    "PAPEL MURAL",
+    "FAENAS HUMEDAS - ESTUCOS",
+    "FAENAS HUMEDAS - YESOS",
+    "MUEBLES Y CUBIERTAS",
+    "MUEBLES Y CUBIERTAS AACC",
+    "MO. PORCELANATO",
+    "TABIQUERIA",
+    "CARPINTERÍA",
+    "ANDAMIOS",
+    "ESTRUCTURA DE CUBIERTA",
+    "QUIEBRAVISTA",
+    "CIERRES EXTERIORES",
+    "SEÑALETICA",
+    "PISO FOTOLAMINADO",
+    "ASCENSORES",
+    "VENTANAS",
+    "INSTALACION DE ACCESORIOS",
+    "IMPERMEABILIZACIÓN",
+    "OTROS",
+    "ARRIENDOS",
+    "AISLACIÓN TERMICA",
+    "LUMINARIA",
+    "ADHESIVO CERAMICO & PORCELANATO",
+    "QUINCALLERIA",
+    "PUERTAS",
+    "LAVAPLATOS & ACCESORIOS",
+    "KIT DE COCINA",
+    "CORNISA",
+    "GRUPO ELECTROGENO",
+    "PAPEL MURAL",
+    "PAPEL MURAL SUBCONTRATO",
+    "YESO PUENTE ADHERENTE",
+    "MORTEROS EN GENERAL",
+    "MITIGACION DE RUIDOS",
+    "RADIADORES",
+    "MAMPARAS",
+    "ARIDOS",
+    "RETIRO DE ESCOMBROS",
+    "TABIQUERÍA",
+    "OBRA GRUESA",
+    "MADERAS",
+    "MATERIALES PILAS",
+    "ARTEFACTOS, TINAS Y RECEPTÁCULOS",
+    "ESPEJOS Y ACCESORIOS",
+    "GRIFERÍA Y ARTEFACTOS SANITARIOS",
+    "VANITORIO & LAVARROPA",
+    "PISO FOTOLAMINADO Y OTROS",
+    "PORCELANATO Y CERAMICA",
+    "HORMIGONES",
+    "INSTALACIONES PROVISORIAS",
+    "FIERRO Y ALAMBRE",
+    "RED PANTALLA ANTICAIDA",
+    "ELEMENTOS DE PVC",
+    "MATERIALES TERMINACIONES",
+    "PERSONAL ADMINISTRATIVO",
+    "POST VENTA Y MARCHA BLANCA",
+    "HERRAMIENTAS Y OTROS",
+    "ELEMENTOS PROTECCION PERSONAL",
+    "MAQ. MENOR (COMPRA O ARRIENDO) Y OTROS",
+    "MAQUINARIA ARRIENDO",
+    "FLETES",
+    " GASTOS DE OBRA",
+    "FOTOCOPIAS",
+    "GASTOS FINANCIEROS",
+    "SEGUROS Y OTROS",
+  ].sort();
+
+
+
+
+
   const handleSubmitSheet = async (e) => {
     e.preventDefault();
 
@@ -239,84 +331,24 @@ const FormBudget = () => {
                 </label>
               </div>
               <div className="">
-                <label className="text-sm text-white font-bolt mb-2 ">
-                  Hoja de Control
-                  <select
-                    className=" bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-2 text-white border-solid border-4 border-gray-500 w-full"
-                    type="text"
-                    name="SubcontractorOffers "
-                    value={subfamily}
-                    onChange={(e) => setSubfamily(e.target.value)}>
-                    <option value="">Selecionar una HC</option>
-                    <option value="Aridos_cemento_Morteros_Afinado _andamios ">
-                      Aridos_cemento_Morteros_Afinado _andamios
+              <label className="text-xs text-white font-bolt mb-1 ">
+                Subfamilia
+                <select
+                  className=" bg-slate-700 text-xs rounded-lg mb-1 mt-2 flex mr-2 p-1 text-white border-solid border-4 border-gray-500 w-full"
+                  type="text"
+                  name="Subfamily"
+                  value={subfamily}
+                  onChange={(e) => setSubfamily(e.target.value)}
+                >
+                  <option value="">Seleccionar Subfamilia</option>
+                  {subFamilies.map((subFamily) => (
+                    <option key={subFamily} value={subFamily}>
+                      {subFamily}
                     </option>
-                    <option value="Cerrajeria">Cerrajeria</option>
-                    <option value="Desbaste_yeso_Cornizas">
-                      Desbaste_yeso_Cornizas
-                    </option>
-                    <option value="Fierro">Fierro</option>
-                    <option value="Hormigones">Hormigones</option>
-                    <option value="Inst_faena">Inst_faena</option>
-                    <option value="Inst_Sanitarias ">Inst_Sanitarias</option>
-                    <option value="Instalacion_Moldaje">
-                      Instalacion_Moldaje{" "}
-                    </option>
-                    <option value="Instalacion_Tabiques">
-                      Instalacion_Tabiques
-                    </option>
-                    <option value="Instalaciones_Electricas">
-                      {" "}
-                      Instalaciones_Electricas
-                    </option>
-                    <option value="Madera_Fijaciones_varios ">
-                      Madera_Fijaciones_varios
-                    </option>
-                    <option value="Moldaje">Moldaje</option>
-                    <option value="Arriendo_Moldaje">Arriendo_Moldaje</option>
-                    <option value="Mano_Obra">Mano_Obra</option>
-                    <option value="Movimiento_Tierra">Movimiento_Tierra</option>
-                    <option value="Muebles">Muebles</option>
-                    <option value="Otros">Otros</option>
-                    <option value="Papel_mural_revestimiento">
-                      Papel_mural_revestimiento
-                    </option>
-                    <option value="Pavimentos-Ceramicas">
-                      Pavimentos-Ceramicas
-                    </option>
-                    <option value="Pintura">Pintura</option>
-                    <option value="puertas_cerraduras">
-                      puertas_cerraduras
-                    </option>
-                    <option
-                      value="Socalzado
-                    ">
-                      Socalzado
-                    </option>
-                    <option
-                      value="Tabiqueria
-                    ">
-                      Tabiqueria
-                    </option>
-                    <option
-                      value="Terminaciones
-                    ">
-                      Terminaciones
-                    </option>
-                    <option
-                      value="Ventanas
-                    ">
-                      Ventanas
-                    </option>
-                    <option
-                      value="Subcontrato_Fierro
-                    
-                    ">
-                      Subcontrato_Fierro
-                    </option>
-                  </select>
-                </label>
-              </div>
+                  ))}
+                </select>
+              </label>
+            </div>
               <div className="">
                 <label className="text-sm text-white font-bolt mb-2 ">
                   Total

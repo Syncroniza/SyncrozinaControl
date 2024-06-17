@@ -160,8 +160,8 @@ const getInvoices = async () => {
         }
     })
 
-    let startDate = new Date("2023-04-24 00:00:00");
-    let endDate = new Date("2023-05-24 23:59:59");
+    let startDate = new Date("2024-03-21 00:00:00");
+    let endDate = new Date("2024-04-24 23:59:59");
 
     while (startDate <= new Date()) {
         console.log(startDate, endDate);
@@ -172,7 +172,6 @@ const getInvoices = async () => {
             url
         );
 
-        console.log(res.data.length);
         if (res.data.length > 0) {
             for (let i = 0; i < res.data.length; i++) {
 
@@ -187,11 +186,10 @@ const getInvoices = async () => {
 
                 let invoiceData = {
                     projectId: "PT-101",
-                    invoices: datum.numDoc,
+                    invoices: datum.folioUnico,
                     dateInvoices: new Date(datum.fechaEmision),
                     subcontractorOffers: datum.nomProveedor,
                     description: datum.nomProveedor,
-                    totalInvoices: datum.montoTotal,
                     invoiceStatus: datum.estadoPago,
                 }
 
@@ -206,12 +204,12 @@ const getInvoices = async () => {
 
                 let dtm = response.data[0];
 
+
                 if (dtm.cabecera.fecha.fechaPago)
                     invoiceData.dueDate = new Date(dtm.cabecera.fecha.fechaPago)
+                invoiceData.totalInvoices =  dtm.cabecera.totales.neto.montoNeto;
 
                 let ocs = dtm.detalle.documentosRelacionados.ordenCompra;
-
-
 
                 if (ocs && ocs.length > 0){
                     console.log(ocs.length);
@@ -225,7 +223,7 @@ const getInvoices = async () => {
                             qty: 1,
                             unit: "OC",
                             unitPrice: oc.montoTotal,
-                            total: oc.montoTotal,
+                            total: oc.subTotal * dtm.cabecera.moneda.valorTasaCambio,
                             rawData: oc
                         }
                         let rc = oc.recepcion;

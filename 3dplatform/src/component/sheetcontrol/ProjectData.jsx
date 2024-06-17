@@ -15,6 +15,7 @@ const ProjectData = () => {
     formatCurrency,
     projects,
     formatedDate,
+    openEditForm,
   } = useContext(ViewerContext);
 
   const [allSheets, setAllSheets] = useState([]);
@@ -76,8 +77,6 @@ const ProjectData = () => {
     }
   };
 
-
-
   useEffect(() => {
     // Crear un nuevo arreglo para almacenar todas las sheets de todos los proyectos
     let allSheets = [];
@@ -138,7 +137,7 @@ const ProjectData = () => {
         </div>
         <div
           className=" overflow-y-auto mb-4 mt-4 text-center ml-2 mr-2"
-          style={{ height: "800px",width:"1200px" }}
+          style={{ height: "800px", width: "1200px" }}
         >
           {/* <Exceltransform UrlEndpoint="http://localhost:8000/sheet/" /> */}
           <table className=" mr-8  w-full sticky ">
@@ -155,8 +154,8 @@ const ProjectData = () => {
                 </th>
                 <th className="border border-slate-500">Total</th>
                 {/* <th className="border border-slate-500">Hoja Control</th> */}
-                {/* <th className="border border-slate-500">Borrar</th>
-                <th className="border border-slate-500">Editar</th> */}
+                <th className="border border-slate-500">Borrar</th>
+                <th className="border border-slate-500">Editar</th>
               </tr>
             </thead>
             <tbody>
@@ -180,7 +179,7 @@ const ProjectData = () => {
                   <td className="border border-slate-300">
                     {formatCurrency(item.total)}
                   </td>
-                  {/* <td className=" border border-slate-300">
+                  <td className=" border border-slate-300">
                     <button
                       className=" bg-red-500  p-1 text-white rounded-lg text-xs"
                       onClick={() => handleDeleteOC(item._id || item.id)}
@@ -200,8 +199,8 @@ const ProjectData = () => {
                         />
                       </svg>
                     </button>
-                  </td> */}
-                  {/* <td className="border border-slate-300">
+                  </td>
+                  <td className="border border-slate-300">
                     <button
                       onClick={() => openEditForm(item)}
                       className=" bg-green-500 p-1 text-white rounded-lg  "
@@ -221,7 +220,7 @@ const ProjectData = () => {
                         />
                       </svg>
                     </button>
-                  </td> */}
+                  </td>{" "}
                 </tr>
               ))}
             </tbody>

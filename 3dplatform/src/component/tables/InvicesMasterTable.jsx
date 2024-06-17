@@ -123,7 +123,7 @@ const InvicesMasterTable = () => {
                 <th className="border border-slate-300 px-2  ">$ Factura</th>
                 <th className="border border-slate-300 px-2  ">Estado Factura</th>
                 <th className="border border-slate-300 px-2  ">Fecha Vencimiento</th>
-                 <th className="border border-slate-300 px-2  ">Observaciones</th>
+                 {/* <th className="border border-slate-300 px-2  ">Observaciones</th> */}
                 <th className="border border-slate-300 px-2  ">Borrar</th>
                 <th className="border border-slate-300 px-2   ">Editar</th> 
               </tr>
@@ -161,9 +161,9 @@ const InvicesMasterTable = () => {
                   <td className="border border-slate-300  px-2  ">
                     {formatedDate(invoices.dueDate)}
                   </td>
-                  <td className="border border-slate-300  px-2  ">
+                  {/* <td className="border border-slate-300  px-2  ">
                     {invoices.observations}
-                  </td>
+                  </td> */}
                   <td className="border border-slate-300 px-2">
                     <button
                       className=" bg-red-500  p-1 text-white rounded-lg text-xs "

@@ -40,11 +40,11 @@ function CarsInformationGeneralProgress() {
 
       const now = new Date();
       let currentWeek = aernValueAccumalated.filter((data) => {
-        return (
-          now >= new Date(data.dateStart) && now <= new Date(data?.finishdate)
-        );
-      });
-      setSelectedWeek(formatedDate(currentWeek[0]?.finishdate));
+        return now >= new Date(data.dateStart) && now <= new Date(data.finishdate);
+      })
+      if (currentWeek.length > 0) {
+        setSelectedWeek(formatedDate(currentWeek[0].finishdate));
+      }
 
       setProjectDuration(days);
     }

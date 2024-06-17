@@ -5,6 +5,9 @@ const LaborCostSchema = new mongoose.Schema(
     projectId: {
       type: String,
     },
+    rol: {
+      type: String,
+    },
     id: {
       type: String,
     },
