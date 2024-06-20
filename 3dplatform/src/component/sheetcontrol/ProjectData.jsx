@@ -17,6 +17,7 @@ const ProjectData = () => {
     formatedDate,
     openEditForm,
   } = useContext(ViewerContext);
+    console.log("🚀 ~ ProjectData ~ projects:", projects)
 
   const [allSheets, setAllSheets] = useState([]);
   const openModal = () => {

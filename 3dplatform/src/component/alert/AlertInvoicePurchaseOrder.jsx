@@ -13,20 +13,11 @@ function AlertInvoicePurchaseOrder() {
 
   const [showAlert, setShowAlert] = useState(false);
   const SPI = totalPurchaseOrders / accumatedValue;
-  console.log("🚀 ~ AlertInvoicePurchaseOrder ~ SPI:", SPI);
   useEffect(() => {
     const checkSPIAndSendAlert = async () => {
       const totalFacturadoALaFecha = accumatedValue;
-      console.log(
-        "🚀 ~ checkSPIAndSendAlert ~ accumatedValue:",
-        accumatedValue
-      );
 
       const totalordenDeCompraALaFecha = totalPurchaseOrders;
-      console.log(
-        "🚀 ~ checkSPIAndSendAlert ~ totalPurchaseOrders:",
-        totalPurchaseOrders
-      );
 
       if (SPI < 1) {
         try {

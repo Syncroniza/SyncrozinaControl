@@ -86,7 +86,7 @@ const InvicesMasterTable = () => {
           MAESTRO DE FACTURAS
         </h1>
         {/* --------------------- Nuevo Registro ----------------- */}
-        <div className="flex">
+        <div className="flex mb-4">
           <button
             onClick={openModal}
             className="flex  bg-blue-500 mt-2 ml-2 p-1 text-white rounded-lg text-xs  "

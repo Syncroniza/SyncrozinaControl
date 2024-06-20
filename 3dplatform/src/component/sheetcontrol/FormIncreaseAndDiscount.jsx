@@ -22,7 +22,7 @@ function FormIncreaseAndDiscount() {
   const [real, setReal] = useState("");
   const [recuperable, setRecuperable] = useState("");
   const [observaciones, setObservaciones] = useState("");
-  
+
   const subFamilies = [
     "INSTALACIÓN DE FAENA",
     "SOCALZADO",
@@ -104,16 +104,15 @@ function FormIncreaseAndDiscount() {
     "MAQ. MENOR (COMPRA O ARRIENDO) Y OTROS",
     "MAQUINARIA ARRIENDO",
     "FLETES",
-    "GASTOS DE OBRA", 
+    "GASTOS DE OBRA",
     "FOTOCOPIAS",
-    "GASTOS FINANCIEROS", 
-    "SEGUROS Y OTROS"
+    "GASTOS FINANCIEROS",
+    "SEGUROS Y OTROS",
   ].sort();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
     const increaseAndDiscountData = {
       projectId: projectId || undefined,
       family: family || undefined,
@@ -167,7 +166,7 @@ function FormIncreaseAndDiscount() {
           <form onSubmit={handleSubmit}>
             <div className="flex">
               <div>
-                <label className="text-xs text-white font-bolt mb-2 p-2">
+                <label className="text-xs text-white font-bolt mb-2 p-1">
                   ProjectId
                   <select
                     className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-1 text-white border-solid border-4 border-gray-500"
@@ -206,7 +205,7 @@ function FormIncreaseAndDiscount() {
             <label className="text-xs text-white font-bold mb-2">
               Subfamilia
               <select
-                className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-2 text-white border-solid border-4 border-gray-500"
+                className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-1 text-white border-solid border-4 border-gray-500"
                 name="subfamily"
               >
                 {subFamilies.map((subFamily) => (
@@ -220,7 +219,7 @@ function FormIncreaseAndDiscount() {
             <label className="text-xs text-white font-bolt mb-2 p-1">
               Detalle
               <input
-                className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2  text-white border-solid border-4 border-gray-500"
+                className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-2 text-white border-solid border-4 border-gray-500"
                 placeholder="Detalle"
                 type="text"
                 value={detalle}
@@ -228,10 +227,10 @@ function FormIncreaseAndDiscount() {
               />
             </label>
 
-            <label className="text-xs text-white font-bolt mb-2 p-1">
+            <label className="text-xs text-white font-bolt mb-2 ">
               Aumento/Disminucion
               <select
-                className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2  text-white border-solid border-4 border-gray-500"
+                className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-1 text-white border-solid border-4 border-gray-500"
                 placeholder="aumentodisminucion"
                 type="text"
                 name="aumentodisminucion"
@@ -246,13 +245,12 @@ function FormIncreaseAndDiscount() {
                 Real
               </label>
               <input
-                className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2  text-white border-solid border-4 border-gray-500"
+                className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-1 text-white border-solid border-4 border-gray-500"
                 placeholder="Real"
                 type="text"
                 value={real}
                 onChange={(e) => setReal(e.target.value)}
               />
-              s
             </label>
             <label className="text-xs text-white font-bolt mb-2 p-1 ">
               Recuperable
@@ -268,7 +266,7 @@ function FormIncreaseAndDiscount() {
             <label className="text-xs text-white font-bolt mb-2 ">
               Observaciones
               <input
-                className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2  text-white border-solid border-4 border-gray-500"
+                className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-1 text-white border-solid border-4 border-gray-500"
                 placeholder="Observaciones"
                 name="observaciones"
                 type="text"

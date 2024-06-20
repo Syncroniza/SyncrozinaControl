@@ -28,15 +28,15 @@ const generateWeeksData = (startDate, totalWeeks) => {
 
 // Formatear fecha en "dd-mm-yyyy"
 const formatDate = (date) => {
-  const day = String(date.getDate()).padStart(2, '0');
-  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const year = date.getFullYear();
   return `${day}-${month}-${year}`;
 };
 
 // Mapear fechas a meses
 const getMonthYearFromDate = (dateString) => {
-  const [day, month, year] = dateString.split('-');
+  const [day, month, year] = dateString.split("-");
   return `${parseInt(month)}-${year}`;
 };
 
@@ -50,8 +50,6 @@ const mapLaborCostsToWeeks = (laborCosts, weeksData) => {
     lastWeekOfMonth[monthYear] = week;
   });
 
-  console.log("Semanas últimas de cada mes:", lastWeekOfMonth);
-
   // Asignar los costos de mano de obra a la última semana del mes
   for (const monthYear in laborCosts) {
     const week = lastWeekOfMonth[monthYear];
@@ -60,7 +58,6 @@ const mapLaborCostsToWeeks = (laborCosts, weeksData) => {
         weeklyCosts[week] = 0;
       }
       weeklyCosts[week] += laborCosts[monthYear];
-      console.log(`Asignando ${laborCosts[monthYear]} a la semana ${week} del mes ${monthYear}`);
     } else {
       console.log(`No se encontró una semana para el mes ${monthYear}`);
     }
@@ -75,15 +72,15 @@ function ActualCostTable() {
     setTotalByWeek,
     formatCurrency,
     totalsWithAccumulated,
-    totalActualCostByWeek, setTotalActualCostByWeek
+    totalActualCost,
+    setTotalActualCost,
+    totalActualCostByWeek,
+    setTotalActualCostByWeek,
   } = useContext(ViewerContext);
-    console.log("🚀 ~ ActualCostTable ~ totalActualCostByWeek:", totalActualCostByWeek)
 
   const [totalByWeek, setTotalByWeekState] = useState({});
-  console.log("🚀 ~ ActualCostTable ~ totalByWeek:", totalByWeek)
   const [weeklyLaborCosts, setWeeklyLaborCosts] = useState({});
   
-  console.log("🚀 ~ ActualCostTable ~ totalActualCostByWeek:", totalActualCostByWeek)
 
   // Calcular la suma total de las facturas por semana
   const calculateTotalByWeek = () => {
@@ -100,7 +97,7 @@ function ActualCostTable() {
 
         invoicesByWeek[projectWeekNumber] += invoice.totalInvoices;
       } else {
-        console.error('Fecha inválida en factura:', invoice.dateInvoices);
+        console.error("Fecha inválida en factura:", invoice.dateInvoices);
       }
     });
 
@@ -120,8 +117,8 @@ function ActualCostTable() {
     const monthlyCosts = {};
 
     totalsWithAccumulated
-      .filter(item => item.projectId === "PT-101")
-      .forEach(item => {
+      .filter((item) => item.projectId === "PT-101")
+      .forEach((item) => {
         const [month, year] = item.period.split("-");
         const periodKey = `${parseInt(month)}-${year}`;
         if (!monthlyCosts[periodKey]) {
@@ -147,6 +144,14 @@ function ActualCostTable() {
     return totalCostByWeek;
   };
 
+  // Calcular el total de totalActualCostByWeek
+  const calculateTotalCost = (totalActualCostByWeek) => {
+    return Object.values(totalActualCostByWeek).reduce(
+      (acc, cost) => acc + cost,
+      0
+    );
+  };
+
   // Actualizar el estado totalWeekly con la suma por semana y agregar el costo de la mano de obra mensual
   useEffect(() => {
     const weeksData = generateWeeksData("2023-06-06", 84); // Generar 84 semanas a partir de la fecha de inicio del proyecto
@@ -163,14 +168,21 @@ function ActualCostTable() {
     setWeeklyLaborCosts(weeklyLaborCosts);
     console.log("Costos semanales de mano de obra:", weeklyLaborCosts);
 
-    const totalActualCostByWeek = calculateTotalActualCostByWeek(totalByWeek, weeklyLaborCosts);
+    const totalActualCostByWeek = calculateTotalActualCostByWeek(
+      totalByWeek,
+      weeklyLaborCosts
+    );
     setTotalActualCostByWeek(totalActualCostByWeek);
     console.log("Costo total actual por semana:", totalActualCostByWeek);
+
+    const totalCost = calculateTotalCost(totalActualCostByWeek);
+    setTotalActualCost(totalCost);
+    console.log("Costo total actual:", totalCost);
   }, [invoicesdata, totalsWithAccumulated]);
 
   return (
     <div className="ml-5 mt-10">
-      <div>
+      {/* <div>
         <h1>Total Facturado por Semana:</h1>
         <ul>
           {Object.keys(totalByWeek).map((weekNumber, index) => (
@@ -185,11 +197,18 @@ function ActualCostTable() {
         <ul>
           {Object.keys(totalActualCostByWeek).map((weekNumber, index) => (
             <li key={index}>
-              Semana {weekNumber}: {formatCurrency(totalActualCostByWeek[weekNumber])}
+              Semana {weekNumber}:{" "}
+              {formatCurrency(totalActualCostByWeek[weekNumber])}
             </li>
           ))}
         </ul>
       </div>
+      <div className="mt-5">
+        <h1>Total Costo Actual:</h1>
+        <div className="bg-gray-200 p-4 rounded-lg shadow-md">
+          {formatCurrency(totalActualCost)}
+        </div>
+      </div> */}
     </div>
   );
 }

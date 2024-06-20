@@ -9,12 +9,16 @@ const KpiByFamily = () => {
     invoicesdata,
     formatCurrency,
     accumulatedRealMonthCost,
+    realMonthCostGgpublico,
+    realMonthCostPrivado,
+    realMonthCostPublico,
   } = useContext(ViewerContext);
-  console.log("🚀 ~ KpiByFamily ~ accumulatedRealMonthCost:", accumulatedRealMonthCost);
 
   const [totalsByFamily, setTotalsByFamily] = useState({});
   const [totalsInvoicesByFamily, setTotalsInvoicesByFamily] = useState({});
-
+  const [totalPublicoggPrivado,setTotalPublicoggPrivado] = useState(0)
+  console.log("🚀 ~ KpiByFamily ~ totalPublicoggPrivado:", totalPublicoggPrivado)
+ 
   // Calcula el presupuesto total por familia
   useEffect(() => {
     const totals = {};
@@ -55,7 +59,7 @@ const KpiByFamily = () => {
     setTotalsInvoicesByFamily(totals);
   }, [invoicesdata, selectedProjectId]);
 
-  // Calcula el total general del Proyecto 
+  // Calcula el total general del Proyecto
   useEffect(() => {
     const total = Object.values(totalsByFamily).reduce(
       (acc, curr) => acc + curr,
@@ -64,6 +68,13 @@ const KpiByFamily = () => {
     setGrandTotal(total);
   }, [totalsByFamily]);
 
+ useEffect(()=>{
+
+setTotalPublicoggPrivado(realMonthCostGgpublico + realMonthCostPrivado,)
+
+ },[])
+
+
   const Disponible = {};
   Object.keys(totalsByFamily).forEach((family) => {
     Disponible[family] =
@@ -71,13 +82,23 @@ const KpiByFamily = () => {
   });
 
   return (
-    <div className="ml-4 mt-4 bg-white p-2 rounded-lg mr-2 shadow-lg" style={{width:"1250px"}}>
+    <div
+      className="ml-4 mt-4 bg-white p-2 rounded-lg mr-2 shadow-lg"
+      style={{ width: "1250px" }}
+    >
       <h1 className="text-sm ml-2 font-semibold">VALORES POR FAMILIA</h1>
       <div className="grid grid-cols-5 gap-4 mr-2">
         {Object.entries(totalsByFamily).map(([family, total]) => {
-          const actual = family === "Mano_Obra"
-            ? accumulatedRealMonthCost
-            : totalsInvoicesByFamily[family] || 0;
+          let actual =
+            family === "Mano_Obra"
+              ? realMonthCostPublico
+              : totalsInvoicesByFamily[family] || 0;
+
+         
+              if (family === "GG") {
+                actual += realMonthCostGgpublico + realMonthCostPrivado;
+              }
+    
           const disponible = total - actual;
 
           return (

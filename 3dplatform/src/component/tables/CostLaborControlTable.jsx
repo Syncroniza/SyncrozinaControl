@@ -11,7 +11,7 @@ const CostLaborControlTable = () => {
     const fetchLabor = async () => {
       try {
         const response = await axios.get("http://localhost:8000/labor/");
-        console.log("🚀 ~ fetchLabor ~ response:", response)
+        console.log("🚀 ~ fetchLabor ~ responselabor:", response)
         if (
           Array.isArray(response.data.data) &&
           response.data.data.length > 0

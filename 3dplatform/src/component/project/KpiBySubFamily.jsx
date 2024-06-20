@@ -12,7 +12,6 @@ const KpiBySubFamily = () => {
   // Filtro del Total por Familia
   const filteredData = getDataBudget.filter((item) => {
     return Object.keys(filters).every((filterName) => {
-      // console.log("filterskPI",filters)
       const filterValue = filters[filterName]
         ? filters[filterName].toLowerCase()
         : "";

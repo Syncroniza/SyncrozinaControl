@@ -11,6 +11,8 @@ import PayApplication from "./page/PayApplication";
 import Informegerencial from "./page/Informegerencial";
 import MainAreaChart from "./component/charts/AreaChart";
 import ReportControlSheet from "./component/sheetcontrol/ReportControlSheet";
+import MonthCostaLaborTable from "./component/tables/MonthCostaLaborTable";
+import EarnValeuManagementTable from "./component/tables/EarnValeuManagementTable";
 
 function App() {
   return (
@@ -35,6 +37,8 @@ function App() {
           <Route path="/eepp" element={<PayApplication />} />
           <Route path="/informe" element={<Informegerencial />} />
           <Route path="/informe/informeHC" element={<ReportControlSheet />} />
+          <Route path="/informe/informeMO" element={<MonthCostaLaborTable />} />
+          <Route path="/informe/EV" element={<EarnValeuManagementTable />} />
           <Route path="/progress" element={<MainAreaChart />} />
         </Routes>
       </ViewerProvider>

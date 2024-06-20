@@ -264,7 +264,7 @@ const FormContractObservation = () => {
               Proyectado
               <input
                 className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-2 text-white border-solid border-4 border-gray-500"
-                placeholder="royectado"
+                placeholder="proyectado"
                 type="text"
                 name="proyectado"
                 value={proyectado}

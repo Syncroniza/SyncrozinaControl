@@ -7,21 +7,17 @@ function CarsInformationGeneralProgress() {
     totalPlanValue,
     projectDuration,
     setProjectDuration,
-    totalAvanceReal,
+    avanceRealTotal,
     setAvanceRealTotal,
   } = useContext(ViewerContext);
-  
+    console.log("🚀 ~ CarsInformationGeneralProgress ~ totalPlanValue:", totalPlanValue)
+    console.log("🚀 ~ CarsInformationGeneralProgress ~ avanceRealTotal:", avanceRealTotal)
+ 
 
   const [selectedWeek, setSelectedWeek] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
 
-  console.log(
-    "🚀 ~ CarsInformationGeneralProgress ~ totalAvanceReal:",
-    totalAvanceReal
-  );
-
   useEffect(() => {
-
     if (!selectedWeek) return;
 
     const filtered = aernValueAccumalated.filter((data) => {
@@ -40,8 +36,10 @@ function CarsInformationGeneralProgress() {
 
       const now = new Date();
       let currentWeek = aernValueAccumalated.filter((data) => {
-        return now >= new Date(data.dateStart) && now <= new Date(data.finishdate);
-      })
+        return (
+          now >= new Date(data.dateStart) && now <= new Date(data.finishdate)
+        );
+      });
       if (currentWeek.length > 0) {
         setSelectedWeek(formatedDate(currentWeek[0].finishdate));
       }
@@ -56,17 +54,16 @@ function CarsInformationGeneralProgress() {
   };
 
   useEffect(() => {
-
     const totalEarnValue =
-    filteredData.length > 0 ? filteredData[0].acumuladoEarn : 0;
+      filteredData.length > 0 ? filteredData[0].acumuladoEarn : 0;
 
-
+      
 
     const avanceRealTotal =
       totalPlanValue > 0 ? (totalEarnValue / totalPlanValue) * 100 : 0;
     setAvanceRealTotal(avanceRealTotal);
-  }, []);
-  
+  }, [aernValueAccumalated]);
+
   const currentPlanValue =
     filteredData.length > 0 ? filteredData[0].acumuladoPlanValue : 0;
 
@@ -75,10 +72,8 @@ function CarsInformationGeneralProgress() {
 
   const totalActualCost =
     filteredData.length > 0 ? filteredData[0].acumuladoActualCost : 0;
-    
-    const SPI = totalEarnValue / currentPlanValue;
-    
 
+  const SPI = totalEarnValue / currentPlanValue;
 
   // -------------Función para calcular la duración en días corridos---------------//
   function calculateDays(startDate, endDate) {

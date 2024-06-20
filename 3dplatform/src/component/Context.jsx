@@ -84,12 +84,20 @@ const ViewerProvider = ({ children }) => {
   const [totalActualCost, setTotalActualCost] = useState(0);
   const [currentPeriodId, setCurrentPeriodId] = useState("");
   const [accumulatedRealMonthCost, setAccumulatedRealMonthCost] = useState(0);
-  const [totalAvanceReal, setAvanceRealTotal] = useState("");
+  const [avanceRealTotal, setAvanceRealTotal] = useState("");
   const [totalUnpaidInvoices, setTotalUnpaidInvoices] = useState(0);
   const [totalsWithAccumulated, setTotalsWithAccumulated] = useState([]);
-  const[totalActualCostByWeek, setTotalActualCostByWeek] = useState({});
-  
-
+  const [totalActualCostByWeek, setTotalActualCostByWeek] = useState({});
+  const [totalRealMonthCost, setTotalRealMonthCost] = useState(0);
+  const [calculateTotalRealMonthCost, setCalculateRealMonthCost] = useState(0);
+  const [disponible, setDisponible] = useState(0);
+  const [selectedByProjectId, setSelectedByProjectId] = useState("");
+  const [selectedRol, setSelectedRol] = useState([]);
+  const [porcentajeGastado, setPorcentajeGastado] = useState(0);
+  const [monthlyCosts, setMonthlyCosts] = useState([]);
+  const [realMonthCostGgpublico, setRealMonthCostGgpublico] = useState(0);
+  const [realMonthCostPrivado, setRealMonthCostPrivado] = useState(0);
+  const [realMonthCostPublico, setRealMonthCostPublico] = useState(0);
   const [filters, setFilters] = useState({
     projectId: "",
     cod: "",
@@ -187,6 +195,42 @@ const ViewerProvider = ({ children }) => {
     // Reemplaza el símbolo de $ por UF
     return formattedValue.replace("$", "$ ");
   };
+
+  const fetchData = async () => {
+    try {
+      const [
+        totalBudgetResponse,
+        invoicesdataResponse,
+        projectsResponse,
+        dataNodeResponse,
+        getDataSheet
+      ] = await Promise.all([
+        fetch("http://localhost:8000/budget"),
+        fetch("http://localhost:8000/invoices/"),
+        fetch("http://localhost:8000/project/"),
+        fetch("http://localhost:8000/labor/"), // Asegúrate de que esta ruta sea correcta
+        fetch("http://localhost:8000/sheet/"), // Asegúrate de que esta ruta sea correcta
+      ]);
+  
+      const newBudget = await totalBudgetResponse.json();
+      const newInvoices = await invoicesdataResponse.json();
+      const newProjects = await projectsResponse.json();
+      const newDataNode = await dataNodeResponse.json();
+      const newGetDataSheet = await getDataSheet.json();
+  
+      // Asegúrate de que las respuestas sean arrays antes de establecer el estado
+      setInvoicesData(Array.isArray(newInvoices) ? newInvoices : []);
+      setProjects(Array.isArray(newProjects) ? newProjects : []);
+      setTotalBudget(Array.isArray(newBudget) ? newBudget : []);
+      setDataNode(Array.isArray(newDataNode) ? newDataNode : []);
+      setGetDataSheet(Array.isArray(newGetDataSheet) ? newGetDataSheet : []);
+  
+      // Aquí puedes incluir otras llamadas a la API que necesites y actualizar sus respectivos estados
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
+  
   const formatedDate = (isoDate) => {
     if (!isoDate) return "Fecha no disponible";
     const date = new Date(isoDate);
@@ -402,7 +446,7 @@ const ViewerProvider = ({ children }) => {
         setCurrentPeriodId,
         accumulatedRealMonthCost,
         setAccumulatedRealMonthCost,
-        totalAvanceReal,
+        avanceRealTotal,
         setAvanceRealTotal,
         totalUnpaidInvoices,
         setTotalUnpaidInvoices,
@@ -410,6 +454,29 @@ const ViewerProvider = ({ children }) => {
         setTotalsWithAccumulated,
         totalActualCostByWeek,
         setTotalActualCostByWeek,
+        totalActualCost,
+        setTotalActualCost,
+        totalRealMonthCost,
+        setTotalRealMonthCost,
+        calculateTotalRealMonthCost,
+        setCalculateRealMonthCost,
+        disponible,
+        setDisponible,
+        selectedByProjectId,
+        setSelectedByProjectId,
+        selectedRol,
+        setSelectedRol,
+        porcentajeGastado,
+        setPorcentajeGastado,
+        monthlyCosts,
+        setMonthlyCosts,
+        realMonthCostGgpublico,
+        setRealMonthCostGgpublico,
+        realMonthCostPrivado,
+        setRealMonthCostPrivado,
+        realMonthCostPublico,
+        setRealMonthCostPublico,
+        fetchData
       }}
     >
       {children}

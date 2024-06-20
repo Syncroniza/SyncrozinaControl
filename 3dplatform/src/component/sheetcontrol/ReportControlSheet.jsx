@@ -18,6 +18,7 @@ function ReportControlSheet() {
     setSelectedProjectId,
     summaryData,
     setSummaryData,
+    totalUnpaidInvoices,
   } = useContext(ViewerContext);
 
   const [selectedFamilies, setSelectedFamilies] = useState([]);
@@ -87,7 +88,7 @@ function ReportControlSheet() {
 
   //----------------- Obtiene Monto total del Contract Observation por sub familia________________//
   const getMontoContrato = (subfamily) => {
-    return contracObservationWhitOutFilter.data.data.reduce((total, item) => {
+    return contracObservationWhitOutFilter.data?.data?.reduce((total, item) => {
       const matchesProject =
         !selectedProjectId || item.projectId === selectedProjectId;
       const matchesFamily = !selectedFamily || item.family === selectedFamily;
@@ -152,6 +153,7 @@ function ReportControlSheet() {
         totalconextras,
         ahorro,
         contrato: montoPropuesta,
+        totalUnpaidInvoices: totalUnpaidInvoices,
       };
     });
 

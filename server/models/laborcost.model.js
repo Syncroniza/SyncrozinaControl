@@ -20,7 +20,6 @@ const LaborCostSchema = new mongoose.Schema(
     Monthscost: {
       type: Number,
     },
-
     compensation: {
       type: Number,
     },
@@ -36,10 +35,16 @@ const LaborCostSchema = new mongoose.Schema(
     acumulatedrealcost: {
       type: Number,
     },
+    period: {
+      type: String, // Agregar el campo period aquí
+      required: false,
+    },
   },
   {
     timestamps: true,
   }
 );
+
+LaborCostSchema.index({ projectId: 1, rol: 1, period: 1 }, { unique: true });
 
 export const LaborCostModel = mongoose.model("laborcostsplit", LaborCostSchema);

@@ -33,6 +33,7 @@ export const getAllLabor = async (req, res) => {
     res.status(500).json({ error });
   }
 };
+//-------------  Create labor--------------------------//
 
 export const createLaborExcel = async (req, res) => {
   console.log("Archivo recibido:", req.file);
@@ -55,23 +56,24 @@ export const createLaborExcel = async (req, res) => {
   } else {
     // Proceso para manejar datos JSON normales
     try {
-      let promises = await req.body.map(async (dtm) => {
+      let promises = req.body.map(async (dtm) => {
         return LaborCostModel.findOneAndUpdate(
-            {deadline: dtm.deadline},
-            dtm,
-            {
-              new: true,
-              upsert: true
-            }
+          {
+            projectId: dtm.projectId,
+            rol: dtm.rol,
+            period: dtm.period
+          },
+          dtm,
+          {
+            new: true,
+            upsert: true,
+            runValidators: true, // Para asegurar que los datos cumplen con el esquema
+          }
         );
       });
 
-        const response = await Promise.all(promises);
+      const response = await Promise.all(promises);
 
-      // const createdData = await LaborCostModel.create({
-      //   realmonthcost: realDatum.value,
-      //   acumulatedrealcost: accumDatum.value
-      // });
       console.log("Datos creados desde JSON:", response);
       res.status(201).json({
         message: "Labor data successfully created.",
@@ -83,6 +85,10 @@ export const createLaborExcel = async (req, res) => {
     }
   }
 };
+
+
+
+//-------------------------------------------------------------------------------//
 
 
 // Get a single labor entry by ID
