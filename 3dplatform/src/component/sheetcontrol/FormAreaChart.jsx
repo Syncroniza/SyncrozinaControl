@@ -3,6 +3,7 @@ import { ViewerContext } from "../Context";
 import axios from "axios";
 import Modal from "../Modal";
 
+
 const FormAreaChart = () => {
   const {
     projectId,
@@ -63,6 +64,7 @@ const FormAreaChart = () => {
 
   return (
     <div className="flex">
+      
       <div className="mt-4 ml-4 ">
         <Modal isOpen={isModalOpenProgress}>
           <h1 className="text-xs font-blod mb-2 text-white">
@@ -71,7 +73,7 @@ const FormAreaChart = () => {
           <form
             className="mt-4 flex flex-col rounded-lg text-xs"
             onSubmit={handleOnSubmit}>
-            <h2 className="text-center text-xs  text-white font-light text-xs">
+            <h2 className="text-center   text-white font-light text-xs">
               Add new Data
             </h2>
             <div>

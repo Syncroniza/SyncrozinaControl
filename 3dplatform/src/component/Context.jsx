@@ -1,13 +1,8 @@
-import { createContext, useState } from "react";
-
+import { createContext, useState, useEffect } from "react";
+import axios from "axios";
 export const ViewerContext = createContext();
 
 const ViewerProvider = ({ children }) => {
-  const [viewer, setViewer] = useState(null);
-  const [IfcLoader, setIfcLoader] = useState(null);
-  const [model, setModel] = useState(null);
-  const [viewerContainer, setViewerContainer] = useState(null);
-  const [highlighter, setHighlighter] = useState(null);
   const [totalSum, setTotalSum] = useState(0);
   const [projects, setProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
@@ -82,6 +77,7 @@ const ViewerProvider = ({ children }) => {
   const [summaryData, setSummaryData] = useState([]);
   const [grandTotal, setGrandTotal] = useState(0);
   const [totalActualCost, setTotalActualCost] = useState(0);
+  console.log("🚀 ~ ViewerProvider ~ totalActualCost:", totalActualCost)
   const [currentPeriodId, setCurrentPeriodId] = useState("");
   const [accumulatedRealMonthCost, setAccumulatedRealMonthCost] = useState(0);
   const [avanceRealTotal, setAvanceRealTotal] = useState("");
@@ -98,6 +94,10 @@ const ViewerProvider = ({ children }) => {
   const [realMonthCostGgpublico, setRealMonthCostGgpublico] = useState(0);
   const [realMonthCostPrivado, setRealMonthCostPrivado] = useState(0);
   const [realMonthCostPublico, setRealMonthCostPublico] = useState(0);
+ 
+
+  
+
   const [filters, setFilters] = useState({
     projectId: "",
     cod: "",
@@ -108,21 +108,6 @@ const ViewerProvider = ({ children }) => {
     totalPrice: "",
     family: "",
   });
-
-  const updateIfcLoader = (newLoader) => {
-    setIfcLoader(newLoader);
-  };
-
-  const updateModel = (newmodel) => {
-    setModel(newmodel);
-  };
-
-  const updateViewerContainer = (newcontainer) => {
-    setViewerContainer(newcontainer);
-  };
-  const updatehighliter = (newhighliter) => {
-    setHighlighter(newhighliter);
-  };
 
   const updateTotalSum = (newTotal) => {
     if (typeof newTotal === "number" && newTotal >= 0) {
@@ -144,9 +129,6 @@ const ViewerProvider = ({ children }) => {
     setIsMoldalOpen(newUpdateOpenModal);
   };
 
-  const updateGetDataBudget = (newUpdaDataBudget) => {
-    setGetDataBudget(newUpdaDataBudget);
-  };
 
   const updateFilters = (newUpdateFilters) => {
     setFilters(newUpdateFilters);
@@ -196,41 +178,6 @@ const ViewerProvider = ({ children }) => {
     return formattedValue.replace("$", "$ ");
   };
 
-  const fetchData = async () => {
-    try {
-      const [
-        totalBudgetResponse,
-        invoicesdataResponse,
-        projectsResponse,
-        dataNodeResponse,
-        getDataSheet
-      ] = await Promise.all([
-        fetch("http://localhost:8000/budget"),
-        fetch("http://localhost:8000/invoices/"),
-        fetch("http://localhost:8000/project/"),
-        fetch("http://localhost:8000/labor/"), // Asegúrate de que esta ruta sea correcta
-        fetch("http://localhost:8000/sheet/"), // Asegúrate de que esta ruta sea correcta
-      ]);
-  
-      const newBudget = await totalBudgetResponse.json();
-      const newInvoices = await invoicesdataResponse.json();
-      const newProjects = await projectsResponse.json();
-      const newDataNode = await dataNodeResponse.json();
-      const newGetDataSheet = await getDataSheet.json();
-  
-      // Asegúrate de que las respuestas sean arrays antes de establecer el estado
-      setInvoicesData(Array.isArray(newInvoices) ? newInvoices : []);
-      setProjects(Array.isArray(newProjects) ? newProjects : []);
-      setTotalBudget(Array.isArray(newBudget) ? newBudget : []);
-      setDataNode(Array.isArray(newDataNode) ? newDataNode : []);
-      setGetDataSheet(Array.isArray(newGetDataSheet) ? newGetDataSheet : []);
-  
-      // Aquí puedes incluir otras llamadas a la API que necesites y actualizar sus respectivos estados
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  };
-  
   const formatedDate = (isoDate) => {
     if (!isoDate) return "Fecha no disponible";
     const date = new Date(isoDate);
@@ -294,16 +241,6 @@ const ViewerProvider = ({ children }) => {
         updateTotalSum,
         totalSum,
         setTotalSum,
-        viewer,
-        setViewer,
-        IfcLoader,
-        updateIfcLoader,
-        model,
-        updateModel,
-        viewerContainer,
-        updateViewerContainer,
-        highlighter,
-        updatehighliter,
         projects,
         setProjects,
         updateDataProject,
@@ -318,7 +255,6 @@ const ViewerProvider = ({ children }) => {
         isModalOpen,
         setIsMoldalOpen,
         updateOpenModal,
-        updateGetDataBudget,
         setGetDataBudget,
         getDataBudget,
         filters,
@@ -476,7 +412,6 @@ const ViewerProvider = ({ children }) => {
         setRealMonthCostPrivado,
         realMonthCostPublico,
         setRealMonthCostPublico,
-        fetchData
       }}
     >
       {children}

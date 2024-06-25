@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { ViewerContext } from "../Context";
-import FormAreaChart from "../sheetcontrol/FormAreaChart";
+// import FormAreaChart from "../sheetcontrol/FormAreaChart";
 import {
   LineChart,
   Line,
@@ -13,7 +13,6 @@ import {
 
 const MainAreaChart = () => {
   const { aernValueAccumalated } = useContext(ViewerContext);
-  console.log("🚀 ~ MainAreaChart ~ aernValueAccumalated:", aernValueAccumalated)
 
   // Función para formatear la fecha
   const formatedDate = (isoDate) => {
@@ -32,7 +31,7 @@ const MainAreaChart = () => {
 
   return (
     <div className="mt-10 ml-10">
-      <FormAreaChart />
+      {/* <FormAreaChart /> */}
       <h2 className="text-indigo-800 font-bold text-2xl">
         Planned Value vs Earn Value
       </h2>

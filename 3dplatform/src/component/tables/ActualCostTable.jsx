@@ -70,17 +70,16 @@ function ActualCostTable() {
   const {
     invoicesdata,
     setTotalByWeek,
-    formatCurrency,
     totalsWithAccumulated,
-    totalActualCost,
     setTotalActualCost,
-    totalActualCostByWeek,
+    totalActualCost,
     setTotalActualCostByWeek,
+    selectProjectId
   } = useContext(ViewerContext);
+    console.log("🚀 ~ ActualCostTable ~ totalActualCost:", totalActualCost)
 
   const [totalByWeek, setTotalByWeekState] = useState({});
   const [weeklyLaborCosts, setWeeklyLaborCosts] = useState({});
-  
 
   // Calcular la suma total de las facturas por semana
   const calculateTotalByWeek = () => {
@@ -155,29 +154,24 @@ function ActualCostTable() {
   // Actualizar el estado totalWeekly con la suma por semana y agregar el costo de la mano de obra mensual
   useEffect(() => {
     const weeksData = generateWeeksData("2023-06-06", 84); // Generar 84 semanas a partir de la fecha de inicio del proyecto
-    console.log("Datos de semanas generados:", weeksData);
 
     const totalByWeek = calculateTotalByWeek();
     setTotalByWeek(totalByWeek);
     setTotalByWeekState(totalByWeek);
-    console.log("Total por semana:", totalByWeek);
 
     const monthlyLaborCosts = calculateMonthlyLaborCosts();
-    console.log("Costos mensuales de mano de obra:", monthlyLaborCosts);
     const weeklyLaborCosts = mapLaborCostsToWeeks(monthlyLaborCosts, weeksData);
     setWeeklyLaborCosts(weeklyLaborCosts);
-    console.log("Costos semanales de mano de obra:", weeklyLaborCosts);
 
     const totalActualCostByWeek = calculateTotalActualCostByWeek(
       totalByWeek,
       weeklyLaborCosts
     );
     setTotalActualCostByWeek(totalActualCostByWeek);
-    console.log("Costo total actual por semana:", totalActualCostByWeek);
 
     const totalCost = calculateTotalCost(totalActualCostByWeek);
+    console.log("🚀 ~ useEffect ~ totalCost:", totalCost);
     setTotalActualCost(totalCost);
-    console.log("Costo total actual:", totalCost);
   }, [invoicesdata, totalsWithAccumulated]);
 
   return (

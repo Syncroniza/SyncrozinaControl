@@ -14,10 +14,8 @@ const ProjectData = () => {
     setIsEditMode,
     formatCurrency,
     projects,
-    formatedDate,
     openEditForm,
   } = useContext(ViewerContext);
-    console.log("🚀 ~ ProjectData ~ projects:", projects)
 
   const [allSheets, setAllSheets] = useState([]);
   const openModal = () => {
@@ -88,6 +86,21 @@ const ProjectData = () => {
     allSheets.sort((a, b) => comparateDates(a.date, b.date));
     setAllSheets(allSheets);
   }, [projects]);
+  const formatedDate = (isoDate) => {
+    if (!isoDate) return "";
+
+    const date = new Date(isoDate);
+    const day = date.getUTCDate();
+    const month = date.getUTCMonth() + 1;
+    const year = date.getUTCFullYear();
+
+    const formattedDay = String(day).padStart(2, "0");
+    const formattedMonth = String(month).padStart(2, "0");
+
+    return `${formattedDay}/${formattedMonth}/${year}`;
+  };
+
+
 
   return (
     <div className=" shadow-xl rounded-xl flex bg-gradient-to-r from-blue-700">
@@ -148,13 +161,11 @@ const ProjectData = () => {
                 <th className="border border-slate-500">Fecha</th>
                 <th className="border border-slate-500">Familia</th>
                 <th className="border border-slate-500 ">O/C</th>
-                {/* <th className="border border-slate-500"> Description</th> */}
                 <th className="border border-slate-500">Precio Unitario</th>
                 <th className="border border-slate-500">
                   Subcontrato/Proveedor
                 </th>
                 <th className="border border-slate-500">Total</th>
-                {/* <th className="border border-slate-500">Hoja Control</th> */}
                 <th className="border border-slate-500">Borrar</th>
                 <th className="border border-slate-500">Editar</th>
               </tr>
@@ -163,17 +174,12 @@ const ProjectData = () => {
               {allSheets.map((item, z) => (
                 <tr key={z} className=" text-xxs ">
                   <td className="border border-slate-300 ">{item.projectId}</td>
-                  <td className="border border-slate-300">
-                    {formatedDate(item.date)}
-                  </td>
+                  <td className="border border-slate-300">{formatedDate(item.date)}</td>
                   <td className="border border-slate-300">{item.family}</td>
                   <td className="border border-slate-300 ">{item.cod}</td>
                   <td className="border border-slate-300">
                     {item.description}
                   </td>
-                  {/* <td className="border border-slate-300">
-                    {formatCurrency(item.unitPrice)}
-                  </td> */}
                   <td className="border border-slate-300">
                     {item.subcontractorOffers}
                   </td>
@@ -221,7 +227,7 @@ const ProjectData = () => {
                         />
                       </svg>
                     </button>
-                  </td>{" "}
+                  </td>
                 </tr>
               ))}
             </tbody>

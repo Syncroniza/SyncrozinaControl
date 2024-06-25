@@ -23,6 +23,7 @@ const IncreaseAndDiscountByForm = () => {
     dataincreaseDisccountwthitoutfilter,
     setDataincreaseDisccountwhithoutfilter,
   } = useContext(ViewerContext);
+    console.log("🚀 ~ IncreaseAndDiscountByForm ~ dataincreaseDisccountwthitoutfilter:", dataincreaseDisccountwthitoutfilter)
   
   const openModal = () => setIsModalOpenBudget(true);
 

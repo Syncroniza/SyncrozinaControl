@@ -7,12 +7,12 @@ const FilterMasterPurchaseOrdres = () => {
     // selectedProjectId,
     invoicesdata,
     selectedFamily,
-    projectId,
-    setSelectedProjectId,
   } = useContext(ViewerContext);
+
   const [newfilteredInvoice, setNewFilteredInvoice] = useState([]);
   const [uniqueProjectsIds, setUniqueProjectIds] = useState([]);
   const  [selectedInvoiceId, setSelectedInvoiceId] = useState("")
+  
   useEffect(() => {
     const filteredInvoice = invoicesdata.filter((invoice) => {
       const projectMatch =

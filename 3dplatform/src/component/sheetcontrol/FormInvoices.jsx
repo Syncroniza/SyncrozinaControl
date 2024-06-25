@@ -369,8 +369,9 @@ const FormInvoices = () => {
                   value={invoiceStatus}
                   onChange={(e) => setInvoiceStatus(e.target.value)}
                 >
-                  <option value="Pendiente">Pendiente</option>
-                  <option value="Pagado">Pagado</option>
+                  <option value="Estado">Estado</option>
+                  <option value="Sin Pagos">Sin Pagos</option>
+                  <option value="Pagada">Pagada</option>
                 </select>
               </label>
             </div>

@@ -13,7 +13,6 @@ const MonthCostaLaborTable = () => {
     totalsWithAccumulated,
     setTotalsWithAccumulated,
     setDisponible,
-    totalRealMonthCost,
     setTotalRealMonthCost,
     setCalculateRealMonthCost,
     selectedByProjectId,
@@ -21,10 +20,6 @@ const MonthCostaLaborTable = () => {
     setPorcentajeGastado,
     monthlyCosts,
     setMonthlyCosts,
-    realMonthCostGgpublico,
-    setRealMonthCostGgpublico,
-    realMonthCostPrivado,
-    setRealMonthCostPrivado
   } = useContext(ViewerContext);
 
   const [combinedData, setCombinedData] = useState([]);
@@ -205,7 +200,7 @@ const MonthCostaLaborTable = () => {
 
   return (
     <div className="p-2 py-2 flex bg-blue-500 ">
-      <Sidebardb />
+      <Sidebardb /> 
       <div className="ml-20">
         <CardsInformationLaborCost />
         <LaborCostTable totals={filteredTotals} />

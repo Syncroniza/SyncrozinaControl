@@ -110,10 +110,10 @@ function CarsInformationGeneralProgress() {
     <div>
       <div className="mt-3 ml-4 mr-2">
         {selectedWeek && (
-          <div className="bg-white  grid grid-cols-7 rounded-lg shadow-lg">
-            <div className="bg-blue-500 from-indigo-500 grid grid-rows-2  p-1  rounded-lg text-center shadow-xl">
-              <h1 className="text-sm font-semibold text-white ">
-                SELECCIONAR FECHA
+          <div className="bg-white  grid grid-cols-7 rounded-lg shadow-lg ">
+            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 rounded-lg text-center shadow-xl m-2">
+              <h1 className="text-sm font-semibold text-white mr-4 mt-3 ">
+                VALOR GANADO A:
               </h1>
               {/* <h1 className="text-sm font-semibold text-white mt-4">
                 SEMANA DEL PROYECTO

@@ -5,20 +5,25 @@ const KpiByFamily = () => {
   const {
     getDataBudget,
     selectedProjectId,
+    setSelectedProjectId,
     setGrandTotal,
     invoicesdata,
     formatCurrency,
-    accumulatedRealMonthCost,
     realMonthCostGgpublico,
     realMonthCostPrivado,
     realMonthCostPublico,
   } = useContext(ViewerContext);
+    console.log("🚀 ~ KpiByFamily ~ invoicesdata:", invoicesdata)
 
   const [totalsByFamily, setTotalsByFamily] = useState({});
+  console.log("🚀 ~ KpiByFamily ~ totalsByFamily:", totalsByFamily)
   const [totalsInvoicesByFamily, setTotalsInvoicesByFamily] = useState({});
-  const [totalPublicoggPrivado,setTotalPublicoggPrivado] = useState(0)
-  console.log("🚀 ~ KpiByFamily ~ totalPublicoggPrivado:", totalPublicoggPrivado)
- 
+  const [totalPublicoggPrivado, setTotalPublicoggPrivado] = useState(0);
+
+  const handleProjectSelect = (projectId) => {
+    setSelectedProjectId(projectId);
+  };
+
   // Calcula el presupuesto total por familia
   useEffect(() => {
     const totals = {};
@@ -46,6 +51,7 @@ const KpiByFamily = () => {
     const filteredData = invoicesdata.filter(
       (proid) => proid.projectId === selectedProjectId
     );
+    console.log("🚀 ~ useEffect ~ filteredData:", filteredData)
 
     filteredData.forEach((item) => {
       const { family, totalInvoices } = item;
@@ -68,12 +74,9 @@ const KpiByFamily = () => {
     setGrandTotal(total);
   }, [totalsByFamily]);
 
- useEffect(()=>{
-
-setTotalPublicoggPrivado(realMonthCostGgpublico + realMonthCostPrivado,)
-
- },[])
-
+  useEffect(() => {
+    setTotalPublicoggPrivado(realMonthCostGgpublico + realMonthCostPrivado);
+  }, []);
 
   const Disponible = {};
   Object.keys(totalsByFamily).forEach((family) => {
@@ -94,11 +97,10 @@ setTotalPublicoggPrivado(realMonthCostGgpublico + realMonthCostPrivado,)
               ? realMonthCostPublico
               : totalsInvoicesByFamily[family] || 0;
 
-         
-              if (family === "GG") {
-                actual += realMonthCostGgpublico + realMonthCostPrivado;
-              }
-    
+          if (family === "GG") {
+            actual += realMonthCostGgpublico + realMonthCostPrivado;
+          }
+
           const disponible = total - actual;
 
           return (
@@ -116,7 +118,7 @@ setTotalPublicoggPrivado(realMonthCostGgpublico + realMonthCostPrivado,)
               <div className="text-center mt-2 text-lg">
                 Disponible: {formatCurrency(disponible)}
               </div>
-              <div className="mt-4 p-1 bg-gray-200 rounded-lg"></div>
+              <div className="mt-4 p-1  rounded-lg"></div>
             </div>
           );
         })}

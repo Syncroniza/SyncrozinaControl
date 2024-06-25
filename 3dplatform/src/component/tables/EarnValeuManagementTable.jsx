@@ -1,11 +1,9 @@
 import { ViewerContext } from "../Context";
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import Exceltransform from "../Exceltransform";
-import FormAreaChart from "../sheetcontrol/FormAreaChart";
 import ActualCostTable from "../tables/ActualCostTable";
-import MainAreaChart from "../charts/AreaChart";
 import { Link } from "react-router-dom";
+import FormAreaChart from "../sheetcontrol/FormAreaChart";
 function EarnValeuManagementTable() {
   const {
     totalByWeek,
@@ -192,9 +190,9 @@ function EarnValeuManagementTable() {
       {/* <div>
         <Exceltransform UrlEndpoint="http://localhost:8000/progress/" /> 
       </div> */}
-
+      <FormAreaChart />
       <div className="ml-5 overflow-auto " style={{ height: "850px" }}>
-        <Link to={"/"}className="text-2xl text-blue-800 font-bold mt-4 flex  ">
+        <Link to={"/"} className="text-2xl text-blue-800 font-bold mt-4 flex  ">
           Control de Avance
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -210,7 +208,6 @@ function EarnValeuManagementTable() {
             />
           </svg>
         </Link>
-
         <table className="mr-2 w-full">
           <thead className="bg-blue-500 sticky top-0 ">
             <tr className="text-xs text-white">
@@ -333,9 +330,8 @@ function EarnValeuManagementTable() {
                     (progress.acumuladoEarn / progress.acumuladoPlanValue)
                   ).toFixed(2)}
                 </td>
-                <td>
-                  <td className=" ">{formatCurrency(progress.eepp)}</td>
-                </td>
+
+                <td className=" ">{formatCurrency(progress.eepp)}</td>
               </tr>
             ))}
           </tbody>

@@ -7,11 +7,9 @@ import CarInformationSheetControlReport from "../tables/CarInformationSheetContr
 function ReportControlSheet() {
   const {
     selectedFamily,
-    selectedSubfamily,
     formatCurrency,
     getDataBudget,
     selectedProjectId,
-    dataIncreaseDiscount,
     dataincreaseDisccountwthitoutfilter,
     contracObservationWhitOutFilter,
     projects,
@@ -22,6 +20,7 @@ function ReportControlSheet() {
   } = useContext(ViewerContext);
 
   const [selectedFamilies, setSelectedFamilies] = useState([]);
+  console.log("🚀 ~ ReportControlSheet ~ selectedFamilies:", selectedFamilies)
 
   //--------------Filtra por cada Familia y muestra los total por una o varias familias -------------//
   const familyOptions = getDataBudget
@@ -102,7 +101,7 @@ function ReportControlSheet() {
 
   //------------------- Obtiene Monto total del Aumento y Disminuciones al contrato por sub familia----//
   const getRecuperable = (subfamily) => {
-    return dataincreaseDisccountwthitoutfilter.data.data.reduce(
+    return dataincreaseDisccountwthitoutfilter?.data?.data?.reduce(
       (total, item) => {
         const matchesProject =
           !selectedProjectId || item.projectId === selectedProjectId;

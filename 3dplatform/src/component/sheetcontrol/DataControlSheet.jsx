@@ -9,13 +9,12 @@ const DataControlSheet = () => {
     const getDataSheetControl = async () => {
       try {
         const response = await axios.get("http://localhost:8000/sheet");
-        // console.log("responsegetDataSheetControl", response.data.result);
+        console.log("🚀 ~ getDataSheetControl ~ response:", response)
 
         if (
           Array.isArray(response.data.result) &&
           response.data.result.length > 0
         ) {
-          // console.log("datasheetresponse", response.data.result);
           updategetDataSheet(response.data.result);
         } else {
           console.error("it is not a array or is emphty", response);

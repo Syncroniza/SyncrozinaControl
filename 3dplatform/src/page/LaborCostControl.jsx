@@ -8,13 +8,15 @@ const LaborCostControl = () => {
     <div>
       <div className="flex bg-blue-500 bg-gradient-to-r from-blue-500 ">
         <Sidebardb />
-       <LaborDashboard />
+        <LaborDashboard />
         {/* MOnthCostlaborTable depende Costlaborcontroltable ya que tiene el post y get si se borra no renderiza MonthscostLabor ... channn */}
-        <CostLaborControlTable /> 
+        <CostLaborControlTable />
+      </div>
+      <div style={{ display:"none"}}>
+        <MonthCostaLaborTable />
       </div>
     </div>
   );
 };
 
 export default LaborCostControl;
-               

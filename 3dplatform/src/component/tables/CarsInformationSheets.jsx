@@ -21,6 +21,8 @@ const CarsInformationSheets = () => {
   const [totalTodosContratos, setTotalTodosContratos] = useState(0);
 
   useEffect(() => {
+    if (!Array.isArray(getDataBudget)) return;
+
     const filteredData = getDataBudget.filter((item) => {
       const matchesProject =
         !selectedProjectId || item.projectId === selectedProjectId;
@@ -41,6 +43,8 @@ const CarsInformationSheets = () => {
   }, [getDataBudget, selectedProjectId, selectedFamily, selectedSubfamily]); // Incluye selectedProjectId aquí
 
   const newGetTotalRecuperableFiltered = () => {
+    if (!Array.isArray(dataIncreaseDiscount)) return 0;
+
     return dataIncreaseDiscount.reduce((total, item) => {
       const matchesProject =
         !selectedProjectId || item.projectId === selectedProjectId;
@@ -56,6 +60,8 @@ const CarsInformationSheets = () => {
   };
 
   const getTotalMontoContrato = () => {
+    if (!Array.isArray(data)) return 0;
+
     // Realizar el cálculo del total de los montos de contrato
     return data.reduce((total, item) => {
       const matchesProject =
@@ -69,7 +75,10 @@ const CarsInformationSheets = () => {
       return total;
     }, 0);
   };
+
   useEffect(() => {
+    if (!Array.isArray(data)) return;
+
     // Realizar el cálculo del total de los montos de contrato
     const total = data.reduce((total, item) => {
       return total + (Number(item.Proyectado) || 0);
@@ -88,14 +97,14 @@ const CarsInformationSheets = () => {
   };
 
   // calcula los valores de las distintas tarjetas
-  const montoPropuesta = Object.values(newtotalbySubFamily).reduce(
+  const montoPropuesta = Object.values(newtotalbySubFamily || {}).reduce(
     (total, current) => total + current,
     0
   );
   const recuperable = newGetTotalRecuperableFiltered();
   const montoContrato = getTotalMontoContrato();
 
-  const totalconextras = montoPropuesta + newGetTotalRecuperableFiltered();
+  const totalconextras = montoPropuesta + recuperable;
   const ahorro = totalconextras - montoContrato;
   const porpagar = totalUnpaidInvoices - totalPaidByProjectFamilySubfamily;
 
@@ -118,7 +127,7 @@ const CarsInformationSheets = () => {
         <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-white text-center shadow-xl mx-2 p-2 grid grid-rows-2">
           <h1 className="text-sm font-light  text-white  ">MONTO PROPUESTA</h1>
           <div className="">
-            {Object.entries(newtotalbySubFamily).map(
+            {Object.entries(newtotalbySubFamily || {}).map(
               ([subfamily, totalProyectado]) => (
                 <div key={subfamily}>
                   <h2 className="text-sm font-semibold">

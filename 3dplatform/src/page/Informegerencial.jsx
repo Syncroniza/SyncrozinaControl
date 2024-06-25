@@ -1,8 +1,8 @@
 import Sidebardb from "../component/dashboard/Sidebardb";
 import CarsInformationGeneralProgress from "../component/tables/CarsInformationGeneralProgress";
-import EarnValeuManagementTable from "../component/tables/EarnValeuManagementTable";
 import { Link, Outlet } from "react-router-dom";
 import MainAreaChart from "../component/charts/AreaChart";
+import EarnValeuManagementTable from "../component/tables/EarnValeuManagementTable";
 
 function Informegerencial() {
   return (
@@ -37,11 +37,11 @@ function Informegerencial() {
           </Link> */}
         </div>
         <Outlet />
-
         <CarsInformationGeneralProgress />
         <MainAreaChart />
-
-        
+      </div>
+      <div style={{display:"none"}}>
+        <EarnValeuManagementTable />
       </div>
     </div>
   );

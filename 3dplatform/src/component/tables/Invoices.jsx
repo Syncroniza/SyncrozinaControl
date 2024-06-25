@@ -9,39 +9,27 @@ const Invoices = () => {
     selectedProjectId,
     formatCurrency,
     selectedFamily,
-    totalPaidByProjectFamilySubfamily,
     setTotalPaidByProjectFamilySubfamily,
-    accumatedValue,
-    totalUnpaidInvoices,
     setTotalUnpaidInvoices,
   } = useContext(ViewerContext);
- 
+
   const [newfilteredInvoices, setNewFilteredInvoices] = useState([]);
   const [totalInvoices, setTotalInvoices] = useState(0);
-  const [percentagePaid, setPercentagePaid] = useState([]);
-
 
   const formatedDate = (isoDate) => {
     if (!isoDate) return "Fecha no disponible";
-
-    // Crear la fecha en base al isoDate
     const date = new Date(isoDate);
-
-    // Usar getUTC* en lugar de get* para obtener la fecha en UTC
     const day = date.getUTCDate();
-    const month = date.getUTCMonth() + 1; // getUTCMonth() devuelve un índice basado en cero (0-11)
+    const month = date.getUTCMonth() + 1;
     const year = date.getUTCFullYear();
-
-    // Formatea el día y el mes para asegurar que tengan dos dígitos
     const formattedDay = String(day).padStart(2, "0");
     const formattedMonth = String(month).padStart(2, "0");
-
-    // Retorna la fecha formateada como "día/mes/año"
     return `${formattedDay}/${formattedMonth}/${year}`;
   };
 
-  // filtro por projectId familia y subfamilia y ademas el calculo acumulado
   useEffect(() => {
+    if (!invoicesdata) return; // Asegúrate de que invoicesdata esté disponible
+
     const filteredInvoices = invoicesdata.filter(
       (invoice) =>
         (!selectedProjectId || invoice.projectId === selectedProjectId) &&
@@ -49,7 +37,6 @@ const Invoices = () => {
         (!selectedSubfamily || invoice.subfamily === selectedSubfamily)
     );
 
-    // Ordenar las facturas por fecha de más antigua a más nueva
     filteredInvoices.sort(
       (a, b) => new Date(a.dateInvoices) - new Date(b.dateInvoices)
     );
@@ -79,14 +66,11 @@ const Invoices = () => {
         0
       );
 
-      const totalInvoicespaidUnPaid = totalPaid + totalUnpaid
+    const totalInvoicespaidUnPaid = totalPaid + totalUnpaid;
 
-    const percentagePaid =
-      totalInvoiced > 0
-        ? Number(((totalPaid / totalInvoiced) * 100).toFixed(2))
-        : 0;
+    
+
     setTotalInvoices(totalInvoiced);
-    setPercentagePaid(percentagePaid);
     setTotalPaidByProjectFamilySubfamily(totalPaid);
     setTotalUnpaidInvoices(totalInvoicespaidUnPaid);
     setNewFilteredInvoices(invoicesWithAccumulated);
@@ -107,7 +91,7 @@ const Invoices = () => {
           <thead className="sticky top-0 bg-blue-500 text-white ">
             <tr className="border border-slate-300  text-xxs">
               <th className="border border-slate-300px-4   ">ProjectId</th>
-              <th className="border border-slate-300 px-4  ">Familia</th>
+              <th className="border border-slate-300 px-4  ">Familias</th>
               <th className="border border-slate-300 px-4  ">SubFamila</th>
               <th className="border border-slate-300 px-4  ">N° Factura</th>
               <th className="border border-slate-300 px-4  ">
@@ -121,8 +105,6 @@ const Invoices = () => {
               </th>
               <th className="border border-slate-300 px-4  ">Fecha vencimiento</th>
               <th className="border border-slate-300 px-4  ">Estado Factura</th>
-
-              {/* <th className="border border-slate-300 px-4  ">Observaciones</th> */}
             </tr>
           </thead>
           <tbody>
@@ -161,25 +143,10 @@ const Invoices = () => {
                 <td className="border border-slate-300 px-4  ">
                   {invoice.invoiceStatus}
                 </td>
-                {/* <td className="border border-slate-300 px-4  ">
-                  {invoice.observations}
-                </td> */}
               </tr>
             ))}
           </tbody>
         </table>
-        {/* <div className=" ml-4 mr-8 mt-4 p-6 rounded-xl text-xs text-white text-center shadow-lg  grid grid-cols-2 ">
-          <div className=" flex flex-col justify-center mr-2 gap-2 bg-blue-500 rounded-xl font-light">
-            <h1>TOTAL FACTURADO</h1>
-            <h1 className="text-xs text-white text-center font-semibold  ">
-              {formatCurrency(accumatedValue)}
-            </h1>
-          </div>
-          <div className="flex flex-col justify-center text-xs font-light mr-2 gap-2 bg-blue-500 rounded-lg ml-1">
-            <h1>% PAGADO DE LO FACTURADO</h1>
-            <h1 className="text-xs font-light ">{percentagePaid}%</h1>
-          </div>
-        </div> */}
       </div>
     </div>
   );

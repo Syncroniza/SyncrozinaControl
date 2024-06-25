@@ -20,7 +20,7 @@ const InvicesMasterTable = () => {
 
   const fetchInvoices = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/invoices/");
+      const response = await axios.get(`http://localhost:8000/invoices/`);
       const sortedInvoices = response.data.data.sort((a, b) => new Date(a.dateInvoices) - new Date(b.dateInvoices));
       if (Array.isArray(response.data.data) && response.data.data.length > 0) {
         setInvoicesData(response.data.data); // Actualiza el estado de proyectos
@@ -47,6 +47,7 @@ const InvicesMasterTable = () => {
       const response = await axios.delete(
         `http://localhost:8000/invoices/${invoicesid}`
       );
+      console.log("🚀 ~ handleDeleteInvoice ~ response:", response)
 
       if (response.status === 200) {
         setInvoicesData((prevInvoiceData) => {
@@ -123,7 +124,6 @@ const InvicesMasterTable = () => {
                 <th className="border border-slate-300 px-2  ">$ Factura</th>
                 <th className="border border-slate-300 px-2  ">Estado Factura</th>
                 <th className="border border-slate-300 px-2  ">Fecha Vencimiento</th>
-                 {/* <th className="border border-slate-300 px-2  ">Observaciones</th> */}
                 <th className="border border-slate-300 px-2  ">Borrar</th>
                 <th className="border border-slate-300 px-2   ">Editar</th> 
               </tr>
@@ -161,9 +161,6 @@ const InvicesMasterTable = () => {
                   <td className="border border-slate-300  px-2  ">
                     {formatedDate(invoices.dueDate)}
                   </td>
-                  {/* <td className="border border-slate-300  px-2  ">
-                    {invoices.observations}
-                  </td> */}
                   <td className="border border-slate-300 px-2">
                     <button
                       className=" bg-red-500  p-1 text-white rounded-lg text-xs "

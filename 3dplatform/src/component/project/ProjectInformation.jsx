@@ -1,7 +1,6 @@
 import { useEffect, useContext, useState } from "react";
 import { ViewerContext } from "../Context";
 import axios from "axios";
-import RefreshButton from "../alert/RefreshButton"
 
 const ProjectInformation = () => {
   const {
@@ -16,16 +15,15 @@ const ProjectInformation = () => {
     formatCurrency,
     grandTotal,
     accumulatedRealMonthCost,
-    avanceRealTotal,
-    totalActualCost
+    totalActualCost,
   } = useContext(ViewerContext);
-    console.log("🚀 ~ ProjectInformation ~ projects:", projects)
+  console.log("🚀 ~ ProjectInformation ~ grandTotal:", grandTotal);
+  console.log("🚀 ~ ProjectInformation ~ totalActualCost:", totalActualCost);
 
   const openModal = () => setIsMoldalOpen(true);
-  // const [totalActualCost, setTotalActualCost] = useState("");
 
   useEffect(() => {
-    // Función para obtener proyectos junto con las sheets .. sheets viene anodado en projects
+    // Función para obtener proyectos junto con las sheets .. sheets viene anidado en projects
     const fetchProjects = async () => {
       try {
         const response = await axios.get("http://localhost:8000/project/");
@@ -59,28 +57,16 @@ const ProjectInformation = () => {
     return passesProjectId;
   });
 
-  // useEffect(() => {
-  //   const filteredData = aernValueAccumalated.filter(
-  //     (item) => item.projectId === selectedProjectId
-  //   );
-  //   const totalActualCost = filteredData.reduce(
-  //     (acc, item) => acc + (item.totalByWeekValue || 0),
-  //     0
-  //   );
-
-  //   setTotalActualCost(totalActualCost); // Actualiza el contexto
-  // }, [aernValueAccumalated, selectedProjectId, setTotalActualCost]);
-
   return (
     <div className="" style={{ width: "1250px" }}>
       <h1 className=" text-lg text-center font-semibold p-2 mb-2 ml-4 bg-white  mr-2 mt-6 shadow-xl rounded-lg ">
         INFORMACION GENERAL DEL PROYECTO
       </h1>
-      {/* <RefreshButton /> */}
+
       <div className="flex bg-white ml-4 mr-2 mt-6 shadow-xl rounded-lg ">
         <div className="col-span-4 mr-2">
           {/* --------------------  NO BORRRAR SE OCULTO AL USUARIO ------------------ */}
-           <button
+          <button
             onClick={openModal}
             type="button"
             className="flex bg-blue-500 bg-gradient-to-r from-indigo-500 p-2 text-white rounded-lg text-xs gap-2 mt-4 ml-4"
@@ -101,7 +87,7 @@ const ProjectInformation = () => {
               />
             </svg>{" "}
             Crear Nuevo Proyecto
-          </button> 
+          </button>
 
           <h1 className="text-xs font-semibold ml-4 mt-2 ">
             SELECCIONAR PROYECTO
@@ -150,7 +136,10 @@ const ProjectInformation = () => {
         <div className="grid grid-cols-3 ml-12">
           <div className=" ">
             {filteredDataProject && (
-              <div className="  text-center bg-blue-500 bg-gradient-to-r from-indigo-500 px-1 grid grid-rows-2 rounded-xl shadow-xl mt-4 mb-4 mr-3 "style={{height:"150px", width:"180px"}}>
+              <div
+                className="  text-center bg-blue-500 bg-gradient-to-r from-indigo-500 px-1 grid grid-rows-2 rounded-xl shadow-xl mt-4 mb-4 mr-3 "
+                style={{ height: "150px", width: "180px" }}
+              >
                 <div className="text-lg mt-2 text-white">Presupuesto: </div>
                 <div className=" text-lg text-white  ">
                   {formatCurrency(grandTotal)}
@@ -159,31 +148,20 @@ const ProjectInformation = () => {
             )}
           </div>
           <div className=" text-center bg-blue-500 bg-gradient-to-r from-indigo-500  grid grid-rows-2 px-1  rounded-xl shadow-xl mt-4 mb-4 mr-3">
-            <h1 className="text-lg mt-2 text-white px-2">
-              Valor Actual :
-            </h1>
+            <h1 className="text-lg mt-2 text-white px-2">Valor Actual :</h1>
             <div className="text-lg text-white ">
               {formatCurrency(totalActualCost)}
             </div>
           </div>
-          {/* <div className=" text-center bg-blue-500 bg-gradient-to-r from-indigo-500  grid grid-rows-2 px-1  rounded-xl shadow-xl mt-4 mb-4 mr-3">
-            <h1 className="text-lg mt-2 text-white px-2">Mano de Obra :</h1>
-            <div className="text-lg text-white ">
-              {formatCurrency(accumulatedRealMonthCost)}
-            </div>
-          </div> */}
+
           <div className=" text-center bg-blue-500 bg-gradient-to-r from-indigo-500  grid grid-rows-2 px-1  rounded-xl shadow-xl mt-4 mb-4 mr-3 ">
             <h1 className=" text-lg mt-2 text-white px-2">Disponible:</h1>
             <div className="text-lg text-white ">
-              {formatCurrency(grandTotal - totalActualCost-accumulatedRealMonthCost)}
+              {formatCurrency(
+                grandTotal - totalActualCost - accumulatedRealMonthCost
+              )}
             </div>
           </div>
-          {/* <div className=" text-center bg-blue-500 bg-gradient-to-r from-indigo-500  grid grid-rows-2 px-1  rounded-xl shadow-xl mt-4 mb-4 mr-3">
-            <h1 className="text-lg mt-2 text-white px-2">% Avance Obra</h1>
-            <div className="text-lg text-white ">
-              {avanceRealTotal}
-            </div>
-          </div> */}
         </div>
       </div>
     </div>
