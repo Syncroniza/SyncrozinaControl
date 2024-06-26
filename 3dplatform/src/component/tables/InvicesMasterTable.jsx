@@ -122,6 +122,7 @@ const InvicesMasterTable = () => {
                 <th className="border border-slate-300 px-4  ">Proveedor</th>
                 <th className="border border-slate-300 px-2   ">Glosa/EEPP</th>
                 <th className="border border-slate-300 px-2  ">$ Factura</th>
+                <th className="border border-slate-300 px-2  ">Estado</th>
                 <th className="border border-slate-300 px-2  ">Estado Factura</th>
                 <th className="border border-slate-300 px-2  ">Fecha Vencimiento</th>
                 <th className="border border-slate-300 px-2  ">Borrar</th>
@@ -156,8 +157,11 @@ const InvicesMasterTable = () => {
                     {formatCurrency(invoices.totalInvoices)}
                   </td>
                   <td className="border border-slate-300 px-2   ">
+                    {invoices.state}
+                  </td>
+                  <td className="border border-slate-300 px-2   ">
                     {invoices.invoiceStatus}
-                  </td> 
+                  </td>
                   <td className="border border-slate-300  px-2  ">
                     {formatedDate(invoices.dueDate)}
                   </td>
