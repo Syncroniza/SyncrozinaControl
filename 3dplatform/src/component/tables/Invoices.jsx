@@ -68,8 +68,6 @@ const Invoices = () => {
 
     const totalInvoicespaidUnPaid = totalPaid + totalUnpaid;
 
-    
-
     setTotalInvoices(totalInvoiced);
     setTotalPaidByProjectFamilySubfamily(totalPaid);
     setTotalUnpaidInvoices(totalInvoicespaidUnPaid);
@@ -103,7 +101,9 @@ const Invoices = () => {
               <th className="border border-slate-300 px-4  ">
                 $ AcumuladoFactura
               </th>
-              <th className="border border-slate-300 px-4  ">Fecha vencimiento</th>
+              <th className="border border-slate-300 px-4  ">
+                Fecha vencimiento
+              </th>
               <th className="border border-slate-300 px-4  ">Estado Factura</th>
             </tr>
           </thead>

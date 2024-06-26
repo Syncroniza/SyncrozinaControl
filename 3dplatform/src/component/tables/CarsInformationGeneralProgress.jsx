@@ -10,9 +10,6 @@ function CarsInformationGeneralProgress() {
     avanceRealTotal,
     setAvanceRealTotal,
   } = useContext(ViewerContext);
-    console.log("🚀 ~ CarsInformationGeneralProgress ~ totalPlanValue:", totalPlanValue)
-    console.log("🚀 ~ CarsInformationGeneralProgress ~ avanceRealTotal:", avanceRealTotal)
- 
 
   const [selectedWeek, setSelectedWeek] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -56,8 +53,6 @@ function CarsInformationGeneralProgress() {
   useEffect(() => {
     const totalEarnValue =
       filteredData.length > 0 ? filteredData[0].acumuladoEarn : 0;
-
-      
 
     const avanceRealTotal =
       totalPlanValue > 0 ? (totalEarnValue / totalPlanValue) * 100 : 0;

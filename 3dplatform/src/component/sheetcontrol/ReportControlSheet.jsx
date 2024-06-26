@@ -20,7 +20,6 @@ function ReportControlSheet() {
   } = useContext(ViewerContext);
 
   const [selectedFamilies, setSelectedFamilies] = useState([]);
-  console.log("🚀 ~ ReportControlSheet ~ selectedFamilies:", selectedFamilies)
 
   //--------------Filtra por cada Familia y muestra los total por una o varias familias -------------//
   const familyOptions = getDataBudget

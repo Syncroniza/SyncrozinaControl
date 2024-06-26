@@ -16,15 +16,12 @@ const IncreaseAndDiscountByForm = () => {
     setIsEditMode,
     setDescription,
     setCurrentIdIncreaseDiscount,
-    currentIdIncreaseDiscount,
     formatCurrency,
     dataIncreaseDiscount,
     setDataIncreaseDiscount,
-    dataincreaseDisccountwthitoutfilter,
     setDataincreaseDisccountwhithoutfilter,
   } = useContext(ViewerContext);
-    console.log("🚀 ~ IncreaseAndDiscountByForm ~ dataincreaseDisccountwthitoutfilter:", dataincreaseDisccountwthitoutfilter)
-  
+
   const openModal = () => setIsModalOpenBudget(true);
 
   useEffect(() => {
@@ -104,7 +101,10 @@ const IncreaseAndDiscountByForm = () => {
     }
   };
   return (
-    <div className="bg-white my-2 ml-3 mr-2 p-3 rounded-xl"style={{ width: "1200px" }}>
+    <div
+      className="bg-white my-2 ml-3 mr-2 p-3 rounded-xl"
+      style={{ width: "1200px" }}
+    >
       <FormIncreaseAndDiscount />
       <h1 className="text-sm font-semibold ml-3 ">
         AUMENTO / DISMINUCIONES AL CONTRATO
@@ -154,7 +154,10 @@ const IncreaseAndDiscountByForm = () => {
           <tbody>
             {Array.isArray(data)
               ? dataIncreaseDiscount.map((increasediscount) => (
-                  <tr className="border border-slate-300 text-xs text-center " key={increasediscount._id}>
+                  <tr
+                    className="border border-slate-300 text-xs text-center "
+                    key={increasediscount._id}
+                  >
                     <td className="border border-slate-300 px-1  ">
                       {increasediscount.projectId}
                     </td>
@@ -180,7 +183,7 @@ const IncreaseAndDiscountByForm = () => {
                       {increasediscount.Observaciones}
                     </td>
 
-                    <td className="border border-slate-300"> 
+                    <td className="border border-slate-300">
                       <button
                         className=" bg-red-500  p-2 text-white rounded-lg  "
                         onClick={() =>

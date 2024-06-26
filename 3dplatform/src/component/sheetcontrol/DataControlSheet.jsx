@@ -9,7 +9,6 @@ const DataControlSheet = () => {
     const getDataSheetControl = async () => {
       try {
         const response = await axios.get("http://localhost:8000/sheet");
-        console.log("🚀 ~ getDataSheetControl ~ response:", response)
 
         if (
           Array.isArray(response.data.result) &&

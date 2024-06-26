@@ -74,9 +74,7 @@ function ActualCostTable() {
     setTotalActualCost,
     totalActualCost,
     setTotalActualCostByWeek,
-    selectProjectId
   } = useContext(ViewerContext);
-    console.log("🚀 ~ ActualCostTable ~ totalActualCost:", totalActualCost)
 
   const [totalByWeek, setTotalByWeekState] = useState({});
   const [weeklyLaborCosts, setWeeklyLaborCosts] = useState({});
@@ -170,7 +168,6 @@ function ActualCostTable() {
     setTotalActualCostByWeek(totalActualCostByWeek);
 
     const totalCost = calculateTotalCost(totalActualCostByWeek);
-    console.log("🚀 ~ useEffect ~ totalCost:", totalCost);
     setTotalActualCost(totalCost);
   }, [invoicesdata, totalsWithAccumulated]);
 

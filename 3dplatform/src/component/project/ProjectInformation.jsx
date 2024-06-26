@@ -17,8 +17,6 @@ const ProjectInformation = () => {
     accumulatedRealMonthCost,
     totalActualCost,
   } = useContext(ViewerContext);
-  console.log("🚀 ~ ProjectInformation ~ grandTotal:", grandTotal);
-  console.log("🚀 ~ ProjectInformation ~ totalActualCost:", totalActualCost);
 
   const openModal = () => setIsMoldalOpen(true);
 

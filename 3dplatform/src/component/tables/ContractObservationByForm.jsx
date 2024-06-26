@@ -19,7 +19,6 @@ const ContractObservationByForm = () => {
     setIsModalOpenContract,
     setCurrentIdContract,
     formatCurrency,
-    contracObservationWhitOutFilter,
     setContracObservationWhitOutFilter,
   } = useContext(ViewerContext);
 
@@ -100,15 +99,14 @@ const ContractObservationByForm = () => {
       setIsEditMode(true);
       setIsModalOpenContract(true);
     }
-    console.log(
-      "🚀 ~ openFormAndCurrentContractId ~ contractToEdit._id:",
-      contractToEdit._id
-    );
   };
   //---------------------------------------------------------------------------//
 
   return (
-    <div className="bg-white my-2 mr-2 ml-3 pt-2 rounded-lg "style={{ width: "1200px" }}>
+    <div
+      className="bg-white my-2 mr-2 ml-3 pt-2 rounded-lg "
+      style={{ width: "1200px" }}
+    >
       <FormContractObservation />
       <h1 className="text-sm font-semibold ml-6 ">OBSERVACIONES AL CONTRATO</h1>
       <button
@@ -132,7 +130,7 @@ const ContractObservationByForm = () => {
         </svg>{" "}
         Nuevo Registro
       </button>
-      <div className="ml-4 overflow-auto"style={{ height:"300px"}}>
+      <div className="ml-4 overflow-auto" style={{ height: "300px" }}>
         <table className=" mt-4  ml-2 mr-2 mb-2 w-full">
           <thead className="sticky top-0 bg-blue-500 text-white  ">
             <tr className=" text-xs ">
