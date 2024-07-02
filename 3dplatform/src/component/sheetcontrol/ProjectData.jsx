@@ -18,6 +18,7 @@ const ProjectData = () => {
   } = useContext(ViewerContext);
 
   const [allSheets, setAllSheets] = useState([]);
+  console.log("🚀 ~ ProjectData ~ allSheets:", allSheets)
   const openModal = () => {
     setIsModalOpenBudget(true);
     setIsEditMode(false);
@@ -100,8 +101,7 @@ const ProjectData = () => {
     return `${formattedDay}/${formattedMonth}/${year}`;
   };
 
-
-
+  
   return (
     <div className=" shadow-xl rounded-xl flex bg-gradient-to-r from-blue-700">
       <Sidebardb />
@@ -160,11 +160,12 @@ const ProjectData = () => {
                 <th className="border border-slate-500 p-2">ProjectId</th>
                 <th className="border border-slate-500">Fecha</th>
                 <th className="border border-slate-500">Familia</th>
+                <th className="border border-slate-500">subFamilia</th>
                 <th className="border border-slate-500 ">O/C</th>
-                <th className="border border-slate-500">Precio Unitario</th>
                 <th className="border border-slate-500">
                   Subcontrato/Proveedor
                 </th>
+                <th className="border border-slate-500">Descripcion</th>
                 <th className="border border-slate-500">Total</th>
                 <th className="border border-slate-500">Borrar</th>
                 <th className="border border-slate-500">Editar</th>
@@ -174,14 +175,35 @@ const ProjectData = () => {
               {allSheets.map((item, z) => (
                 <tr key={z} className=" text-xxs ">
                   <td className="border border-slate-300 ">{item.projectId}</td>
-                  <td className="border border-slate-300">{formatedDate(item.date)}</td>
+                  <td className="border border-slate-300">
+                    {formatedDate(item.date)}
+                  </td>
                   <td className="border border-slate-300">{item.family}</td>
+                 <td className="border border-slate-300">
+                    {item.rawData && item.rawData.recepcion && item.rawData.recepcion.map((recepcion, index) => (
+                      <div key={index}>
+                        {recepcion.detalleRecepcion && recepcion.detalleRecepcion.map((detalle, i) => (
+                          <div key={i}>
+                            {detalle.distribucionCosto && detalle.distribucionCosto.map((distribucion, j) => (
+                              <p key={j}>{distribucion.descripcioncentcosto}</p>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    ))}
+                  </td>
                   <td className="border border-slate-300 ">{item.cod}</td>
                   <td className="border border-slate-300">
-                    {item.description}
+                    {item.subcontractorOffers}
                   </td>
                   <td className="border border-slate-300">
-                    {item.subcontractorOffers}
+                    {item.rawData && item.rawData.recepcion && item.rawData.recepcion.map((recepcion, index) => (
+                      <div key={index}>
+                        {recepcion.detalleRecepcion && recepcion.detalleRecepcion.map((detalle, i) => (
+                          <p key={i}>{detalle.descripcion}</p>
+                        ))}
+                      </div>
+                    ))}
                   </td>
                   <td className="border border-slate-300">
                     {formatCurrency(item.total)}

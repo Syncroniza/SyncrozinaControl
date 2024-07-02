@@ -8,9 +8,12 @@ const IdentificationHeader = () => {
     materialSheets,
     selectedProjectId,
   } = useContext(ViewerContext);
+    console.log("🚀 ~ IdentificationHeader ~ materialSheets:", materialSheets)
 
   const [aggregatedSheets, setAggregatedSheets] = useState([]);
-
+  console.log("🚀 ~ IdentificationHeader ~ aggregatedSheets:", aggregatedSheets)
+ const [selectdCod, setSelectedCod]= useState ("")
+  console.log("🚀 ~ IdentificationHeader ~ selectdCod:", selectdCod)
   useEffect(() => {
     if (!materialSheets) return;
 
@@ -24,7 +27,8 @@ const IdentificationHeader = () => {
       sheets.forEach((sheet) => {
         if (
           (selectedFamily === "" || sheet.family === selectedFamily) &&
-          (selectedSubfamily === "" || sheet.subfamily === selectedSubfamily)
+          (selectedSubfamily === "" || sheet.subfamily === selectedSubfamily) &&
+          (selectdCod === "" || sheet.cod === selectdCod)
         ) {
           if (!groupedData[sheet.projectId]) {
             groupedData[sheet.projectId] = {
@@ -38,6 +42,7 @@ const IdentificationHeader = () => {
             groupedData[sheet.projectId].families[familyKey] = {
               family: sheet.family,
               subfamily: sheet.subfamily,
+              cod:sheet.cod,
               subcontractorOffers: new Set(),
               total: 0,
             };
@@ -96,6 +101,12 @@ const IdentificationHeader = () => {
                     <h1>Familia:</h1>
                     <h1 className="text-xs font-light ml-2 mt-1">
                       {family.family}
+                    </h1>
+                  </div>
+                  <div className="flex text-sm font-semibold mt-2">
+                    <h1>Codigo :</h1>
+                    <h1 className="text-xs font-light ml-2 mt-1">
+                      {family.cod}
                     </h1>
                   </div>
 

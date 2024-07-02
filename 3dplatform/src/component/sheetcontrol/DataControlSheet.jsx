@@ -3,7 +3,7 @@ import axios from "axios";
 import { ViewerContext } from "../Context";
 
 const DataControlSheet = () => {
-  const {  updategetDataSheet } = useContext(ViewerContext);
+  const {  getDataSheet, setGetDataSheet } = useContext(ViewerContext);
 
   useEffect(() => {
     const getDataSheetControl = async () => {
@@ -14,7 +14,7 @@ const DataControlSheet = () => {
           Array.isArray(response.data.result) &&
           response.data.result.length > 0
         ) {
-          updategetDataSheet(response.data.result);
+          setGetDataSheet(response.data.result);
         } else {
           console.error("it is not a array or is emphty", response);
         }

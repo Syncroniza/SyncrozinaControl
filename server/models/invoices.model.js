@@ -42,6 +42,12 @@ const InvoicesSchema = new mongoose.Schema(
     observations: {
       type: String,
     },
+      state: {
+        type: String,
+      },
+      rawData: {
+        type: Object
+      }
   },
   {
     timestamps: true,

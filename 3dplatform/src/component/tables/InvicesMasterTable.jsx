@@ -14,6 +14,7 @@ const InvicesMasterTable = () => {
     formatCurrency,
     isModalOpenBudget,
   } = useContext(ViewerContext);
+    console.log("🚀 ~ InvicesMasterTable ~ invoicesdata:", invoicesdata)
 
   const openModal = () => setIsModalOpenBudget(true);
 
@@ -24,7 +25,7 @@ const InvicesMasterTable = () => {
         (a, b) => new Date(a.dateInvoices) - new Date(b.dateInvoices)
       );
       if (Array.isArray(response.data.data) && response.data.data.length > 0) {
-        setInvoicesData(response.data.data); // Actualiza el estado de proyectos
+        setInvoicesData(response.data.data); 
       } else {
         console.error("Empty array of projects", response);
       }
@@ -126,14 +127,11 @@ const InvicesMasterTable = () => {
                   Fecha de emision
                 </th>
                 <th className="border border-slate-300 px-4  ">Proveedor</th>
-                <th className="border border-slate-300 px-2   ">Glosa/EEPP</th>
+                {/* <th className="border border-slate-300 px-2   ">Glosa/EEPP</th> */}
                 <th className="border border-slate-300 px-2  ">$ Factura</th>
-                <th className="border border-slate-300 px-2  ">
-                  Estado Factura
-                </th>
-                <th className="border border-slate-300 px-2  ">
-                  Fecha Vencimiento
-                </th>
+                <th className="border border-slate-300 px-2  ">Estado</th>
+                <th className="border border-slate-300 px-2  ">Estado Factura</th>
+                <th className="border border-slate-300 px-2  ">Fecha Vencimiento</th>
                 <th className="border border-slate-300 px-2  ">Borrar</th>
                 <th className="border border-slate-300 px-2   ">Editar</th>
               </tr>
@@ -156,14 +154,17 @@ const InvicesMasterTable = () => {
                   <td className="border border-slate-300  px-2  ">
                     {formatedDate(invoices.dateInvoices)}
                   </td>
-                  <td className="border border-slate-300  px-2  ">
+                  {/* <td className="border border-slate-300  px-2  ">
                     {invoices.subcontractorOffers}
-                  </td>
+                  </td> */}
                   <td className="border border-slate-300  px-2  ">
                     {invoices.description}
                   </td>
                   <td className="border border-slate-300  px-2  ">
                     {formatCurrency(invoices.totalInvoices)}
+                  </td>
+                  <td className="border border-slate-300 px-2   ">
+                    {invoices.state}
                   </td>
                   <td className="border border-slate-300 px-2   ">
                     {invoices.invoiceStatus}
