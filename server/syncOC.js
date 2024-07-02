@@ -160,8 +160,8 @@ const getInvoices = async () => {
         }
     })
 
-    let startDate = new Date("2024-03-21 00:00:00");
-    let endDate = new Date("2024-04-24 23:59:59");
+    let startDate = new Date("2023-03-21 00:00:00");
+    let endDate = new Date("2023-04-24 23:59:59");
 
     while (startDate <= new Date()) {
         console.log(startDate, endDate);
@@ -191,6 +191,7 @@ const getInvoices = async () => {
                     subcontractorOffers: datum.nomProveedor,
                     description: datum.nomProveedor,
                     invoiceStatus: datum.estadoPago,
+                    state: datum.estadoDoc,
                 }
 
                 let url = `/cvbf/api/Factura/PorId?IdDoc=${datum.idDocumento}&api-version=1.0`;
@@ -212,7 +213,6 @@ const getInvoices = async () => {
                 let ocs = dtm.detalle.documentosRelacionados.ordenCompra;
 
                 if (ocs && ocs.length > 0){
-                    console.log(ocs.length);
                     ocs.map(async (oc) => {
                         let ocData = {
                             projectId: "PT-101",
@@ -231,22 +231,25 @@ const getInvoices = async () => {
                             oc.recepcion.map((recep) => {
                                 recep.detalleRecepcion.map((det) => {
                                     det.distribucionCosto.map(async (cost) => {
-                                        let budget = controlsheetsCods[cost.idCentroCosto] || controlsheetsNames[cost.descripcioncentcosto];
+                                        // Strip
+                                        let idCentroCosto = cost.idCentroCosto.replace(/\s/g, '');
+                                        let nameCentroCosto =  cost.descripcioncentcosto.replace(/\s/g, '');
+                                        let budget = controlsheetsCods[idCentroCosto] || controlsheetsNames[nameCentroCosto];
                                         if (!budget) {
-                                            console.log("No control sheet found for", cost.idCentroCosto, cost.descripcioncentcosto);
+                                            console.log("No control sheet found for", idCentroCosto, nameCentroCosto);
                                             budget = await BudgetModel.create({
                                                 projectId: "PT-101",
-                                                cod: cost.idCentroCosto,
-                                                taskName: cost.descripcioncentcosto,
+                                                cod: idCentroCosto,
+                                                taskName: nameCentroCosto,
                                                 unit: "",
                                                 qty: 1,
                                                 unitPrice: 0,
                                                 totalPrice: 0,
                                                 family: "",
-                                                subfamily: cost.descripcioncentcosto,
+                                                subfamily: nameCentroCosto,
                                             })
-                                            controlsheetsCods[cost.idCentroCosto] = budget;
-                                            controlsheetsNames[cost.descripcioncentcosto] = budget;
+                                            controlsheetsCods[idCentroCosto] = budget;
+                                            controlsheetsNames[nameCentroCosto] = budget;
                                         }
                                         ocData.family = budget.family;
                                         ocData.subfamily = budget.subfamily;
@@ -272,7 +275,7 @@ const getInvoices = async () => {
         }
 
         startDate = endDate;
-        endDate = new Date(endDate.getTime() + 30 * 24 * 60 * 60 * 1000);
+        endDate = new Date(endDate.getTime() + 90 * 24 * 60 * 60 * 1000);
     }
 }
 
