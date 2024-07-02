@@ -14,7 +14,6 @@ const CarsInformationSheets = () => {
     newtotalbySubFamily,
     setNewTottalBySubFamily,
     totalUnpaidInvoices,
-    setTotalUnpaidInvoices,
   } = useContext(ViewerContext);
 
   // se genero una nueva forma de calcular el total por subfamily

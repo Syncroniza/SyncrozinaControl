@@ -77,7 +77,6 @@ const ViewerProvider = ({ children }) => {
   const [summaryData, setSummaryData] = useState([]);
   const [grandTotal, setGrandTotal] = useState(0);
   const [totalActualCost, setTotalActualCost] = useState(0);
-  console.log("🚀 ~ ViewerProvider ~ totalActualCost:", totalActualCost)
   const [currentPeriodId, setCurrentPeriodId] = useState("");
   const [accumulatedRealMonthCost, setAccumulatedRealMonthCost] = useState(0);
   const [avanceRealTotal, setAvanceRealTotal] = useState("");
@@ -94,9 +93,6 @@ const ViewerProvider = ({ children }) => {
   const [realMonthCostGgpublico, setRealMonthCostGgpublico] = useState(0);
   const [realMonthCostPrivado, setRealMonthCostPrivado] = useState(0);
   const [realMonthCostPublico, setRealMonthCostPublico] = useState(0);
- 
-
-  
 
   const [filters, setFilters] = useState({
     projectId: "",
@@ -129,7 +125,6 @@ const ViewerProvider = ({ children }) => {
     setIsMoldalOpen(newUpdateOpenModal);
   };
 
-
   const updateFilters = (newUpdateFilters) => {
     setFilters(newUpdateFilters);
   };
@@ -138,9 +133,6 @@ const ViewerProvider = ({ children }) => {
     setFilteredProjectId(newUpdatefilteredProjectId);
   };
 
-  const updategetDataSheet = (newUpdategetDataSheet) => {
-    setGetDataSheet(newUpdategetDataSheet);
-  };
   const updateDataNode = (newUpdaDataNode) => {
     setDataNode(newUpdaDataNode);
   };
@@ -268,7 +260,6 @@ const ViewerProvider = ({ children }) => {
         setIsModalOpenBudget,
         isModalOpenBudget,
         getDataSheet,
-        updategetDataSheet,
         dataNode,
         setDataNode,
         updateDataNode,

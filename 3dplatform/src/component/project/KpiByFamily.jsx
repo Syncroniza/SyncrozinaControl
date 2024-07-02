@@ -13,10 +13,8 @@ const KpiByFamily = () => {
     realMonthCostPrivado,
     realMonthCostPublico,
   } = useContext(ViewerContext);
-    console.log("🚀 ~ KpiByFamily ~ invoicesdata:", invoicesdata)
 
   const [totalsByFamily, setTotalsByFamily] = useState({});
-  console.log("🚀 ~ KpiByFamily ~ totalsByFamily:", totalsByFamily)
   const [totalsInvoicesByFamily, setTotalsInvoicesByFamily] = useState({});
   const [totalPublicoggPrivado, setTotalPublicoggPrivado] = useState(0);
 
@@ -51,7 +49,6 @@ const KpiByFamily = () => {
     const filteredData = invoicesdata.filter(
       (proid) => proid.projectId === selectedProjectId
     );
-    console.log("🚀 ~ useEffect ~ filteredData:", filteredData)
 
     filteredData.forEach((item) => {
       const { family, totalInvoices } = item;

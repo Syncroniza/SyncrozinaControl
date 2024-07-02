@@ -166,7 +166,6 @@ function EarnValeuManagementTable() {
   }
 
   // El nuevo arreglo con la información requerida
-  console.log(newArray);
 
   // --------------------------------Formato de Fecha -----------------------------------------------------//
 

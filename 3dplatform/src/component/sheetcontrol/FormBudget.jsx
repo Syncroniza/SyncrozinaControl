@@ -115,7 +115,7 @@ const FormBudget = () => {
     "MAQ. MENOR (COMPRA O ARRIENDO) Y OTROS",
     "MAQUINARIA ARRIENDO",
     "FLETES",
-    " GASTOS DE OBRA",
+    "GASTOS DE OBRA",
     "FOTOCOPIAS",
     "GASTOS FINANCIEROS",
     "SEGUROS Y OTROS",
