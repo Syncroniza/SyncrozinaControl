@@ -23,10 +23,24 @@ app.use("/uploads", express.static("server/uploads"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+const whitelist = [
+    "http://localhost:5173",
+    "https://appsyncroniza.cl"
+];
+
 app.use(
   cors({
-    credentials: true,
-    origin: "http://localhost:5173",
+      credentials: true,
+      origin: function (origin, callback) {
+          if (!origin) return callback(null, true);
+          if (whitelist.indexOf(origin) === -1) {
+              const message =
+                  "The CORS policy for this site does not " +
+                  "allow access from the specified Origin.";
+              return callback(new Error(message), false);
+          }
+          return callback(null, true);
+      }
   })
 );
 
