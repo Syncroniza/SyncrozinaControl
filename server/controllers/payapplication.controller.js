@@ -1,6 +1,6 @@
 import { Types, Error } from "mongoose";
 const { ObjectId } = Types;
-import { PayApplicationModel } from "../models/PayApplication.model.js";
+import { PayApplicationModel } from "../models/payapplication.model.js";
 
 export function getAllPayApplication(req, res) {
   PayApplicationModel.find({})
