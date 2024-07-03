@@ -47,6 +47,11 @@ invoicesRoutes(app)
 payapplicationRoutes(app)
 progressRoutes(app)
 
+app.get("/health", (req, res) => {
+    res.send("OK");
+    res.status(200);
+});
+
 
 
 
