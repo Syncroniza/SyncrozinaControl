@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { ViewerContext } from "../Context";
 import axios from "axios";
 import Modal from "../Modal";
+import {BASE_URL} from "../../constants.js";
 
 
 const FormAreaChart = () => {
@@ -37,11 +38,11 @@ const FormAreaChart = () => {
       if (isEditMode) {
         resetForm();
         await axios.patch(
-          `http://localhost:8000/progress/${currentProgressId}`,
+          `${BASE_URL}/progress/${currentProgressId}`,
           progressData
         );
       } else {
-        await axios.post("http://localhost:8000/progress/", progressData);
+        await axios.post(BASE_URL + "/progress/", progressData);
       }
       closeModal();
     } catch (err) {

@@ -2,6 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { ViewerContext } from "../Context";
 import FormIncreaseAndDiscount from "../sheetcontrol/FormIncreaseAndDiscount";
+import {BASE_URL} from "../../constants.js";
 
 const IncreaseAndDiscountByForm = () => {
   const {
@@ -28,7 +29,7 @@ const IncreaseAndDiscountByForm = () => {
     const fetchContract = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/increasediscount/"
+          BASE_URL + "/increasediscount/"
         );
 
         if (
@@ -65,7 +66,7 @@ const IncreaseAndDiscountByForm = () => {
     }
     try {
       const response = await axios.delete(
-        `http://localhost:8000/increasediscount/${increasediscountId}`
+        `${BASE_URL}/increasediscount/${increasediscountId}`
       );
 
       if (response.status === 200) {

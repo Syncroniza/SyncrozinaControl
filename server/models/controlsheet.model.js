@@ -48,9 +48,12 @@ const ControlsheetSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-      rawData: {
-        type: Object,
-      },
+    rawData: {
+        type: Object
+    },
+    externalID: {
+        type: String,
+    }
   },
   {
     timestamps: true,

@@ -4,6 +4,7 @@ import axios from "axios";
 import ActualCostTable from "../tables/ActualCostTable";
 import { Link } from "react-router-dom";
 import FormAreaChart from "../sheetcontrol/FormAreaChart";
+import {BASE_URL} from "../../constants.js";
 function EarnValeuManagementTable() {
   const {
     totalByWeek,
@@ -45,7 +46,7 @@ function EarnValeuManagementTable() {
   useEffect(() => {
     const fetchProgress = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/progress/");
+        const response = await axios.get(BASE_URL + "/progress/");
 
         if (
           Array.isArray(response.data.data) &&
@@ -187,7 +188,7 @@ function EarnValeuManagementTable() {
   return (
     <div className="bg-white ml-4 mt-4 mr-4">
       {/* <div>
-        <Exceltransform UrlEndpoint="http://localhost:8000/progress/" /> 
+        <Exceltransform UrlEndpoint=BASE_URL + "/progress/" /> 
       </div> */}
       <FormAreaChart />
       <div className="ml-5 overflow-auto " style={{ height: "850px" }}>

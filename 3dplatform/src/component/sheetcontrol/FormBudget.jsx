@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import Modal from "../Modal";
 import axios from "axios";
 import { ViewerContext } from "../Context";
+import {BASE_URL} from "../../constants.js";
 
 const FormBudget = () => {
   const {
@@ -146,11 +147,11 @@ const FormBudget = () => {
       if (isEditMode) {
         resetForm();
         await axios.patch(
-          `http://localhost:8000/sheet/${currentSheetId}`,
+          `${BASE_URL}/sheet/${currentSheetId}`,
           sheetData
         );
       } else {
-        await axios.post("http://localhost:8000/sheet/", sheetData);
+        await axios.post(BASE_URL + "/sheet/", sheetData);
       }
 
       closeModelBudget(); // Cierra el modal y limpia el formulario después de una operación exitosa

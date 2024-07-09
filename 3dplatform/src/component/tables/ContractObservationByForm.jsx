@@ -2,6 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { ViewerContext } from "../Context";
 import FormContractObservation from "../sheetcontrol/FormContractObservation";
+import {BASE_URL} from "../../constants.js";
 
 const ContractObservationByForm = () => {
   const {
@@ -29,7 +30,7 @@ const ContractObservationByForm = () => {
   useEffect(() => {
     const fetchContract = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/contract/");
+        const response = await axios.get(BASE_URL + "/contract/");
 
         if (
           Array.isArray(response.data.data) &&
@@ -65,7 +66,7 @@ const ContractObservationByForm = () => {
     }
     try {
       const response = await axios.delete(
-        `http://localhost:8000/contract/${contractid}`
+        `${BASE_URL}/contract/${contractid}`
       );
 
       if (response.status === 200) {

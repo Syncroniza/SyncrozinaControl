@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import Modal from "../Modal";
 import axios from "axios";
 import { ViewerContext } from "../Context";
+import {BASE_URL} from "../../constants.js";
 
 const FormInvoices = () => {
   const {
@@ -148,7 +149,7 @@ const FormInvoices = () => {
       if (isEditMode) {
         // Asegúrate de que currentIdInvoices tiene el valor correcto
         const response = await axios.patch(
-          `http://localhost:8000/invoices/${curentIdInvoices}`,
+          `${BASE_URL}/invoices/${curentIdInvoices}`,
           invoiceData
         );
         const invoice = response.data;
@@ -162,7 +163,7 @@ const FormInvoices = () => {
         setIsEditMode(false); // Esto reinicia el modo a no edición
       } else {
         const response = await axios.post(
-          "http://localhost:8000/invoices/",
+          BASE_URL + "/invoices/",
           invoiceData
         );
         const invoice = response.data;

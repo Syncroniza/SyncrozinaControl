@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import Modal from "../Modal";
 import axios from "axios";
 import { ViewerContext } from "../Context";
+import {BASE_URL} from "../../constants.js";
 
 const FormContractObservation = () => {
   const {
@@ -130,12 +131,12 @@ const FormContractObservation = () => {
       if (isEditMode) {
         resetForm();
         await axios.patch(
-          `http://localhost:8000/contract/${currentContractId}`,
+          `${BASE_URL}/contract/${currentContractId}`,
           contractObservationData
         );
       } else {
         await axios.post(
-          "http://localhost:8000/contract",
+          BASE_URL + "/contract",
           contractObservationData
         );
       }

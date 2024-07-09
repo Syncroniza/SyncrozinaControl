@@ -3,6 +3,7 @@ import { ViewerContext } from "../Context";
 import Sidebardb from "../dashboard/Sidebardb";
 import FormInvoices from "../sheetcontrol/FormInvoices";
 import axios from "axios";
+import {BASE_URL} from "../../constants.js";
 
 const InvicesMasterTable = () => {
   const {
@@ -20,7 +21,7 @@ const InvicesMasterTable = () => {
 
   const fetchInvoices = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/invoices/`);
+      const response = await axios.get(`${BASE_URL}/invoices/`);
       const sortedInvoices = response.data.data.sort(
         (a, b) => new Date(a.dateInvoices) - new Date(b.dateInvoices)
       );
@@ -47,7 +48,7 @@ const InvicesMasterTable = () => {
     }
     try {
       const response = await axios.delete(
-        `http://localhost:8000/invoices/${invoicesid}`
+        `${BASE_URL}/invoices/${invoicesid}`
       );
       console.log("🚀 ~ handleDeleteInvoice ~ response:", response);
 

@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import Modal from "../Modal";
 import { ViewerContext } from "../Context";
+import {BASE_URL} from "../../constants.js";
 
 const FormLaborCost = () => {
   // Asumiendo que periodId se pasa como prop
@@ -15,7 +16,7 @@ const FormLaborCost = () => {
   const handleUpdateProject = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/labor/", {
+      const response = await axios.post(BASE_URL + "/labor/", {
         currentPeriodId,
         realMonthCost,
       });

@@ -13,6 +13,7 @@ import {
 
 import { useTheme } from "@table-library/react-table-library/theme";
 import axios from "axios";
+import {BASE_URL} from "../../constants.js";
 
 const LaborCostTable = () => {
   const {
@@ -95,7 +96,7 @@ const LaborCostTable = () => {
       });
 
       const response = await axios.post(
-        "http://localhost:8000/labor/",
+        BASE_URL + "/labor/",
         requestData
       );
 

@@ -1,6 +1,7 @@
 import { useEffect, useContext } from "react";
 import axios from "axios";
 import { ViewerContext } from "../Context";
+import {BASE_URL} from "../../constants.js";
 
 const DataControlSheet = () => {
   const {  getDataSheet, setGetDataSheet } = useContext(ViewerContext);
@@ -8,7 +9,7 @@ const DataControlSheet = () => {
   useEffect(() => {
     const getDataSheetControl = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/sheet");
+        const response = await axios.get(BASE_URL + "/sheet");
 
         if (
           Array.isArray(response.data.result) &&

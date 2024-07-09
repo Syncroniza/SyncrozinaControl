@@ -160,8 +160,8 @@ const getInvoices = async () => {
         }
     })
 
-    let startDate = new Date("2023-03-21 00:00:00");
-    let endDate = new Date("2023-04-24 23:59:59");
+    let startDate = new Date("2024-04-19 00:00:00");
+    let endDate = new Date("2024-07-18 23:59:59");
 
     while (startDate <= new Date()) {
         console.log(startDate, endDate);
@@ -186,12 +186,14 @@ const getInvoices = async () => {
 
                 let invoiceData = {
                     projectId: "PT-101",
+                    externalID: datum.idDocumento,
                     invoices: datum.folioUnico,
                     dateInvoices: new Date(datum.fechaEmision),
                     subcontractorOffers: datum.nomProveedor,
                     description: datum.nomProveedor,
                     invoiceStatus: datum.estadoPago,
                     state: datum.estadoDoc,
+                    rawData: datum
                 }
 
                 let url = `/cvbf/api/Factura/PorId?IdDoc=${datum.idDocumento}&api-version=1.0`;
@@ -215,6 +217,7 @@ const getInvoices = async () => {
                 if (ocs && ocs.length > 0){
                     ocs.map(async (oc) => {
                         let ocData = {
+                            externalID: oc.idOc,
                             projectId: "PT-101",
                             date: new Date(oc.fechaCreacion),
                             description: datum.nomProveedor,
@@ -236,7 +239,7 @@ const getInvoices = async () => {
                                         let nameCentroCosto =  cost.descripcioncentcosto.replace(/\s/g, '');
                                         let budget = controlsheetsCods[idCentroCosto] || controlsheetsNames[nameCentroCosto];
                                         if (!budget) {
-                                            console.log("No control sheet found for", idCentroCosto, nameCentroCosto);
+                                            console.log("No control sheet found for", idCentroCosto, nameCentroCosto, invoiceData);
                                             budget = await BudgetModel.create({
                                                 projectId: "PT-101",
                                                 cod: idCentroCosto,
@@ -260,14 +263,14 @@ const getInvoices = async () => {
                             })
                         }
                         await ControlSheetModel.findOneAndUpdate(
-                            {cod: ocData.cod},
+                            {externalID: ocData.externalID},
                             ocData,
                             {upsert: true}
                         );
                     })
                 }
                 await InvoicesModel.findOneAndUpdate(
-                    {invoices: invoiceData.invoices},
+                    {externalID: invoiceData.externalID},
                     invoiceData,
                     {upsert: true}
                 );
@@ -279,13 +282,60 @@ const getInvoices = async () => {
     }
 }
 
+const createAlieas = async () => {
+    let aliases = {
+        "MOLDAJE": "ARRIENDO DE MOLDAJE",
+        "ELEMENTOSPROTECCIÓNPERSONAL": "ELEMENTOS PROTECCION PERSONAL",
+        "FIERRO": "FIERRO Y ALAMBRE",
+        "ENFIERRADURA": "FIERRO Y ALAMBRE",
+        "FOTOCOPIAS(COMUNESYPLANOS)": "FOTOCOPIAS",
+        "GASTOSDEOBRA": "GASTOS DE OBRA",
+        "HERREMIENTASYOTROS": "HERRAMIENTAS Y OTROS",
+        "MAQUINARIAYHERREMIENTAS(ARRIENDO)": "MAQ. MENOR (COMPRA O ARRIENDO) Y OTROS",
+        "MAQUINARIAMENOR(COMPRA)": "MAQ. MENOR (COMPRA O ARRIENDO) Y OTROS",
+        "POSTVENTAYMARCHABLANCA": "POST VENTA Y MARCHA BLANCA",
+        "ASESORIASPLANIFICACIONYLIDERAZGO": "SEGUROS Y OTROS",
+        "ENSAYOS": "SEGUROS Y OTROS",
+        "GastosGeneralesTepille": "SEGUROS Y OTROS",
+        "ACTIVIDADCAPITALHUMANOENOBRA": "SEGUROS Y OTROS",
+        "APUNTALAMIENTOVIGAS": "SEGUROS Y OTROS",
+    }
+    let resumeAliases = {}
+
+    for (let key of Object.keys(aliases)) {
+        let new_key = aliases[key];
+        let alias = key
+        if (Object.hasOwn(resumeAliases, new_key)) {
+            resumeAliases[new_key].push(alias)
+        } else {
+            resumeAliases[new_key] = [alias]
+        }
+    }
+
+    console.log(resumeAliases)
+
+    for (let key of Object.keys(resumeAliases)) {
+        let taskName = key;
+        let aliases = resumeAliases[key];
+        console.log(taskName, aliases)
+        await BudgetModel.findOneAndUpdate(
+            {taskName: taskName},
+            {aliases: aliases}
+        )
+    }
+}
+
 mongoConnect().then(async () => {
     let controlsheets = await BudgetModel.find({})
     controlsheets.map((cs) => {
         controlsheetsNames[cs.taskName] = cs;
+        cs.aliases.map((alias) => {
+            controlsheetsNames[alias] = cs;
+        });
         controlsheetsCods[cs.cod] = cs;
     })
     // await getOC()
     await getInvoices();
+    // await createAlieas();
     console.log("Se fini")
 });

@@ -1,6 +1,7 @@
 import { useEffect, useContext, useState } from "react";
 import { ViewerContext } from "../Context";
 import axios from "axios";
+import {BASE_URL} from "../../constants.js";
 
 const ProjectInformation = () => {
   const {
@@ -24,7 +25,7 @@ const ProjectInformation = () => {
     // Función para obtener proyectos junto con las sheets .. sheets viene anidado en projects
     const fetchProjects = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/project/");
+        const response = await axios.get(BASE_URL + "/project/");
 
         if (
           Array.isArray(response.data.data) &&

@@ -42,7 +42,7 @@
 
 //   const sendAPIAlert = async (message) => {
 //     try {
-//       const response = await axios.post("http://localhost:8000/sendSPIAlert", {
+//       const response = await axios.post(BASE_URL + "/sendSPIAlert", {
 //         message: message,
 //       });
 //       setShowAlert(true);
