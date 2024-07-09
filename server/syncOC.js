@@ -160,8 +160,8 @@ const getInvoices = async () => {
         }
     })
 
-    let startDate = new Date("2024-04-19 00:00:00");
-    let endDate = new Date("2024-07-18 23:59:59");
+    let startDate = new Date("2023-03-21 00:00:00");
+    let endDate = new Date("2023-04-24 23:59:59");
 
     while (startDate <= new Date()) {
         console.log(startDate, endDate);
