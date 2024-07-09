@@ -5,7 +5,6 @@ const KpiByFamily = () => {
   const {
     getDataBudget,
     selectedProjectId,
-    setSelectedProjectId,
     setGrandTotal,
     invoicesdata,
     formatCurrency,
@@ -13,15 +12,12 @@ const KpiByFamily = () => {
     realMonthCostPrivado,
     realMonthCostPublico,
   } = useContext(ViewerContext);
+    console.log("🚀 ~ KpiByFamily ~ realMonthCostPublico:", realMonthCostPublico)
 
   const [totalsByFamily, setTotalsByFamily] = useState({});
   const [totalsInvoicesByFamily, setTotalsInvoicesByFamily] = useState({});
   const [totalPublicoggPrivado, setTotalPublicoggPrivado] = useState(0);
-
-  const handleProjectSelect = (projectId) => {
-    setSelectedProjectId(projectId);
-  };
-
+ 
   // Calcula el presupuesto total por familia
   useEffect(() => {
     const totals = {};

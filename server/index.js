@@ -13,7 +13,6 @@ import contractRoutes from "./routes/contract.routes.js";
 import increasediscountRoutes from "./routes/increasediscount.routes.js";
 import invoicesRoutes from "./routes/invoices.routes.js";
 import payapplicationRoutes from "./routes/payapplication.routes.js";
-import progressRoutes from "./routes/progress.routes.js";
 
 
 const app = express();
@@ -59,7 +58,7 @@ contractRoutes(app)
 increasediscountRoutes(app)
 invoicesRoutes(app)
 payapplicationRoutes(app)
-progressRoutes(app)
+
 
 app.get("/health", (req, res) => {
     res.send("OK");

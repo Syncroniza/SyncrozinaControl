@@ -33,7 +33,7 @@ const LaborDashboard = () => {
 
   useEffect(() => {
     const filteredTotalPublico = totalsWithAccumulated.filter(
-      (item) => item.rol === "publico"
+      (item) => item.rol === "MODirecta"
     );
 
     const totalLaborPublico = filteredTotalPublico.reduce(
