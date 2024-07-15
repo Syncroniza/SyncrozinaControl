@@ -14,7 +14,11 @@ const InvicesMasterTable = () => {
     formatCurrency,
     isModalOpenBudget,
   } = useContext(ViewerContext);
-    console.log("🚀 ~ InvicesMasterTable ~ invoicesdata:", invoicesdata)
+  console.log("🚀 ~ InvicesMasterTable ~ invoicesdata:", invoicesdata);
+
+  const [paidInvoices, setPaidInvoices] = useState([]);
+  const [totalPaidAmount, setTotalPaidAmount] = useState(0);
+  const [totalInvoicedAmount, setTotalInvoicedAmount] = useState(0);
 
   const openModal = () => setIsModalOpenBudget(true);
 
@@ -24,8 +28,11 @@ const InvicesMasterTable = () => {
       const sortedInvoices = response.data.data.sort(
         (a, b) => new Date(a.dateInvoices) - new Date(b.dateInvoices)
       );
+      console.log("🚀 ~ fetchInvoices ~ response:", response);
       if (Array.isArray(response.data.data) && response.data.data.length > 0) {
-        setInvoicesData(response.data.data); 
+        setInvoicesData(response.data.data);
+        filterPaidInvoices(response.data.data);
+        calculateTotalInvoicedAmount(response.data.data);
       } else {
         console.error("Empty array of projects", response);
       }
@@ -34,10 +41,30 @@ const InvicesMasterTable = () => {
     }
   };
 
+  const filterPaidInvoices = (data) => {
+    const paid = data.filter((invoice) => {
+      return invoice.invoiceStatus === "Pagada";
+    });
+    setPaidInvoices(paid);
+    const total = paid.reduce(
+      (sum, invoice) => sum + invoice.totalInvoices,
+      0
+    );
+    setTotalPaidAmount(total);
+  };
+
+  const calculateTotalInvoicedAmount = (data) => {
+    const total = data.reduce(
+      (sum, invoice) => sum + (invoice.totalInvoices || 0),
+      0
+    );
+    setTotalInvoicedAmount(total);
+  };
+
   useEffect(() => {
     fetchInvoices();
-  }, [selectedSubfamily, isModalOpenBudget, setInvoicesData]); // Se ejecuta solo e
-  //--------------------Delete____________________________
+  }, [selectedSubfamily, isModalOpenBudget, setInvoicesData]);
+
   const handleDeleteInvoice = async (invoicesid) => {
     const isConfirmed = window.confirm(
       "Esta seguro que quiere borrar la factura ?"
@@ -53,18 +80,18 @@ const InvicesMasterTable = () => {
 
       if (response.status === 200) {
         setInvoicesData((prevInvoiceData) => {
-          // Filtrar el array para remover el elemento eliminado
-          return prevInvoiceData.filter(
+          const updatedData = prevInvoiceData.filter(
             (invoices) => invoices._id !== invoicesid
           );
+          filterPaidInvoices(updatedData);
+
+          return updatedData;
         });
       }
     } catch (err) {
       console.error("Error deleting invoice:", err);
     }
   };
-
-  // ---------------------------------------------------------------------------------------------------------//
 
   const formatedDate = (isoDate) => {
     if (!isoDate) return "";
@@ -81,14 +108,34 @@ const InvicesMasterTable = () => {
   };
 
   return (
-    <div className="flex bg-gradient-to-r from-blue-700 ">
+    <div className="flex bg-gradient-to-r from-blue-500 ">
       <Sidebardb />
       <FormInvoices />
       <div className="  b-4 bg-white mt-4 ml-3 mb-6 p-4 rounded-lg">
-        <h1 className="text-lg mb-4 text-center font-semibold">
+        <h1 className="text-lg  text-center font-semibold">
           MAESTRO DE FACTURAS
         </h1>
-        {/* --------------------- Nuevo Registro ----------------- */}
+        <div className="grid grid-cols-3">
+          <div className=" text-center p-2 bg-gradient-to-r from-green-500 to-blue-500  grid grid-rows-2   rounded-xl shadow-xl mt-4 mb-4 mr-3">
+            <h2 className="text-white">
+              Total Facturado: 
+            </h2>
+            <h1 className="text-white">{formatCurrency(totalInvoicedAmount)}</h1>
+          </div>
+
+          <div className=" text-center bg-gradient-to-r from-green-500 to-blue-500  grid grid-rows-2  rounded-xl shadow-xl mt-4 mb-4 mr-3">
+            <h2 className="text-white">
+              Total Pagado: 
+            </h2>
+            <h1 className="text-white">{formatCurrency(totalPaidAmount)}</h1>
+          </div>
+          
+          <div className=" text-center bg-gradient-to-r from-green-500 to-blue-500  grid grid-rows-2   rounded-xl shadow-xl mt-4 mb-4 mr-3">
+            <h2 className="text-white">
+              Total Por Pagar: 
+            </h2>
+            <h1 className="text-white">{formatCurrency(totalInvoicedAmount-totalPaidAmount)}</h1>
+          </div>
         <div className="flex mb-4">
           <button
             onClick={openModal}
@@ -112,6 +159,7 @@ const InvicesMasterTable = () => {
             Nuevo Registro
           </button>
         </div>
+        </div>
         <div
           className="overflow-auto text-center "
           style={{ width: "1200px", height: "1000px" }}
@@ -127,11 +175,14 @@ const InvicesMasterTable = () => {
                   Fecha de emision
                 </th>
                 <th className="border border-slate-300 px-4  ">Proveedor</th>
-                {/* <th className="border border-slate-300 px-2   ">Glosa/EEPP</th> */}
                 <th className="border border-slate-300 px-2  ">$ Factura</th>
                 <th className="border border-slate-300 px-2  ">Estado</th>
-                <th className="border border-slate-300 px-2  ">Estado Factura</th>
-                <th className="border border-slate-300 px-2  ">Fecha Vencimiento</th>
+                <th className="border border-slate-300 px-2  ">
+                  Estado Factura
+                </th>
+                <th className="border border-slate-300 px-2  ">
+                  Fecha Vencimiento
+                </th>
                 <th className="border border-slate-300 px-2  ">Borrar</th>
                 <th className="border border-slate-300 px-2   ">Editar</th>
               </tr>
@@ -154,9 +205,6 @@ const InvicesMasterTable = () => {
                   <td className="border border-slate-300  px-2  ">
                     {formatedDate(invoices.dateInvoices)}
                   </td>
-                  {/* <td className="border border-slate-300  px-2  ">
-                    {invoices.subcontractorOffers}
-                  </td> */}
                   <td className="border border-slate-300  px-2  ">
                     {invoices.description}
                   </td>

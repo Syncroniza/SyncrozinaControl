@@ -18,7 +18,6 @@ const ProjectData = () => {
   } = useContext(ViewerContext);
 
   const [allSheets, setAllSheets] = useState([]);
-  console.log("🚀 ~ ProjectData ~ allSheets:", allSheets)
   const openModal = () => {
     setIsModalOpenBudget(true);
     setIsEditMode(false);
@@ -103,7 +102,7 @@ const ProjectData = () => {
 
   
   return (
-    <div className=" shadow-xl rounded-xl flex bg-gradient-to-r from-blue-700">
+    <div className=" shadow-xl rounded-xl flex bg-gradient-to-r from-blue-500">
       <Sidebardb />
       <FormBudget />
       <div className="bg-white rounded-xl ml-4 mt-5 mb-6">

@@ -12,7 +12,6 @@ const KpiByFamily = () => {
     realMonthCostPrivado,
     realMonthCostPublico,
   } = useContext(ViewerContext);
-    console.log("🚀 ~ KpiByFamily ~ realMonthCostPublico:", realMonthCostPublico)
 
   const [totalsByFamily, setTotalsByFamily] = useState({});
   const [totalsInvoicesByFamily, setTotalsInvoicesByFamily] = useState({});
@@ -102,13 +101,13 @@ const KpiByFamily = () => {
               className="bg-blue-500 bg-gradient-to-r from-indigo-500  ml-2 rounded-lg text-white shadow-lg"
             >
               <p className="text-center text-sm shadow-xl">{family}</p>
-              <div className="text-center text-lg mt-2">
+              <div className="text-center text-sm mt-2">
                 Total: {formatCurrency(total)}
               </div>
-              <div className="text-center mt-2 text-lg">
+              <div className="text-center mt-2 text-sm">
                 Actual: {formatCurrency(actual)}
               </div>
-              <div className="text-center mt-2 text-lg">
+              <div className="text-center mt-2 text-sm">
                 Disponible: {formatCurrency(disponible)}
               </div>
               <div className="mt-4 p-1  rounded-lg"></div>

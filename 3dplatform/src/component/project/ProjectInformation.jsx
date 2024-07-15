@@ -56,7 +56,7 @@ const ProjectInformation = () => {
   });
 
   return (
-    <div className="" style={{ width: "1250px" }}>
+    <div className="" style={{ width: "1270px" }}>
       <h1 className=" text-lg text-center font-semibold p-2 mb-2 ml-4 bg-white  mr-2 mt-6 shadow-xl rounded-lg ">
         INFORMACION GENERAL DEL PROYECTO
       </h1>
@@ -131,20 +131,30 @@ const ProjectInformation = () => {
             </tbody>
           </table>
         </div>
-        <div className="grid grid-cols-3 ml-12">
-          <div className=" ">
-            {filteredDataProject && (
-              <div
-                className="  text-center bg-blue-500 bg-gradient-to-r from-indigo-500 px-1 grid grid-rows-2 rounded-xl shadow-xl mt-4 mb-4 mr-3 "
-                style={{ height: "150px", width: "180px" }}
-              >
-                <div className="text-lg mt-2 text-white">Presupuesto: </div>
-                <div className=" text-lg text-white  ">
-                  {formatCurrency(grandTotal)}
-                </div>
-              </div>
-            )}
+        <div className="grid grid-cols-4 ml-12">
+          <div className=" text-center bg-green-500   grid grid-rows-2 px-1  rounded-xl shadow-xl mt-4 mb-4 mr-3">
+            <h1 className="text-lg mt-2 text-white px-2">
+              Presupuesto Original :
+            </h1>
+            <div>
+              <h1 className="text-lg text-white ">$7.622.685.676</h1>
+              <h1 className="text-sm text-white mb-0 ">($210.381.453)</h1>
+            </div>
           </div>
+
+          {filteredDataProject && (
+            <div
+              className="  text-center bg-blue-500 bg-gradient-to-r from-indigo-500 px-1 grid grid-rows-2 rounded-xl shadow-xl mt-4 mb-4 mr-3 "
+              style={{ height: "200px", width: "180px" }}
+            >
+              <div className="text-lg mt-2 text-white">
+                Presupuesto de Obra:{" "}
+              </div>
+              <div className=" text-lg text-white  ">
+                {formatCurrency(grandTotal)}
+              </div>
+            </div>
+          )}
           <div className=" text-center bg-blue-500 bg-gradient-to-r from-indigo-500  grid grid-rows-2 px-1  rounded-xl shadow-xl mt-4 mb-4 mr-3">
             <h1 className="text-lg mt-2 text-white px-2">Valor Actual :</h1>
             <div className="text-lg text-white ">

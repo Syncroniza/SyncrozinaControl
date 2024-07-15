@@ -117,7 +117,7 @@ function CarsInformationGeneralProgress() {
                 {formatedDate(selectedWeek)}
               </h1> */}
               <select
-                className=" text-white text-center "
+                className=" text-white text-center text-xs "
                 value={selectedWeek}
                 onChange={(e) => setSelectedWeek(e.target.value)}
               >
@@ -140,7 +140,7 @@ function CarsInformationGeneralProgress() {
               <h1 className="text-sm mt-2 font-semibold text-white">
                 % AVANCE PLANIFICADO
               </h1>
-              <h1 className="text-lg font-semibold text-white mt-2">
+              <h1 className="text-sm font-semibold text-white mt-2">
                 {((currentPlanValue / totalPlanValue) * 100).toFixed(2)} %
               </h1>
             </div>
@@ -148,7 +148,7 @@ function CarsInformationGeneralProgress() {
               <h1 className="text-sm font-semibold text-white mt-2">
                 % AVANCE REAL
               </h1>
-              <h1 className="text-lg font-semibold text-white mt-2">
+              <h1 className="text-sm font-semibold text-white mt-2">
                 {calculatePercentage(totalEarnValue, totalPlanValue)} %
               </h1>
             </div>
@@ -156,13 +156,13 @@ function CarsInformationGeneralProgress() {
               <h1 className="text-sm font-semibold text-white mt-2">
                 % COSTO ACTUAL
               </h1>
-              <h1 className="text-lg font-semibold text-white mt-2">
+              <h1 className="text-sm font-semibold text-white mt-2">
                 {calculatePercentage(totalActualCost, totalPlanValue)} %
               </h1>
             </div>
             <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 m-2 p-1 rounded-xl text-center shadow-xl">
               <h1 className="text-sm font-semibold text-white mt-2">SPI</h1>
-              <h1 className="text-lg font-semibold text-white mt-2">
+              <h1 className="text-sm font-semibold text-white mt-2">
                 {SPI.toFixed(2)} %
               </h1>
             </div>
@@ -170,7 +170,7 @@ function CarsInformationGeneralProgress() {
               <h1 className="text-sm font-semobold text-white mt-2">
                 Duración del Proyecto
               </h1>
-              <h1 className="text-lg font-semibold text-white mt-2">
+              <h1 className="text-sm font-semibold text-white mt-2">
                 {projectDuration} días corridos
               </h1>
             </div>
@@ -178,7 +178,7 @@ function CarsInformationGeneralProgress() {
               <h1 className="text-sm font-light text-white">
                 Proyeccion a termino
               </h1>
-              <h1 className="text-lg font-semibold text-white mt-2">
+              <h1 className="text-sm font-semibold text-white mt-2">
                 {(projectDuration / SPI).toFixed(0)} días corridos
               </h1>
             </div>

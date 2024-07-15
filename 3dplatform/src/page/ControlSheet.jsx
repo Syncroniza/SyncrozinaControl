@@ -12,7 +12,7 @@ import ActualCostTable from "../component/tables/ActualCostTable";
 import HojasdeControl from "../page/HojadeControl";
 const ControlSheetMain = () => {
   return (
-    <div className="flex bg-gradient-to-r from-blue-700 mb-4 ">
+    <div className="flex bg-gradient-to-r from-blue-500 mb-4 ">
       <div className="flex">
         <Sidebardb />
       </div>
