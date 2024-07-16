@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import Modal from "../Modal";
 import axios from "axios";
 import { ViewerContext } from "../Context";
+import {BASE_URL} from "../../constants.js";
 
 function FormIncreaseAndDiscount() {
   const {
@@ -128,12 +129,12 @@ function FormIncreaseAndDiscount() {
       if (isEditMode) {
         resetForm();
         await axios.patch(
-          `http://localhost:8000/increasediscount/${currentIdIncreaseDiscount}`,
+          `${BASE_URL}/increasediscount/${currentIdIncreaseDiscount}`,
           increaseAndDiscountData
         );
       } else {
         await axios.post(
-          "http://localhost:8000/increasediscount",
+          BASE_URL + "/increasediscount",
           increaseAndDiscountData
         );
       }

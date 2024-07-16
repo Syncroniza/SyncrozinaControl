@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useContext } from "react";
 import { ViewerContext } from "../Context";
+import {BASE_URL} from "../../constants.js";
 
 const CostLaborControlTable = () => {
   const { setDataNode } = useContext(ViewerContext);
@@ -8,7 +9,7 @@ const CostLaborControlTable = () => {
   useEffect(() => {
     const fetchLabor = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/labor/");
+        const response = await axios.get(BASE_URL + "/labor/");
         if (
           Array.isArray(response.data.data) &&
           response.data.data.length > 0

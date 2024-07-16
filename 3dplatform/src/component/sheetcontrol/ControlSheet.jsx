@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import Modal from "../Modal";
 import { ViewerContext } from "../Context";
+import {BASE_URL} from "../../constants.js";
 
 const ControlSheet = () => {
   const { isModalOpen, setIsMoldalOpen: updateModalOpen } =
@@ -19,7 +20,7 @@ const ControlSheet = () => {
   const handleUpdateProject = (e) => {
     e.preventDefault();
 
-    axios.post("http://localhost:8000/project", {
+    axios.post(BASE_URL + "/project", {
       projectId: projectId,
       projectName: projectName,
       startDate: startDate,

@@ -47,6 +47,9 @@ const InvoicesSchema = new mongoose.Schema(
       },
       rawData: {
         type: Object
+      },
+      externalID: {
+        type: String,
       }
   },
   {

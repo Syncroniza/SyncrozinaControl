@@ -4,6 +4,7 @@ import { ViewerContext } from "../Context";
 import Exceltransform from "../Exceltransform";
 import Sidebardb from "../dashboard/Sidebardb";
 import FormBudget from "./FormBudget";
+import {BASE_URL} from "../../constants.js";
 
 const ProjectData = () => {
   const {
@@ -31,7 +32,7 @@ const ProjectData = () => {
     // Función para obtener proyectos junto con las sheets .. sheets viene anidado en projects
     const fetchProjects = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/project/");
+        const response = await axios.get(BASE_URL + "/project/");
 
         if (
           Array.isArray(response.data.data) &&
@@ -57,7 +58,7 @@ const ProjectData = () => {
     }
     try {
       const response = await axios.delete(
-        `http://localhost:8000/sheet/${sheetid}`
+        `${BASE_URL}/sheet/${sheetid}`
       );
       if (response.status === 200) {
         setSelectedProject((prevSelectedProject) => {
@@ -152,7 +153,7 @@ const ProjectData = () => {
           className=" overflow-y-auto mb-4 mt-4 text-center ml-2 mr-2"
           style={{ height: "800px", width: "1200px" }}
         >
-          {/* <Exceltransform UrlEndpoint="http://localhost:8000/sheet/" /> */}
+          {/* <Exceltransform UrlEndpoint=BASE_URL + "/sheet/" /> */}
           <table className=" mr-8  w-full sticky ">
             <thead className="sticky top-0 bg-blue-500 text-white">
               <tr className="border border-slate-00  text-xxs  ">

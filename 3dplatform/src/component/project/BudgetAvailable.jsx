@@ -2,6 +2,7 @@ import { useEffect, useContext } from "react";
 import { ViewerContext } from "../Context";
 import axios from "axios";
 import Exceltransform from "../Exceltransform";
+import {BASE_URL} from "../../constants.js";
 
 const BudgetAvailable = () => {
   const {
@@ -12,7 +13,7 @@ const BudgetAvailable = () => {
 
   useEffect(() => {
     const getBudgetData = async () => {
-      const getDataResponse = await axios.get("http://localhost:8000/budget");
+      const getDataResponse = await axios.get(BASE_URL + "/budget");
 
       if (
         Array.isArray(getDataResponse.data.data) &&
@@ -27,7 +28,7 @@ const BudgetAvailable = () => {
 
   return (
     <div className="bg-white ml-4 mr-2 mt-4 mb-2 shadow-lg  rounded-lg">
-      <Exceltransform UrlEndpoint="http://localhost:8000/budget/" />
+      <Exceltransform UrlEndpoint={BASE_URL + "/budget/"} />
     </div>
   );
 };
