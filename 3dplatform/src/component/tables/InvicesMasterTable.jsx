@@ -3,12 +3,9 @@ import { ViewerContext } from "../Context";
 import Sidebardb from "../dashboard/Sidebardb";
 import FormInvoices from "../sheetcontrol/FormInvoices";
 import axios from "axios";
-<<<<<<< HEAD
-import Select from "react-select";
-=======
 import {BASE_URL} from "../../constants.js";
->>>>>>> 8f0b82b9b0cb96b01cb30854c0a777812fd57d75
 
+import Select from "react-select"
 const InvicesMasterTable = () => {
   const {
     setIsModalOpenBudget,
