@@ -3,6 +3,7 @@ import { ViewerContext } from "../Context";
 import Sidebardb from "../dashboard/Sidebardb";
 import FormInvoices from "../sheetcontrol/FormInvoices";
 import axios from "axios";
+import Select from "react-select";
 
 const InvicesMasterTable = () => {
   const {
@@ -19,6 +20,10 @@ const InvicesMasterTable = () => {
   const [paidInvoices, setPaidInvoices] = useState([]);
   const [totalPaidAmount, setTotalPaidAmount] = useState(0);
   const [totalInvoicedAmount, setTotalInvoicedAmount] = useState(0);
+  const [filteredInvoices, setFilteredInvoices] = useState([]);
+  const [selectedDocStates, setSelectedDocStates] = useState([]);
+  const [selectedPagoStates, setSelectedPagoStates] = useState([]);
+  const [totalsByState, setTotalsByState] = useState({});
 
   const openModal = () => setIsModalOpenBudget(true);
 
@@ -33,6 +38,7 @@ const InvicesMasterTable = () => {
         setInvoicesData(response.data.data);
         filterPaidInvoices(response.data.data);
         calculateTotalInvoicedAmount(response.data.data);
+        setFilteredInvoices(response.data.data); // Inicialmente mostrar todas las facturas
       } else {
         console.error("Empty array of projects", response);
       }
@@ -46,10 +52,7 @@ const InvicesMasterTable = () => {
       return invoice.invoiceStatus === "Pagada";
     });
     setPaidInvoices(paid);
-    const total = paid.reduce(
-      (sum, invoice) => sum + invoice.totalInvoices,
-      0
-    );
+    const total = paid.reduce((sum, invoice) => sum + invoice.totalInvoices, 0);
     setTotalPaidAmount(total);
   };
 
@@ -107,6 +110,136 @@ const InvicesMasterTable = () => {
     return `${formattedDay}/${formattedMonth}/${year}`;
   };
 
+  const customStyles = {
+    control: (base, state) => ({
+      ...base,
+      boxShadow: state.isFocused ? "0 0 0 2px rgba(56, 189, 248, 0.5)" : 0,
+      borderColor: state.isFocused ? "#38bdf8" : "#d1d5db",
+      "&:hover": {
+        borderColor: state.isFocused ? "#38bdf8" : "#d1d5db",
+      },
+      className: "rounded-md",
+    }),
+    menu: (base) => ({
+      ...base,
+      borderRadius: 0,
+      hyphens: "auto",
+      marginTop: 0,
+      textAlign: "left",
+      wordWrap: "break-word",
+    }),
+    menuList: (base) => ({
+      ...base,
+      padding: 0,
+    }),
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isFocused ? "#bfdbfe" : "#ffffff",
+      color: "#1f2937",
+      cursor: "pointer",
+      "&:active": {
+        backgroundColor: "#38bdf8",
+      },
+    }),
+    multiValue: (base) => ({
+      ...base,
+      backgroundColor: "#e0f2fe",
+    }),
+    multiValueLabel: (base) => ({
+      ...base,
+      color: "#0369a1",
+    }),
+    multiValueRemove: (base) => ({
+      ...base,
+      color: "#0369a1",
+      ":hover": {
+        backgroundColor: "#0369a1",
+        color: "#ffffff",
+      },
+    }),
+  };
+
+  const handleDocStateChange = (selectedOptions) => {
+    setSelectedDocStates(selectedOptions);
+  };
+
+  const handlePagoStateChange = (selectedOptions) => {
+    setSelectedPagoStates(selectedOptions);
+  };
+
+  useEffect(() => {
+    const selectedDocStatesValues = selectedDocStates.map(
+      (option) => option.value
+    );
+    const selectedPagoStatesValues = selectedPagoStates.map(
+      (option) => option.value
+    );
+
+    if (
+      selectedDocStatesValues.length === 0 &&
+      selectedPagoStatesValues.length === 0
+    ) {
+      setFilteredInvoices(invoicesdata);
+      setTotalsByState({});
+    } else {
+      const filtered = invoicesdata.filter(
+        (invoice) =>
+          (selectedDocStatesValues.length === 0 ||
+            selectedDocStatesValues.includes(invoice.rawData.estadoDoc)) &&
+          (selectedPagoStatesValues.length === 0 ||
+            selectedPagoStatesValues.includes(invoice.rawData.estadoPago))
+      );
+      setFilteredInvoices(filtered);
+
+      // Calcular los totales por combinación de estados
+      const combinations = [];
+      if (selectedDocStatesValues.length === 0) {
+        combinations.push(
+          ...selectedPagoStatesValues.map((state) => ["", state])
+        );
+      } else if (selectedPagoStatesValues.length === 0) {
+        combinations.push(
+          ...selectedDocStatesValues.map((state) => [state, ""])
+        );
+      } else {
+        selectedDocStatesValues.forEach((docState) => {
+          selectedPagoStatesValues.forEach((pagoState) => {
+            combinations.push([docState, pagoState]);
+          });
+        });
+      }
+
+      const totals = combinations.reduce((acc, [docState, pagoState]) => {
+        const total = filtered
+          .filter(
+            (invoice) =>
+              (docState === "" || invoice.rawData.estadoDoc === docState) &&
+              (pagoState === "" || invoice.rawData.estadoPago === pagoState)
+          )
+          .reduce((sum, invoice) => sum + (invoice.totalInvoices || 0), 0);
+        const key = `${docState}${
+          docState && pagoState ? " y " : ""
+        }${pagoState}`;
+        acc[key] = total;
+        return acc;
+      }, {});
+      setTotalsByState(totals);
+    }
+  }, [selectedDocStates, selectedPagoStates, invoicesdata]);
+
+  // Obtener las opciones para el Select de los estados de los documentos y estados de pago
+  const getEstadoDocOptions = () => {
+    const estados = invoicesdata.map((invoice) => invoice.rawData.estadoDoc);
+    const uniqueEstados = [...new Set(estados)];
+    return uniqueEstados.map((estado) => ({ value: estado, label: estado }));
+  };
+
+  const getEstadoPagoOptions = () => {
+    const estados = invoicesdata.map((invoice) => invoice.rawData.estadoPago);
+    const uniqueEstados = [...new Set(estados)];
+    return uniqueEstados.map((estado) => ({ value: estado, label: estado }));
+  };
+
   return (
     <div className="flex bg-gradient-to-r from-blue-500 ">
       <Sidebardb />
@@ -116,49 +249,59 @@ const InvicesMasterTable = () => {
           MAESTRO DE FACTURAS
         </h1>
         <div className="grid grid-cols-3">
-          <div className=" text-center p-2 bg-gradient-to-r from-green-500 to-blue-500  grid grid-rows-2   rounded-xl shadow-xl mt-4 mb-4 mr-3">
-            <h2 className="text-white">
-              Total Facturado: 
-            </h2>
-            <h1 className="text-white">{formatCurrency(totalInvoicedAmount)}</h1>
+          <div className=" text-center p-2 bg-gradient-to-r from-indigo-500 to-blue-500  grid grid-rows-2   rounded-xl shadow-xl mt-4 mb-4 mr-3">
+            <h2 className="text-white">Total Facturado:</h2>
+            <h1 className="text-white">
+              {formatCurrency(totalInvoicedAmount)}
+            </h1>
           </div>
 
-          <div className=" text-center bg-gradient-to-r from-green-500 to-blue-500  grid grid-rows-2  rounded-xl shadow-xl mt-4 mb-4 mr-3">
-            <h2 className="text-white">
-              Total Pagado: 
-            </h2>
+          <div className=" text-center bg-gradient-to-r from-indigo-500 to-blue-500  grid grid-rows-2  rounded-xl shadow-xl mt-4 mb-4 mr-3">
+            <h2 className="text-white">Total Pagado:</h2>
             <h1 className="text-white">{formatCurrency(totalPaidAmount)}</h1>
           </div>
-          
-          <div className=" text-center bg-gradient-to-r from-green-500 to-blue-500  grid grid-rows-2   rounded-xl shadow-xl mt-4 mb-4 mr-3">
-            <h2 className="text-white">
-              Total Por Pagar: 
-            </h2>
-            <h1 className="text-white">{formatCurrency(totalInvoicedAmount-totalPaidAmount)}</h1>
+
+          <div className=" text-center bg-gradient-to-r from-indigo-500 to-blue-500  grid grid-rows-2   rounded-xl shadow-xl mt-4 mb-4 mr-3">
+            <h2 className="text-white">Total Por Pagar:</h2>
+            <h1 className="text-white">
+              {formatCurrency(totalInvoicedAmount - totalPaidAmount)}
+            </h1>
           </div>
-        <div className="flex mb-4">
-          <button
-            onClick={openModal}
-            className="flex  bg-blue-500 mt-2 ml-2 p-1 text-white rounded-lg text-xs  "
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              dataslot="icon"
-              className="w-2 h-2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>{" "}
-            Nuevo Registro
-          </button>
         </div>
+        <div className="p-5 grid grid-cols-2">
+          <Select
+            isMulti
+            options={getEstadoPagoOptions()}
+            value={selectedPagoStates}
+            onChange={handlePagoStateChange}
+            styles={customStyles}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            placeholder="Pagado / Sin Pagar"
+            noOptionsMessage={() => "No hay opciones disponibles"}
+          />
+          <Select
+            isMulti
+            options={getEstadoDocOptions()}
+            value={selectedDocStates}
+            onChange={handleDocStateChange}
+            styles={customStyles}
+            className="basic-multi-select"
+            classNamePrefix="select"
+            placeholder="Seleccione Estado de Factura"
+            noOptionsMessage={() => "No hay opciones disponibles"}
+          />
+        </div>
+        <div className="grid grid-cols-3">
+          {Object.entries(totalsByState).map(([state, total]) => (
+            <div
+              key={state}
+              className=" text-center bg-gradient-to-r from-indigo-500 to-blue-500  grid grid-rows-2   rounded-xl shadow-xl mt-4 mb-4 mr-3"
+            >
+              <h2 className="text-white">Total {state}:</h2>
+              <h1 className="text-white">{formatCurrency(total)}</h1>
+            </div>
+          ))}
         </div>
         <div
           className="overflow-auto text-center "
@@ -183,12 +326,12 @@ const InvicesMasterTable = () => {
                 <th className="border border-slate-300 px-2  ">
                   Fecha Vencimiento
                 </th>
-                <th className="border border-slate-300 px-2  ">Borrar</th>
+                <th className="border border-slate-300 px-2">Borrar</th>
                 <th className="border border-slate-300 px-2   ">Editar</th>
               </tr>
             </thead>
             <tbody>
-              {invoicesdata.map((invoices, y) => (
+              {filteredInvoices.map((invoices, y) => (
                 <tr key={y} className="text-xxs ">
                   <td className="border border-slate-300  px-2   ">
                     {invoices.projectId}
@@ -212,10 +355,10 @@ const InvicesMasterTable = () => {
                     {formatCurrency(invoices.totalInvoices)}
                   </td>
                   <td className="border border-slate-300 px-2   ">
-                    {invoices.state}
+                    {invoices.rawData.estadoDoc}
                   </td>
                   <td className="border border-slate-300 px-2   ">
-                    {invoices.invoiceStatus}
+                    {invoices.rawData.estadoPago}
                   </td>
                   <td className="border border-slate-300  px-2  ">
                     {formatedDate(invoices.dueDate)}

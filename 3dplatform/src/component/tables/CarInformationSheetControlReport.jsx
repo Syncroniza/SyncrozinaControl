@@ -54,7 +54,7 @@ const CarInformationSheetControlReport = () => {
         ))}
       </div>
       <div className="grid grid-cols-5 bg-white shadow-xl rounded-xl mr-3">
-        <div className="bg-blue-500 grid grid-rows-2 ml-8 mr-8 mt-4 mb-4 p-2 rounded-xl text-center shadow-xl bg-gradient-to-r from-indigo-500">
+        <div className="bg-blue-500 grid grid-rows-2 ml-8 mr-8 mt-4 mb-4 p-2 rounded-xl text-center shadow-xl bg-gradient-to-r from-indigo-500 ">
           <h1 className="text-sm font-light text-white">
             TOTAL MONTO PROPUESTA
           </h1>
@@ -76,7 +76,7 @@ const CarInformationSheetControlReport = () => {
             {formatCurrency(totals.recuperable)}
           </h1>
         </div>
-        <div className="bg-gradient-to-r from-indigo-500 bg-blue-500 grid grid-rows-2 ml-8 mr-8 mt-4 mb-4 p-2 rounded-xl text-center shadow-xl">
+        <div className="bg-gradient-to-r from-indigo-500 to bg-blue-500 grid grid-rows-2 ml-8 mr-8 mt-4 mb-4 p-2 rounded-xl text-center shadow-xl">
           <h1 className="text-sm font-light text-white">
             TOTAL MONTO CON EXTRAS
           </h1>

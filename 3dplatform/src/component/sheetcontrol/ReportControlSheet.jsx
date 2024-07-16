@@ -32,9 +32,9 @@ function ReportControlSheet() {
         )
     ); // Eliminar duplicados
 
-  const handleFamilyChange = (selectedOptions) => {
-    setSelectedFamilies(selectedOptions);
-  };
+  // const handleFamilyChange = (selectedOptions) => {
+  //   setSelectedFamilies(selectedOptions);
+  // };
   const customStyles = {
     control: (base, state) => ({
       ...base,
