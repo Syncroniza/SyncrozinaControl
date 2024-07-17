@@ -93,14 +93,14 @@ const LaborDashboard = () => {
 
   return (
     <div
-      className="bg-blue-500 bg-gradient-to-r from-indigo-500 p-4 shadow-lg rounded-lg mb-4 ml-20"
-      style={{ width: "1150px" }}
+      className=" bg-white to p-4 shadow-lg rounded-lg mb-4 ml-4"
+      style={{ width: "1300px" }}
     >
       <h1 className="bg-white p-2 rounded-lg text-center font-semibold flex flex-col">
         CONTROL MANO DE OBRA
         <Link to={"/informe/informeMO"}>
-          <div className="flex justify-center">
-            ir a reporte MO
+          <div className="   mt-3 mr-3 ml-2 flex justify-center text-white p-2 rounded-lg bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500">
+            A reporte Mano de Obra 
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -120,20 +120,22 @@ const LaborDashboard = () => {
         </Link>
       </h1>
       <div>
+        <div className=" text-sm bg-blue-500 rounded-lg text-white text-center p-4">
         <h1 className="text-white text-sm mt-4">
           TOTAL MANO DE OBRA (MO Directa, MO GG,Rol Privado)
         </h1>
-        <div className=" text-sm bg-white rounded-lg text-white text-center p-6">
           <div className="grid grid-cols-3 mx-4 rounded-lg">
-            <div className="p-4 bg-blue-500 rounded-lg">
+            <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-500 rounded-lg border border-spacing-3 mr-2">
               <h1>Presupuestado</h1>
               <p>{formatCurrency(totalRealMonthCost)}</p>
             </div>
-            <div className="p-4 bg-blue-500 rounded-lg ml-4">
+
+            <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-500 rounded-lg border border-spacing-3 mr-3">
               <h1>Gastado a la Fecha</h1>
               <p>{formatCurrency(calculateTotalRealMonthCost)}</p>
             </div>
-            <div className="p-4 bg-blue-500 rounded-lg ml-4">
+            
+            <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-500 rounded-lg border border-spacing-3">
               <h1>Disponible</h1>
               <p>{formatCurrency(diferenciaTotalLabor)}</p>
             </div>
@@ -142,40 +144,40 @@ const LaborDashboard = () => {
       </div>
 
       <div>
-        <h1 className="text-white text-sm mt-4">
+        <div className=" text-sm bg-blue-500 rounded-lg text-white text-center p-6 mt-3 mb-3 ">
+        <h1 className="text-white text-sm ">
           TOTAL MANO DE OBRA DIRECTA
         </h1>
-        <div className=" text-sm bg-white rounded-lg text-white text-center p-6">
           <div className="grid grid-cols-3 mx-4 rounded-lg">
-            <div className="p-4 bg-blue-500 rounded-lg">
+          <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-500 rounded-lg border border-spacing-3 mr-2">
               <h1>Presupuestado</h1>
               <p>{formatCurrency(totalLaborPublico)}</p>
             </div>
-            <div className="p-4 bg-blue-500 rounded-lg ml-4">
+            <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-500 rounded-lg border border-spacing-3 mr-3">
               <h1>Gastado a la Fecha</h1>
               <p>{formatCurrency(realMonthCostPublico)}</p>
             </div>
-            <div className="p-4 bg-blue-500 rounded-lg ml-4">
+            <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-500 rounded-lg border border-spacing-3 mr-2">
               <h1>Disponible</h1>
               <p>{formatCurrency(totalLaborDiferenciaPublico)}</p>
             </div>
           </div>
         </div>
 
-        <h1 className="text-white text-sm mt-4">
+        <div className=" text-sm bg-blue-500 rounded-lg text-white text-center p-6 mb-3">
+        <h1 className="text-white text-sm mt-3">
           TOTAL MANO DE OBRA GG
         </h1>
-        <div className=" text-sm bg-white rounded-lg text-white text-center p-6">
           <div className="grid grid-cols-3 mx-4 rounded-lg">
-            <div className="p-4 bg-blue-500 rounded-lg">
+          <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-500 rounded-lg border border-spacing-3 mr-3">
               <h1>Presupuestado</h1>
               <p>{formatCurrency(totalLaborGgpublico)}</p>
             </div>
-            <div className="p-4 bg-blue-500 rounded-lg ml-4">
+            <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-500 rounded-lg border border-spacing-3 mr-3">
               <h1>Gastado a la Fecha</h1>
               <p>{formatCurrency(realMonthCostGgpublico)}</p>
             </div>
-            <div className="p-4 bg-blue-500 rounded-lg ml-4">
+            <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-500 rounded-lg border border-spacing-3">
               <h1>Disponible</h1>
               <p>{formatCurrency(totalLaborDiferenciaggPublico)}</p>
             </div>
@@ -183,20 +185,20 @@ const LaborDashboard = () => {
         </div>
       </div>
       <div>
+        <div className=" text-sm bg-blue-500 rounded-lg text-white text-center p-6">
         <h1 className="text-white text-sm mt-4">
           TOTAL MANO DE OBRA ROL PRIVADO
         </h1>
-        <div className=" text-sm bg-white rounded-lg text-white text-center p-6">
           <div className="grid grid-cols-3 mx-4 rounded-lg">
-            <div className="p-4 bg-blue-500 rounded-lg">
+          <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-500 rounded-lg border border-spacing-3 mr-3">
               <h1>Presupuestado</h1>
               <p>{formatCurrency(totalLaborPrivado)}</p>
             </div>
-            <div className="p-4 bg-blue-500 rounded-lg ml-4">
+            <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-500 rounded-lg border border-spacing-3 mr-3">
               <h1>Gastado a la Fecha</h1>
               <p>{formatCurrency(realMonthCostPrivado)}</p>
             </div>
-            <div className="p-4 bg-blue-500 rounded-lg ml-4">
+            <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-500 rounded-lg border border-spacing-3">
               <h1>Disponible</h1>
               <p>{formatCurrency(totalLaborPrivado - realMonthCostPrivado)}</p>
             </div>

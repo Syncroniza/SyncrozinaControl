@@ -2,7 +2,7 @@ import { useEffect, useContext, useState } from "react";
 import axios from "axios";
 import { ViewerContext } from "../Context";
 import FormContractObservation from "../sheetcontrol/FormContractObservation";
-import {BASE_URL} from "../../constants.js";
+import { BASE_URL } from "../../constants.js";
 
 const ContractObservationByForm = () => {
   const {
@@ -65,9 +65,7 @@ const ContractObservationByForm = () => {
       return;
     }
     try {
-      const response = await axios.delete(
-        `${BASE_URL}/contract/${contractid}`
-      );
+      const response = await axios.delete(`${BASE_URL}/contract/${contractid}`);
 
       if (response.status === 200) {
         setData((prevContractData) => {
@@ -106,7 +104,7 @@ const ContractObservationByForm = () => {
   return (
     <div
       className="bg-white my-2 mr-2 ml-3 pt-2 rounded-lg "
-      style={{ width: "1200px" }}
+      style={{ width: "1350px" }}
     >
       <FormContractObservation />
       <h1 className="text-sm font-semibold ml-6 ">OBSERVACIONES AL CONTRATO</h1>
@@ -131,10 +129,10 @@ const ContractObservationByForm = () => {
         </svg>{" "}
         Nuevo Registro
       </button>
-      <div className="ml-4 overflow-auto" style={{ height: "300px" }}>
-        <table className=" mt-4  ml-2 mr-2 mb-2 w-full">
+      <div className="ml-4 overflow-auto" style={{ height: "200px" }}>
+        <table className=" mt-4  ml-3 mr-3 mb-2 w-full">
           <thead className="sticky top-0 bg-blue-500 text-white  ">
-            <tr className=" text-xs ">
+            <tr className=" text-xxs ">
               <th className="border border-slate-300 ">ProjectId</th>
               <th className="border border-slate-300 ">Familia</th>
               <th className="border border-slate-300">SubFamila</th>
@@ -150,7 +148,7 @@ const ContractObservationByForm = () => {
               ? data.map((contract) => (
                   <tr
                     key={contract._id}
-                    className="border border-slate-300 text-xs text-center  "
+                    className="border border-slate-300 text-xxs text-center  "
                   >
                     <td className="border border-slate-300  ">
                       {contract.projectId}
@@ -184,7 +182,7 @@ const ContractObservationByForm = () => {
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
                           stroke="currentColor"
-                          className="w-3 h-3 "
+                          className="w-2 h-2 "
                         >
                           <path
                             strokeLinecap="round"
@@ -208,7 +206,7 @@ const ContractObservationByForm = () => {
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
                           stroke="currentColor"
-                          className="w-3 h-3"
+                          className="w-2 h-2"
                         >
                           <path
                             strokeLinecap="round"

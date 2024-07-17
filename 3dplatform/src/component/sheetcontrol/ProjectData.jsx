@@ -151,7 +151,7 @@ const ProjectData = () => {
         </div>
         <div
           className=" overflow-y-auto mb-4 mt-4 text-center ml-2 mr-2"
-          style={{ height: "800px", width: "1200px" }}
+          style={{ height: "800px", width: "1300px" }}
         >
           {/* <Exceltransform UrlEndpoint=BASE_URL + "/sheet/" /> */}
           <table className=" mr-8  w-full sticky ">
@@ -167,7 +167,7 @@ const ProjectData = () => {
                 </th>
                 <th className="border border-slate-500">Descripcion</th>
                 <th className="border border-slate-500">Total</th>
-                <th className="border border-slate-500">Borrar</th>
+                {/* <th className="border border-slate-500">Borrar</th> */}
                 <th className="border border-slate-500">Editar</th>
               </tr>
             </thead>
@@ -208,7 +208,7 @@ const ProjectData = () => {
                   <td className="border border-slate-300">
                     {formatCurrency(item.total)}
                   </td>
-                  <td className=" border border-slate-300">
+                  {/* <td className=" border border-slate-300">
                     <button
                       className=" bg-red-500  p-1 text-white rounded-lg text-xs"
                       onClick={() => handleDeleteOC(item._id || item.id)}
@@ -228,7 +228,7 @@ const ProjectData = () => {
                         />
                       </svg>
                     </button>
-                  </td>
+                  </td> */}
                   <td className="border border-slate-300">
                     <button
                       onClick={() => openEditForm(item)}

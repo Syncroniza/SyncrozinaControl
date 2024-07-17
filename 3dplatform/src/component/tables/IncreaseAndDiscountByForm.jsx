@@ -104,7 +104,7 @@ const IncreaseAndDiscountByForm = () => {
   return (
     <div
       className="bg-white my-2 ml-3 mr-2 p-3 rounded-xl"
-      style={{ width: "1200px" }}
+      style={{ width: "1350px" }}
     >
       <FormIncreaseAndDiscount />
       <h1 className="text-sm font-semibold ml-3 ">
@@ -133,11 +133,11 @@ const IncreaseAndDiscountByForm = () => {
       </button>
       <div
         className="mt-4 overflow-auto ml-2 mr-2  "
-        style={{ height: "300px" }}
+        style={{ height: "200px" }}
       >
         <table className="w-full">
           <thead className="sticky top-0 bg-blue-500 text-white ">
-            <tr className="border border-slate-500 px-4 text-xs ">
+            <tr className="border border-slate-500 px-4 text-xxs ">
               <th className="border border-slate-500 p-1   ">ProjectId</th>
               <th className="border border-slate-500 p-1   ">Familia</th>
               <th className="border border-slate-500 p-1   ">SubFamila</th>
@@ -156,7 +156,7 @@ const IncreaseAndDiscountByForm = () => {
             {Array.isArray(data)
               ? dataIncreaseDiscount.map((increasediscount) => (
                   <tr
-                    className="border border-slate-300 text-xs text-center "
+                    className="border border-slate-300 text-xxs text-center "
                     key={increasediscount._id}
                   >
                     <td className="border border-slate-300 px-1  ">

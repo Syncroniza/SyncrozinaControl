@@ -74,7 +74,7 @@ const formatedDate = (isoDate) => {
 
   // ----------------------------  JSX -----------------------------------------//
   return (
-    <div className="bg-white p-3 flex flex-col rounded-xl my-2 ml-2 mr-2"style={{ width: "1200px" }}>
+    <div className="bg-white p-3 flex flex-col rounded-xl my-2 ml-2 mr-2"style={{ width: "1350px" }}>
       <h1 className="text-sm font-semibold ml-6 ">ORDENES DE COMPRA</h1>
       <div className=" justify-end p-4 ">
         <h1 className="bg-blue-500 text-xl text-white p-6 rounded-xl ">
@@ -82,7 +82,7 @@ const formatedDate = (isoDate) => {
         </h1>
       </div>
       <div
-        className=" ml-4 overflow-auto " style={{ height: "400px"}}
+        className=" ml-4 overflow-auto " style={{ height: "200px"}}
       >
         <table className="mt-4 ml-2 mb-2 w-full">
           <thead className="sticky top-0 bg-blue-500 text-white ">

@@ -10,7 +10,7 @@ import IncreaseAndDiscountByForm from "../component/tables/IncreaseAndDiscountBy
 const HojadeControl = () => {
   return (
     <div>
-        <div className=" flex bg-blue-500  top-0 left-1 right-0 z-10 shadow-md">
+        <div className=" flex bg-gradient-to-r from-blue-500   top-0 left-1 right-0 z-10 shadow-md">
           <Sidebardb />
           <div>
             <MaterialSheetsControl />

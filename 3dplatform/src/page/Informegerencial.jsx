@@ -1,15 +1,15 @@
 import Sidebardb from "../component/dashboard/Sidebardb";
 import CarsInformationGeneralProgress from "../component/tables/CarsInformationGeneralProgress";
-import { Link, Outlet } from "react-router-dom";
+import { Link } from "react-router-dom";
 import MainAreaChart from "../component/charts/AreaChart";
 import EarnValeuManagementTable from "../component/tables/EarnValeuManagementTable";
 
 function Informegerencial() {
   return (
-    <div className="flex justify-around bg-gradient-to-r from-blue-500 py-4">
+    <div className="flex bg-gradient-to-r from-blue-500">
       <Sidebardb />
       <div>
-        <div className="flex justify-around">
+        <div className="flex justify-around  ">
           <Link to={"/informe/informeHC"}>
             <h1 className="justify-center ml-6 mt-6 bg-blue-500 bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded-lg p-4 text-white text-sm ">
               INFORME HOJAS DE CONTROL
@@ -36,11 +36,10 @@ function Informegerencial() {
             </h1>
           </Link> */}
         </div>
-        <Outlet />
         <CarsInformationGeneralProgress />
         <MainAreaChart />
       </div>
-      <div style={{display:"none"}}>
+      <div style={{ display: "none" }}>
         <EarnValeuManagementTable />
       </div>
     </div>

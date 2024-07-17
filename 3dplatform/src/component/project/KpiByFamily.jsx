@@ -98,7 +98,7 @@ const KpiByFamily = () => {
   return (
     <div
       className="ml-4 mt-4 bg-white p-2 rounded-lg mr-2 shadow-lg"
-      style={{ width: "1250px" }}
+      style={{ width: "1310px" }}
     >
       <h1 className="text-sm ml-2 font-semibold">VALORES POR FAMILIA</h1>
       <div className="grid grid-cols-5 gap-4 mr-2">

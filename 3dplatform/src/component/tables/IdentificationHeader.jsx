@@ -80,7 +80,7 @@ const IdentificationHeader = () => {
           <div
             key={project.projectId}
             className="bg-white shadow-lg px-6 py-2 rounded-lg mb-4"
-            style={{ width: "1200px" }}
+            style={{ width: "1350px" }}
           >
             {Object.values(project.families)
               .filter(

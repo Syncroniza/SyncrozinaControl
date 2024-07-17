@@ -121,7 +121,7 @@ const CarsInformationSheets = () => {
     <div>
       <div
         className="bg-white mt-2 ml-3 mr-2 grid grid-cols-8 rounded-lg shadow-lg py-5 px-10"
-        style={{ width: "1200px" }}
+        style={{ width: "1350px" }}
       >
         <div className="bg-blue-500  bg-gradient-to-r from-indigo-500 rounded-xl text-white text-center shadow-xl mx-2 p-2 grid grid-rows-2">
           <h1 className="text-sm font-light  text-white  ">MONTO PROPUESTA</h1>

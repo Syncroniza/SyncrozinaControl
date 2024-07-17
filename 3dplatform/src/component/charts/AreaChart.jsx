@@ -33,11 +33,11 @@ const MainAreaChart = () => {
     <div className="mt-10 ml-10">
       {/* <FormAreaChart /> */}
       <h2 className="text-indigo-800 font-bold text-2xl">
-        Planned Value vs Earn Value
+        Planificado/ValorGanado/CostoActual/EEPP
       </h2>
       <LineChart
-        width={1200}
-        height={500}
+        width={1300}
+        height={700}
         data={aernValueAccumalated}
         margin={{
           top: 5,

@@ -57,7 +57,7 @@ const ProjectInformation = () => {
   });
 
   return (
-    <div className="" style={{ width: "1270px" }}>
+    <div className="" style={{ width: "1330px" }}>
       <h1 className=" text-lg text-center font-semibold p-2 mb-2 ml-4 bg-white  mr-2 mt-6 shadow-xl rounded-lg ">
         INFORMACION GENERAL DEL PROYECTO
       </h1>

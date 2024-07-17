@@ -167,7 +167,7 @@ function ReportControlSheet() {
       <Sidebardb />
       <div className="ml-3 mt-6">
         <div className="grid grid-rows-2 justify-center align-middle bg-white shadow-xl rounded-xl mr-3">
-          <h1 className="text-lg font-bold">INFORME HOJAS DE CONTROL</h1>
+          <h1 className="text-lg font-semibold">INFORME HOJAS DE CONTROL</h1>
           <div className="flex justify-between mb-1">
             <h1 className="">Elegir Proyecto</h1>
             <select
@@ -206,7 +206,7 @@ function ReportControlSheet() {
         <CarInformationSheetControlReport />
         <div
           className="bg-white mt-4 mb-4 shadow-lg rounded-lg  mr-3 overflow-y-auto "
-          style={{ height: "600px" }}
+          style={{ height: "650px" }}
         >
           <table className="w-full">
             <thead className="bg-blue-500 sticky top-0 ">

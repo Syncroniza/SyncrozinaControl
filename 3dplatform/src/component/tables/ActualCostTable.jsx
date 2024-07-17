@@ -84,6 +84,7 @@ function ActualCostTable() {
     const invoicesByWeek = {};
 
     invoicesdata.forEach((invoice) => {
+      console.log("🚀 ~ invoicesdata.forEach ~ invoicesdata:", invoicesdata)
       const invoiceDate = new Date(invoice.dateInvoices);
       if (!isNaN(invoiceDate)) {
         const projectWeekNumber = getProjectWeekNumber(invoiceDate);

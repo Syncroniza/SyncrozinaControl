@@ -78,13 +78,13 @@ const Invoices = () => {
   return (
     <div
       className="bg-white my-2 ml-3 mr-2 p-2 rounded-lg "
-      style={{ width: "1200px" }}
+      style={{ width: "1350px" }}
     >
       <h1 className="text-sm font-semibold ml-3 ">FACTURAS</h1>
       <h1 className="bg-blue-500 text-xl text-white p-6 rounded-xl ml-1 mb-4 mt-2">
         {formatCurrency(totalInvoices)}
       </h1>
-      <div className="overflow-auto" style={{ height: "400px" }}>
+      <div className="overflow-auto" style={{ height: "200px" }}>
         <table className=" mt-2 border border-slate-500 ml-2 mr-2 ">
           <thead className="sticky top-0 bg-blue-500 text-white ">
             <tr className="border border-slate-300  text-xxs">

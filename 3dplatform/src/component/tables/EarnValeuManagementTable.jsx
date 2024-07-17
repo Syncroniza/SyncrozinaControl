@@ -4,7 +4,7 @@ import axios from "axios";
 import ActualCostTable from "../tables/ActualCostTable";
 import { Link } from "react-router-dom";
 import FormAreaChart from "../sheetcontrol/FormAreaChart";
-import {BASE_URL} from "../../constants.js";
+import { BASE_URL } from "../../constants.js";
 function EarnValeuManagementTable() {
   const {
     totalByWeek,
@@ -192,22 +192,28 @@ function EarnValeuManagementTable() {
       </div> */}
       <FormAreaChart />
       <div className="ml-5 overflow-auto " style={{ height: "850px" }}>
-        <Link to={"/"} className="text-2xl text-blue-800 font-bold mt-4 flex  ">
-          Control de Avance
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            class="size-5"
-            className="w-7 h-7 ml-4 mt-1"
+        <div className="">
+          
+          <Link
+            to={"/"}
+            className="text-2xl text-blue-800 font-bold mt-4 flex   "
           >
-            <path
-              fill-rule="evenodd"
-              d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z"
-              clip-rule="evenodd"
-            />
-          </svg>
-        </Link>
+            Control de Avance
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              class="size-5"
+              className="w-9 h-9 mb-2 ml-4 mt-1 bg-gradient-to-r p-1 rounded-lg from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </Link>
+        </div>
         <table className="mr-2 w-full">
           <thead className="bg-blue-500 sticky top-0 ">
             <tr className="text-xs text-white">
@@ -232,7 +238,7 @@ function EarnValeuManagementTable() {
               <th className="   ">% Valor Ganado </th>
               <th className=" border border-slate-300  ">Costo Actual $</th>
               <th className=" border border-slate-300  ">
-                Coato Actual Acumulado
+                Costo Actual Acumulado
               </th>
               <th className=" border border-slate-300  ">
                 % Costo Actual Acumulado
