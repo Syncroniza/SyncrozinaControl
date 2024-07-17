@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { ViewerContext } from "../Context";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const CarsInformationSheets = () => {
   const {
@@ -143,20 +144,28 @@ const CarsInformationSheets = () => {
           </div>
         </div>
         <div className="bg-blue-500 grid grid-rows-2 bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 py-2 ">
-          <h1 className="text-sm font-light text-white mt-1">MONTO CONTRATO</h1>
+          <h1 data-tooltip-id="my-tooltip-2">
+            <h1 className="text-sm font-light text-white mt-1">
+              MONTO CONTRATO
+            </h1>
+          </h1>
           <h1 className="text-sm font-semibold  text-white ">
             {formatCurrency(montoContrato)}{" "}
           </h1>
         </div>
 
         <div className="bg-blue-500 grid grid-rows-2 bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
-          <h1 className="text-sm font-light text-white mt-1">RECUPERABLE</h1>
+          <h1 data-tooltip-id="my-tooltip-3">
+            <h1 className="text-sm font-light text-white mt-1">RECUPERABLE</h1>
+          </h1>
           <h1 className="text-sm font-semibold  text-white ">
             {formatCurrency(recuperable)}
           </h1>
         </div>
         <div className="bg-blue-500 grid grid-rows-2 bg-gradient-to-r from-indigo-500 rounded-xl text-center shadow-xl mx-2 p-2">
-          <h1 className="text-sm font-light text-white">TOTAL CON EXTRAS</h1>
+          <h1 data-tooltip-id="my-tooltip-4">
+            <h1 className="text-sm font-light text-white">TOTAL CON EXTRAS</h1>
+          </h1>
           <h1 className="text-sm font-semibold  text-white ">
             {formatCurrency(totalconextras)}
           </h1>
@@ -216,6 +225,24 @@ const CarsInformationSheets = () => {
           </h1>
         </div>
       </div>
+      <ReactTooltip
+        id="my-tooltip-2"
+        place="top"
+        content="Viene de Observaciones al Contrato"
+        className="!bg-black !text-white !text-xxs !rounded-lg !p-2"
+      />
+      <ReactTooltip
+        id="my-tooltip-3"
+        place="top"
+        content="Viene Aumento/Disminuciones Contrato"
+        className="!bg-black !text-white !text-xxs !rounded-lg !p-2"
+      />
+      <ReactTooltip
+        id="my-tooltip-4"
+        place="top"
+        content="Propuesta + Recuperable"
+        className="!bg-black !text-white !text-xxs !rounded-lg !p-2"
+      />
     </div>
   );
 };

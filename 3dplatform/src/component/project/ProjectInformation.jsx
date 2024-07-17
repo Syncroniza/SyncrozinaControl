@@ -1,7 +1,8 @@
 import { useEffect, useContext, useState } from "react";
 import { ViewerContext } from "../Context";
 import axios from "axios";
-import {BASE_URL} from "../../constants.js";
+import { BASE_URL } from "../../constants.js";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const ProjectInformation = () => {
   const {
@@ -65,7 +66,7 @@ const ProjectInformation = () => {
       <div className="flex bg-white ml-4 mr-2 mt-6 shadow-xl rounded-lg ">
         <div className="col-span-4 mr-2">
           {/* --------------------  NO BORRRAR SE OCULTO AL USUARIO ------------------ */}
-          <button
+          {/* <button
             onClick={openModal}
             type="button"
             className="flex bg-blue-500 bg-gradient-to-r from-indigo-500 p-2 text-white rounded-lg text-xs gap-2 mt-4 ml-4"
@@ -86,7 +87,7 @@ const ProjectInformation = () => {
               />
             </svg>{" "}
             Crear Nuevo Proyecto
-          </button>
+          </button> */}
 
           <h1 className="text-xs font-semibold ml-4 mt-2 ">
             SELECCIONAR PROYECTO
@@ -156,12 +157,21 @@ const ProjectInformation = () => {
               </div>
             </div>
           )}
+
           <div className=" text-center bg-blue-500 bg-gradient-to-r from-indigo-500  grid grid-rows-2 px-1  rounded-xl shadow-xl mt-4 mb-4 mr-3">
-            <h1 className="text-lg mt-2 text-white px-2">Valor Actual :</h1>
+            <h1 data-tooltip-id="my-tooltip-1">
+              <h1 className="text-lg mt-2 text-white px-2">Valor Actual :</h1>
+            </h1>
             <div className="text-lg text-white ">
               {formatCurrency(totalActualCost)}
             </div>
           </div>
+          <ReactTooltip
+            id="my-tooltip-1"
+            place="top"
+            content="Facturado + MOgg + Rol Privado"
+            className="!bg-black !text-white !text-xxs !rounded-lg !p-2"
+          />
 
           <div className=" text-center bg-blue-500 bg-gradient-to-r from-indigo-500  grid grid-rows-2 px-1  rounded-xl shadow-xl mt-4 mb-4 mr-3 ">
             <h1 className=" text-lg mt-2 text-white px-2">Disponible:</h1>

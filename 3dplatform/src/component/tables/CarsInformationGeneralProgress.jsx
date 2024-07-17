@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { ViewerContext } from "../Context";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 function CarsInformationGeneralProgress() {
   const {
@@ -161,7 +162,9 @@ function CarsInformationGeneralProgress() {
               </h1>
             </div>
             <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 m-2 p-1 rounded-xl text-center shadow-xl">
-              <h1 className="text-sm font-semibold text-white mt-2">SPI</h1>
+              <h1 data-tooltip-id="tooltip-spi">
+                <h1 className="text-sm font-semibold text-white mt-2">SPI</h1>
+              </h1>
               <h1 className="text-sm font-semibold text-white mt-2">
                 {SPI.toFixed(2)} %
               </h1>
@@ -185,6 +188,12 @@ function CarsInformationGeneralProgress() {
           </div>
         )}
       </div>
+      <ReactTooltip
+        id="tooltip-spi"
+        place="top"
+        content="Avance Real/Avance planificado"
+        className="!bg-black !text-white !text-xxs !rounded-lg !p-2"
+      />
     </div>
   );
 }

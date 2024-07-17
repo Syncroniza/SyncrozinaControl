@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 import { ViewerContext } from "../Context";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 const KpiByFamily = () => {
   const {
@@ -74,24 +75,29 @@ const KpiByFamily = () => {
       totalsByFamily[family] - (totalsInvoicesByFamily[family] || 0);
   });
 
-  const renderFamilyCard = (family, total, actual, disponible) => (
-    <div
-      key={family}
-      className="bg-blue-500 bg-gradient-to-r from-indigo-500  ml-2 rounded-lg text-white shadow-lg"
-    >
-      <p className="text-center text-sm shadow-xl">{family}</p>
-      <div className="text-center text-sm mt-2">
-        Total: {formatCurrency(total)}
+  const renderFamilyCard = (family, total, actual, disponible) => {
+    const isGG = family === "GG";
+    return (
+      <div
+        key={family}
+        className="bg-blue-500 bg-gradient-to-r from-indigo-500  ml-2 rounded-lg text-white shadow-lg"
+        data-tooltip-id={isGG ? "tooltip-gg" : undefined}
+        data-tooltip-content={isGG ? "FacturasGG + MOgg + Rol Privado" : undefined}
+      >
+        <p className="text-center text-sm shadow-xl">{family}</p>
+        <div className="text-center text-sm mt-2">
+          Total: {formatCurrency(total)}
+        </div>
+        <div className="text-center mt-2 text-sm">
+          Actual: {formatCurrency(actual)}
+        </div>
+        <div className="text-center mt-2 text-sm">
+          Disponible: {formatCurrency(disponible)}
+        </div>
+        <div className="mt-4 p-1 rounded-lg"></div>
       </div>
-      <div className="text-center mt-2 text-sm">
-        Actual: {formatCurrency(actual)}
-      </div>
-      <div className="text-center mt-2 text-sm">
-        Disponible: {formatCurrency(disponible)}
-      </div>
-      <div className="mt-4 p-1  rounded-lg"></div>
-    </div>
-  );
+    );
+  };
 
   const undefinedTotal = totalsInvoicesByFamily.undefined || 0;
 
@@ -104,7 +110,6 @@ const KpiByFamily = () => {
       <div className="grid grid-cols-5 gap-4 mr-2">
         {Object.entries(totalsByFamily).map(([family, total]) => {
           if (family === undefined) return null; // Skip undefined family here
-
           const displayedFamily = family;
           let actual =
             displayedFamily === "Mano_Obra"
@@ -114,13 +119,18 @@ const KpiByFamily = () => {
           if (displayedFamily === "GG") {
             actual += realMonthCostGgpublico + realMonthCostPrivado;
           }
-
           const disponible = total - actual;
 
           return renderFamilyCard(displayedFamily, total, actual, disponible);
         })}
         {renderFamilyCard("Sin Familia", undefinedTotal, 0, undefinedTotal)}
       </div>
+      <ReactTooltip
+        id="tooltip-gg"
+        place="top"
+        content="FacturasGG + MOgg + Rol Privado"
+        className="!bg-black !text-white !text-xxs !rounded-lg !p-2"
+      />
     </div>
   );
 };
