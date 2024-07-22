@@ -189,9 +189,9 @@ const InvicesMasterTable = () => {
       filtered = filtered.filter(
         (invoice) =>
           (selectedDocStatesValues.length === 0 ||
-            selectedDocStatesValues.includes(invoice.rawData.estadoDoc)) &&
+            selectedDocStatesValues.includes(invoice.rawData?.estadoDoc)) &&
           (selectedPagoStatesValues.length === 0 ||
-            selectedPagoStatesValues.includes(invoice.rawData.estadoPago))
+            selectedPagoStatesValues.includes(invoice.rawData?.estadoPago))
       );
     }
 
@@ -235,8 +235,8 @@ const InvicesMasterTable = () => {
       const total = filtered
         .filter(
           (invoice) =>
-            (docState === "" || invoice.rawData.estadoDoc === docState) &&
-            (pagoState === "" || invoice.rawData.estadoPago === pagoState)
+            (docState === "" || invoice.rawData?.estadoDoc === docState) &&
+            (pagoState === "" || invoice.rawData?.estadoPago === pagoState)
         )
         .reduce((sum, invoice) => sum + (invoice.totalInvoices || 0), 0);
       const key = `${docState}${
@@ -256,13 +256,13 @@ const InvicesMasterTable = () => {
   ]);
 
   const getEstadoDocOptions = () => {
-    const estados = invoicesdata.map((invoice) => invoice.rawData.estadoDoc);
+    const estados = invoicesdata.map((invoice) => invoice.rawData?.estadoDoc);
     const uniqueEstados = [...new Set(estados)];
     return uniqueEstados.map((estado) => ({ value: estado, label: estado }));
   };
 
   const getEstadoPagoOptions = () => {
-    const estados = invoicesdata.map((invoice) => invoice.rawData.estadoPago);
+    const estados = invoicesdata.map((invoice) => invoice.rawData?.estadoPago);
     const uniqueEstados = [...new Set(estados)];
     return uniqueEstados.map((estado) => ({ value: estado, label: estado }));
   };
@@ -413,10 +413,10 @@ const InvicesMasterTable = () => {
                     {formatCurrency(invoice.totalInvoices)}
                   </td>
                   <td className="border border-slate-300 px-2">
-                    {invoice.rawData.estadoDoc}
+                    {invoice.rawData?.estadoDoc}
                   </td>
                   <td className="border border-slate-300 px-2">
-                    {invoice.rawData.estadoPago}
+                    {invoice.rawData?.estadoPago}
                   </td>
                   <td className="border border-slate-300 px-2">
                     {formatedDate(invoice.dueDate)}

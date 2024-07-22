@@ -3,7 +3,8 @@ import { ViewerContext } from "../Context";
 import Sidebardb from "../dashboard/Sidebardb";
 
 const InvoicesReport = () => {
-  const { invoicesdata, formatCurrency } = useContext(ViewerContext);
+  const { invoicesdata, formatCurrency } =
+    useContext(ViewerContext);
   console.log("🚀 ~ InvoicesReport ~ invoicesdata:", invoicesdata);
   const [reportData, setReportData] = useState([]);
   const [selectedProvider, setSelectedProvider] = useState("");
