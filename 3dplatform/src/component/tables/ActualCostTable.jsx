@@ -1,28 +1,26 @@
-import { useContext, useEffect, useState } from "react";
-import { ViewerContext } from "../Context";
 
 // Función para generar semanas dinámicamente
 const generateWeeksData = (startDate, totalWeeks) => {
   const weeksData = [];
   let currentDate = new Date(startDate);
-
+  
   for (let i = 1; i <= totalWeeks; i++) {
     const weekStartDate = new Date(currentDate);
     const weekEndDate = new Date(currentDate);
     weekEndDate.setDate(weekEndDate.getDate() + 4); // Una semana laboral de 5 días (lunes a viernes)
-
+    
     const week = {
       week: i,
       dateStart: formatDate(weekStartDate),
       finishDate: formatDate(weekEndDate),
     };
-
+    
     weeksData.push(week);
-
+    
     // Avanzar a la próxima semana (lunes siguiente)
     currentDate.setDate(currentDate.getDate() + 7);
   }
-
+  
   return weeksData;
 };
 
@@ -42,14 +40,14 @@ const getMonthYearFromDate = (dateString) => {
 
 const mapLaborCostsToWeeks = (laborCosts, weeksData) => {
   const weeklyCosts = {};
-
+  
   // Determinar la última semana de cada mes
   const lastWeekOfMonth = {};
   weeksData.forEach(({ week, finishDate }) => {
     const monthYear = getMonthYearFromDate(finishDate);
     lastWeekOfMonth[monthYear] = week;
   });
-
+  
   // Asignar los costos de mano de obra a la última semana del mes
   for (const monthYear in laborCosts) {
     const week = lastWeekOfMonth[monthYear];
@@ -62,10 +60,12 @@ const mapLaborCostsToWeeks = (laborCosts, weeksData) => {
       console.log(`No se encontró una semana para el mes ${monthYear}`);
     }
   }
-
+  
   return weeklyCosts;
 };
 
+import { useContext, useEffect, useState } from "react";
+import { ViewerContext } from "../Context";
 function ActualCostTable() {
   const {
     invoicesdata,
@@ -84,7 +84,6 @@ function ActualCostTable() {
     const invoicesByWeek = {};
 
     invoicesdata.forEach((invoice) => {
-      console.log("🚀 ~ invoicesdata.forEach ~ invoicesdata:", invoicesdata)
       const invoiceDate = new Date(invoice.dateInvoices);
       if (!isNaN(invoiceDate)) {
         const projectWeekNumber = getProjectWeekNumber(invoiceDate);

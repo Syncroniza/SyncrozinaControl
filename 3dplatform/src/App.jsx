@@ -10,6 +10,7 @@ import Informegerencial from "./page/Informegerencial";
 import ReportControlSheet from "./component/sheetcontrol/ReportControlSheet";
 import MonthCostaLaborTable from "./component/tables/MonthCostaLaborTable";
 import EarnValeuManagementTable from "./component/tables/EarnValeuManagementTable";
+import InvoicesReport from "./component/sheetcontrol/InvoicesReport";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/informe/informeHC" element={<ReportControlSheet />} />
             <Route path="/informe/informeMO" element={<MonthCostaLaborTable />} />
             <Route path="/informe/EV" element={<EarnValeuManagementTable />} />
+            <Route path="/informe/InvoicesReport" element={<InvoicesReport />} />
           </Routes>
         </ViewerProvider>
       </BrowserRouter>

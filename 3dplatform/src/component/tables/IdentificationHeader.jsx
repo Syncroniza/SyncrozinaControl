@@ -8,12 +8,9 @@ const IdentificationHeader = () => {
     materialSheets,
     selectedProjectId,
   } = useContext(ViewerContext);
-    console.log("🚀 ~ IdentificationHeader ~ materialSheets:", materialSheets)
 
   const [aggregatedSheets, setAggregatedSheets] = useState([]);
-  console.log("🚀 ~ IdentificationHeader ~ aggregatedSheets:", aggregatedSheets)
  const [selectdCod, setSelectedCod]= useState ("")
-  console.log("🚀 ~ IdentificationHeader ~ selectdCod:", selectdCod)
   useEffect(() => {
     if (!materialSheets) return;
 

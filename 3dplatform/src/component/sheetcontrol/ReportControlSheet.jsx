@@ -6,7 +6,6 @@ import CarInformationSheetControlReport from "../tables/CarInformationSheetContr
 
 function ReportControlSheet() {
   const {
-    selectedFamily,
     formatCurrency,
     getDataBudget,
     selectedProjectId,
@@ -17,11 +16,12 @@ function ReportControlSheet() {
     summaryData,
     setSummaryData,
     totalUnpaidInvoices,
+    invoicesdata,
   } = useContext(ViewerContext);
 
   const [selectedFamilies, setSelectedFamilies] = useState([]);
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
-  //--------------Filtra por cada Familia y muestra los total por una o varias familias -------------//
   const familyOptions = getDataBudget
     .map((item) => ({ value: item.family, label: item.family }))
     .filter(
@@ -30,11 +30,8 @@ function ReportControlSheet() {
         self.findIndex(
           (t) => t.place === option.place && t.label === option.label
         )
-    ); // Eliminar duplicados
+    );
 
-  // const handleFamilyChange = (selectedOptions) => {
-  //   setSelectedFamilies(selectedOptions);
-  // };
   const customStyles = {
     control: (base, state) => ({
       ...base,
@@ -84,29 +81,25 @@ function ReportControlSheet() {
     }),
   };
 
-  //----------------- Obtiene Monto total del Contract Observation por sub familia________________//
   const getMontoContrato = (subfamily) => {
     return contracObservationWhitOutFilter.data?.data?.reduce((total, item) => {
       const matchesProject =
         !selectedProjectId || item.projectId === selectedProjectId;
-      const matchesFamily = !selectedFamily || item.family === selectedFamily;
       const matchesSubfamily = item.subfamily === subfamily;
-      if (matchesProject && matchesFamily && matchesSubfamily) {
+      if (matchesProject && matchesSubfamily) {
         return total + (Number(item.Proyectado) || 0);
       }
       return total;
     }, 0);
   };
 
-  //------------------- Obtiene Monto total del Aumento y Disminuciones al contrato por sub familia----//
   const getRecuperable = (subfamily) => {
     return dataincreaseDisccountwthitoutfilter?.data?.data?.reduce(
       (total, item) => {
         const matchesProject =
           !selectedProjectId || item.projectId === selectedProjectId;
-        const matchesFamily = !selectedFamily || item.family === selectedFamily;
         const matchesSubfamily = item.subfamily === subfamily;
-        if (matchesProject && matchesFamily && matchesSubfamily) {
+        if (matchesProject && matchesSubfamily) {
           return total + (Number(item.Recuperable) || 0);
         }
         return total;
@@ -116,11 +109,10 @@ function ReportControlSheet() {
   };
 
   useEffect(() => {
-    const selectedFamilyValues = selectedFamilies.map((option) => option.value);
     const filteredData = getDataBudget.filter(
       (item) =>
-        selectedFamilyValues.length === 0 ||
-        selectedFamilyValues.includes(item.family)
+        selectedFamilies.length === 0 ||
+        selectedFamilies.some((family) => family.value === item.family)
     );
 
     const subfamilies = [
@@ -139,7 +131,30 @@ function ReportControlSheet() {
       const montoContrato = getMontoContrato(subfamily);
       const getrecuperable = getRecuperable(subfamily);
       const totalconextras = montoPropuesta + getrecuperable;
-      const ahorro = montoContrato === 0 ? 0 : totalconextras - montoContrato; // Modificado para manejar montos de contrato cero
+      const ahorro = montoContrato === 0 ? 0 : totalconextras - montoContrato;
+
+      // Filtrar facturas pagadas y pertenecientes a la subfamilia
+      const paidInvoices = invoicesdata.filter(
+        (invoice) =>
+          invoice.invoiceStatus === "Pagada" && invoice.subfamily === subfamily
+      );
+
+      const totalPaidInvoices = paidInvoices.reduce(
+        (total, invoice) => total + (Number(invoice.totalInvoices) || 0),
+        0
+      );
+      // Filtrar facturas emitidas y pertenecientes a la subfamilia
+      const issuedInvoices = invoicesdata.filter(
+        (invoice) => invoice.rawData && invoice.subfamily === subfamily
+      );
+
+      const totalIssuedInvoices = issuedInvoices.reduce(
+        (total, invoice) =>
+          total + (Number(invoice.rawData.montoTotal) / 1.19 || 0),
+        0
+      );
+
+      const totalDifferenceInvoices = totalIssuedInvoices - totalPaidInvoices;
 
       return {
         family: subfamilyData[0]?.family || "No Especificada",
@@ -152,15 +167,40 @@ function ReportControlSheet() {
         ahorro,
         contrato: montoPropuesta,
         totalUnpaidInvoices: totalUnpaidInvoices,
+        totalPaidInvoices,
+        totalIssuedInvoices,
+        totalDifferenceInvoices,
       };
     });
+    // Ordenar newSummaryData alfabéticamente por subfamily
+    newSummaryData.sort((a, b) => a.subfamily.localeCompare(b.subfamily));
 
     setSummaryData(newSummaryData);
   }, [
     getDataBudget,
-    selectedFamilies, // Solo reactúa a cambios en las familias seleccionadas
+    selectedFamilies,
     selectedProjectId,
+    invoicesdata,
+    totalUnpaidInvoices,
   ]);
+
+  const handleSort = (key) => {
+    let direction = "asc";
+    if (sortConfig.key === key && sortConfig.direction === "asc") {
+      direction = "desc";
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedData = [...summaryData].sort((a, b) => {
+    if (sortConfig.key) {
+      const order = sortConfig.direction === "asc" ? 1 : -1;
+      if (a[sortConfig.key] < b[sortConfig.key]) return -order;
+      if (a[sortConfig.key] > b[sortConfig.key]) return order;
+      return 0;
+    }
+    return 0;
+  });
 
   return (
     <div className="flex bg-gradient-to-r from-blue-500 ">
@@ -203,7 +243,7 @@ function ReportControlSheet() {
             />
           </div>
         </div>
-        <CarInformationSheetControlReport />
+        <CarInformationSheetControlReport selectedFamilies={selectedFamilies.map(family => family.value)} />
         <div
           className="bg-white mt-4 mb-4 shadow-lg rounded-lg  mr-3 overflow-y-auto "
           style={{ height: "650px" }}
@@ -211,23 +251,43 @@ function ReportControlSheet() {
           <table className="w-full">
             <thead className="bg-blue-500 sticky top-0 ">
               <tr className=" text-sm text-white ">
-                <th className=" border-slate-700 p-2  ">ProjectId</th>
-                <th className=" border-slate-500   ">Familia</th>
-                <th className=" border-slate-500  ">Hoja de Control</th>
-                <th className=" border-slate-500    ">Monto Propuesta</th>
-                <th className=" border-slate-500  ">Monto Contrato</th>
-                <th className=" border-slate-500  ">Recuperable</th>
+                <th
+                  className="border-slate-500 cursor-pointer"
+                  onClick={() => handleSort("subfamily")}
+                >
+                  Hoja de Control
+                </th>
+                <th className=" border-slate-500    "
+                onClick={() => handleSort("montoPropuesta")}
+                >Monto Propuesta</th>
+                <th className=" border-slate-500  "
+                 onClick={() => handleSort("montoContrato")}
+                >Monto Contrato</th>
+                <th className=" border-slate-500  "
+                 onClick={() => handleSort("recuperable")}
+                >Recuperable</th>
                 <th className=" border-slate-500  ">Total con Extras</th>
-                <th className=" border-slate-500 ">Ahorro/Perdida</th>
+                <th
+                  className=" border-slate-500 cursor-pointer"
+                  onClick={() => handleSort("ahorro")}
+                >
+                  Ahorro/Perdida
+                </th>
+                <th className=" border-slate-500 "
+                onClick={() => handleSort("totalconextras")}
+                >Facturado</th>
+                <th className=" border-slate-500 ">Pagado</th>
+                <th
+                  className=" border-slate-500 cursor-pointer"
+                  onClick={() => handleSort("totalDifferenceInvoices")}
+                >
+                  Por pagar
+                </th>
               </tr>
             </thead>
             <tbody className="">
-              {summaryData.map((item, index) => (
-                <tr key={index} className="text-center text-xs">
-                  <td className="border border-slate-500  ">
-                    {item.projectId}
-                  </td>
-                  <td className="border border-slate-500  ">{item.family}</td>
+              {sortedData.map((item, i) => (
+                <tr key={i} className="text-center text-xs">
                   <td className="border border-slate-500   ">
                     {item.subfamily}
                   </td>
@@ -246,7 +306,7 @@ function ReportControlSheet() {
                   <td
                     className={`border border-slate-500 text-center text-xs ${
                       item.montoContrato === 0
-                        ? "text-black" // Si no hay contrato, el texto será negro
+                        ? "text-black"
                         : item.ahorro > 0
                         ? "text-green-500"
                         : item.ahorro < 0
@@ -257,6 +317,15 @@ function ReportControlSheet() {
                     {item.montoContrato === 0
                       ? "S/C"
                       : formatCurrency(item.ahorro)}
+                  </td>
+                  <td className="border border-slate-500  ">
+                    {formatCurrency(item.totalIssuedInvoices)}
+                  </td>
+                  <td className="border border-slate-500  ">
+                    {formatCurrency(item.totalPaidInvoices)}
+                  </td>
+                  <td className="border border-slate-500  ">
+                    {formatCurrency(item.totalDifferenceInvoices)}
                   </td>
                 </tr>
               ))}

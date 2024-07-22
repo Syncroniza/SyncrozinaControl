@@ -26,6 +26,7 @@ const InvicesMasterTable = () => {
   const [totalsByState, setTotalsByState] = useState({});
   const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda de número de factura
   const [searchProvider, setSearchProvider] = useState(""); // Estado para el término de búsqueda de proveedor
+  const [selectedFamilies, setSelectedFamilies] = useState([]); // Estado para la familia seleccionada
 
   const openModal = () => setIsModalOpenBudget(true);
 
@@ -72,7 +73,7 @@ const InvicesMasterTable = () => {
 
   const handleDeleteInvoice = async (invoicesid) => {
     const isConfirmed = window.confirm(
-      "Esta seguro que quiere borrar la factura ?"
+      "¿Está seguro que quiere borrar la factura?"
     );
     if (!isConfirmed) {
       return;
@@ -98,6 +99,8 @@ const InvicesMasterTable = () => {
     if (!isoDate) return "";
 
     const date = new Date(isoDate);
+    if (isNaN(date.getTime())) return ""; // Validar si la fecha es válida
+
     const day = date.getUTCDate();
     const month = date.getUTCMonth() + 1;
     const year = date.getUTCFullYear();
@@ -165,6 +168,10 @@ const InvicesMasterTable = () => {
     setSelectedPagoStates(selectedOptions);
   };
 
+  const handleFamilyChange = (selectedOptions) => {
+    setSelectedFamilies(selectedOptions);
+  };
+
   useEffect(() => {
     const selectedDocStatesValues = selectedDocStates.map(
       (option) => option.value
@@ -185,6 +192,14 @@ const InvicesMasterTable = () => {
             selectedDocStatesValues.includes(invoice.rawData.estadoDoc)) &&
           (selectedPagoStatesValues.length === 0 ||
             selectedPagoStatesValues.includes(invoice.rawData.estadoPago))
+      );
+    }
+
+    if (selectedFamilies && selectedFamilies.length > 0) {
+      const selectedFamilyValues = selectedFamilies.map((option) => option.value);
+      filtered = filtered.filter((invoice) => 
+        (selectedFamilyValues.includes(invoice.family)) || 
+        (selectedFamilyValues.includes("empty") && (!invoice.family || invoice.family.trim() === ""))
       );
     }
 
@@ -234,6 +249,7 @@ const InvicesMasterTable = () => {
   }, [
     selectedDocStates,
     selectedPagoStates,
+    selectedFamilies,
     searchTerm,
     searchProvider,
     invoicesdata,
@@ -249,6 +265,17 @@ const InvicesMasterTable = () => {
     const estados = invoicesdata.map((invoice) => invoice.rawData.estadoPago);
     const uniqueEstados = [...new Set(estados)];
     return uniqueEstados.map((estado) => ({ value: estado, label: estado }));
+  };
+
+  const getFamilyOptions = () => {
+    const families = invoicesdata.map((invoice) => invoice.family);
+    const uniqueFamilies = [...new Set(families)];
+    const options = uniqueFamilies.map((family) => ({
+      value: family,
+      label: family,
+    }));
+    options.push({ value: "empty", label: "Sin Familia" });
+    return options;
   };
 
   return (
@@ -277,14 +304,14 @@ const InvicesMasterTable = () => {
             </h1>
           </div>
         </div>
-        <div className="p-5 grid grid-cols-3 gap-4">
+        <div className=" p-5 grid grid-cols-5 gap-4">
           <Select
             isMulti
             options={getEstadoPagoOptions()}
             value={selectedPagoStates}
             onChange={handlePagoStateChange}
             styles={customStyles}
-            className="basic-multi-select"
+            className="basic-multi-select text-xs "
             classNamePrefix="select"
             placeholder="Pagado / Sin Pagar"
             noOptionsMessage={() => "No hay opciones disponibles"}
@@ -295,27 +322,36 @@ const InvicesMasterTable = () => {
             value={selectedDocStates}
             onChange={handleDocStateChange}
             styles={customStyles}
-            className="basic-multi-select"
+            className="basic-multi-select text-xs "
             classNamePrefix="select"
             placeholder="Seleccione Estado de Factura"
             noOptionsMessage={() => "No hay opciones disponibles"}
           />
-          <div>
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Buscar por N° de Factura"
-              className="border p-2 rounded-md"
-            />
-            <input
-              type="text"
-              value={searchProvider}
-              onChange={(e) => setSearchProvider(e.target.value)}
-              placeholder="Buscar por Proveedor"
-              className="border p-2 rounded-md"
-            />
-          </div>
+          <Select
+            isMulti
+            options={getFamilyOptions()}
+            value={selectedFamilies}
+            onChange={handleFamilyChange}
+            styles={customStyles}
+            className="basic-multi-select text-xs "
+            classNamePrefix="select"
+            placeholder="Seleccione Familia"
+            noOptionsMessage={() => "No hay opciones disponibles"}
+          />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Buscar por N° de Factura"
+            className="border p-2 rounded-md text-xs "
+          />
+          <input
+            type="text"
+            value={searchProvider}
+            onChange={(e) => setSearchProvider(e.target.value)}
+            placeholder="Buscar por Proveedor"
+            className="border p-2 rounded-md text-xs "
+          />
         </div>
         <div className="grid grid-cols-3">
           {Object.entries(totalsByState).map(([state, total]) => (
@@ -335,14 +371,14 @@ const InvicesMasterTable = () => {
           <table className="w-full">
             <thead className="sticky top-0 bg-blue-500 text-white">
               <tr className="border border-slate-300 text-xxs">
-                <th className="border border-slate-300 p-2">ProjectId</th>
                 <th className="border border-slate-300 px-2">Familia</th>
-                <th className="border border-slate-300 px-2">SubFamila</th>
                 <th className="border border-slate-300 px-2">N° Factura</th>
+                <th className="border border-slate-300 px-2">SubFamila</th>
                 <th className="border border-slate-300 px-2">
                   Fecha de emision
                 </th>
-                <th className="border border-slate-300 px-4">Proveedor</th>
+                <th className="border border-slate-300 px-2">RUT Proveedor</th>
+                 <th className="border border-slate-300 px-4">Proveedor</th>
                 <th className="border border-slate-300 px-2">$ Factura</th>
                 <th className="border border-slate-300 px-2">Estado</th>
                 <th className="border border-slate-300 px-2">Estado Factura</th>
@@ -353,44 +389,44 @@ const InvicesMasterTable = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredInvoices.map((invoices, y) => (
+              {filteredInvoices.map((invoice, y) => (
                 <tr key={y} className="text-xxs">
                   <td className="border border-slate-300 px-2">
-                    {invoices.projectId}
+                    {invoice.family || "Sin Familia"}
                   </td>
                   <td className="border border-slate-300 px-2">
-                    {invoices.family}
+                    {invoice.subfamily}
                   </td>
                   <td className="border border-slate-300 px-2">
-                    {invoices.subfamily}
+                    {invoice.invoices}
                   </td>
                   <td className="border border-slate-300 px-2">
-                    {invoices.invoices}
+                    {formatedDate(invoice.dateInvoices)}
                   </td>
                   <td className="border border-slate-300 px-2">
-                    {formatedDate(invoices.dateInvoices)}
+                    {invoice.rawData?.rutProveedor}
                   </td>
                   <td className="border border-slate-300 px-2">
-                    {invoices.description}
+                    {invoice.description}
                   </td>
                   <td className="border border-slate-300 px-2">
-                    {formatCurrency(invoices.totalInvoices)}
+                    {formatCurrency(invoice.totalInvoices)}
                   </td>
                   <td className="border border-slate-300 px-2">
-                    {invoices.rawData.estadoDoc}
+                    {invoice.rawData.estadoDoc}
                   </td>
                   <td className="border border-slate-300 px-2">
-                    {invoices.rawData.estadoPago}
+                    {invoice.rawData.estadoPago}
                   </td>
                   <td className="border border-slate-300 px-2">
-                    {formatedDate(invoices.dueDate)}
+                    {formatedDate(invoice.dueDate)}
                   </td>
                   <td className="border border-slate-300">
                     <button
                       className="bg-green-500 p-1 text-white rounded-lg text-xs"
                       onClick={() =>
                         openFormAndCurrentInvloiceId(
-                          invoices._id || invoices.id
+                          invoice._id || invoice.id
                         )
                       }
                     >
