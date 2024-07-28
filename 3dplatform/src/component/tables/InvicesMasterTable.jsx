@@ -4,7 +4,9 @@ import Sidebardb from "../dashboard/Sidebardb";
 import FormInvoices from "../sheetcontrol/FormInvoices";
 import axios from "axios";
 import { BASE_URL } from "../../constants.js";
-import Select from "react-select";
+import InvoicesStatusChart from "./InvoicesStatusTable.jsx";
+import InvoicePieCharts from "../charts/InvoicePieCharts.jsx";
+import { Link } from "react-router-dom";
 
 const InvicesMasterTable = () => {
   const {
@@ -12,20 +14,21 @@ const InvicesMasterTable = () => {
     invoicesdata,
     setInvoicesData,
     selectedSubfamily,
-    openFormAndCurrentInvloiceId,
     formatCurrency,
     isModalOpenBudget,
+    setFilteredInvoices,
   } = useContext(ViewerContext);
 
   const [paidInvoices, setPaidInvoices] = useState([]);
   const [totalPaidAmount, setTotalPaidAmount] = useState(0);
   const [totalInvoicedAmount, setTotalInvoicedAmount] = useState(0);
-  const [filteredInvoices, setFilteredInvoices] = useState([]);
   const [selectedDocStates, setSelectedDocStates] = useState([]);
   const [selectedPagoStates, setSelectedPagoStates] = useState([]);
   const [totalsByState, setTotalsByState] = useState({});
-  const [searchTerm, setSearchTerm] = useState(""); // Estado para el término de búsqueda de número de factura
-  const [searchProvider, setSearchProvider] = useState(""); // Estado para el término de búsqueda de proveedor
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchProvider, setSearchProvider] = useState("");
+  const [selectedFamilies, setSelectedFamilies] = useState([]);
+  const [countsByCategory, setCountsByCategory] = useState({});
 
   const openModal = () => setIsModalOpenBudget(true);
 
@@ -40,6 +43,7 @@ const InvicesMasterTable = () => {
         setInvoicesData(response.data.data);
         filterPaidInvoices(response.data.data);
         calculateTotalInvoicedAmount(response.data.data);
+        calculateCountsByCategory(response.data.data); // Calcular cantidades por categoría
         setFilteredInvoices(response.data.data); // Inicialmente mostrar todas las facturas
       } else {
         console.error("Empty array of projects", response);
@@ -66,13 +70,27 @@ const InvicesMasterTable = () => {
     setTotalInvoicedAmount(total);
   };
 
+  const calculateCountsByCategory = (data) => {
+    const counts = {
+      total: data.length,
+      paid: data.filter((invoice) => invoice.invoiceStatus === "Pagada").length,
+      unpaid: data.filter((invoice) => invoice.invoiceStatus === "Sin Pagos")
+        .length,
+      pendingApproval: data.filter(
+        (invoice) => invoice.invoiceStatus === "En Espera de Aprobacion"
+      ).length,
+      // Agrega más categorías según sea necesario
+    };
+    setCountsByCategory(counts);
+  };
+
   useEffect(() => {
     fetchInvoices();
   }, [selectedSubfamily, isModalOpenBudget, setInvoicesData]);
 
   const handleDeleteInvoice = async (invoicesid) => {
     const isConfirmed = window.confirm(
-      "Esta seguro que quiere borrar la factura ?"
+      "¿Está seguro que quiere borrar la factura?"
     );
     if (!isConfirmed) {
       return;
@@ -86,83 +104,13 @@ const InvicesMasterTable = () => {
             (invoices) => invoices._id !== invoicesid
           );
           filterPaidInvoices(updatedData);
+          calculateCountsByCategory(updatedData); // Actualizar cantidades por categoría
           return updatedData;
         });
       }
     } catch (err) {
       console.error("Error deleting invoice:", err);
     }
-  };
-
-  const formatedDate = (isoDate) => {
-    if (!isoDate) return "";
-
-    const date = new Date(isoDate);
-    const day = date.getUTCDate();
-    const month = date.getUTCMonth() + 1;
-    const year = date.getUTCFullYear();
-
-    const formattedDay = String(day).padStart(2, "0");
-    const formattedMonth = String(month).padStart(2, "0");
-
-    return `${formattedDay}/${formattedMonth}/${year}`;
-  };
-
-  const customStyles = {
-    control: (base, state) => ({
-      ...base,
-      boxShadow: state.isFocused ? "0 0 0 2px rgba(56, 189, 248, 0.5)" : 0,
-      borderColor: state.isFocused ? "#38bdf8" : "#d1d5db",
-      "&:hover": {
-        borderColor: state.isFocused ? "#38bdf8" : "#d1d5db",
-      },
-      className: "rounded-md",
-    }),
-    menu: (base) => ({
-      ...base,
-      borderRadius: 0,
-      hyphens: "auto",
-      marginTop: 0,
-      textAlign: "left",
-      wordWrap: "break-word",
-    }),
-    menuList: (base) => ({
-      ...base,
-      padding: 0,
-    }),
-    option: (base, state) => ({
-      ...base,
-      backgroundColor: state.isFocused ? "#bfdbfe" : "#ffffff",
-      color: "#1f2937",
-      cursor: "pointer",
-      "&:active": {
-        backgroundColor: "#38bdf8",
-      },
-    }),
-    multiValue: (base) => ({
-      ...base,
-      backgroundColor: "#e0f2fe",
-    }),
-    multiValueLabel: (base) => ({
-      ...base,
-      color: "#0369a1",
-    }),
-    multiValueRemove: (base) => ({
-      ...base,
-      color: "#0369a1",
-      ":hover": {
-        backgroundColor: "#0369a1",
-        color: "#ffffff",
-      },
-    }),
-  };
-
-  const handleDocStateChange = (selectedOptions) => {
-    setSelectedDocStates(selectedOptions);
-  };
-
-  const handlePagoStateChange = (selectedOptions) => {
-    setSelectedPagoStates(selectedOptions);
   };
 
   useEffect(() => {
@@ -182,9 +130,21 @@ const InvicesMasterTable = () => {
       filtered = filtered.filter(
         (invoice) =>
           (selectedDocStatesValues.length === 0 ||
-            selectedDocStatesValues.includes(invoice.rawData.estadoDoc)) &&
+            selectedDocStatesValues.includes(invoice.rawData?.estadoDoc)) &&
           (selectedPagoStatesValues.length === 0 ||
-            selectedPagoStatesValues.includes(invoice.rawData.estadoPago))
+            selectedPagoStatesValues.includes(invoice.rawData?.estadoPago))
+      );
+    }
+
+    if (selectedFamilies && selectedFamilies.length > 0) {
+      const selectedFamilyValues = selectedFamilies.map(
+        (option) => option.value
+      );
+      filtered = filtered.filter(
+        (invoice) =>
+          selectedFamilyValues.includes(invoice.family) ||
+          (selectedFamilyValues.includes("empty") &&
+            (!invoice.family || invoice.family.trim() === ""))
       );
     }
 
@@ -220,8 +180,8 @@ const InvicesMasterTable = () => {
       const total = filtered
         .filter(
           (invoice) =>
-            (docState === "" || invoice.rawData.estadoDoc === docState) &&
-            (pagoState === "" || invoice.rawData.estadoPago === pagoState)
+            (docState === "" || invoice.rawData?.estadoDoc === docState) &&
+            (pagoState === "" || invoice.rawData?.estadoPago === pagoState)
         )
         .reduce((sum, invoice) => sum + (invoice.totalInvoices || 0), 0);
       const key = `${docState}${
@@ -234,22 +194,11 @@ const InvicesMasterTable = () => {
   }, [
     selectedDocStates,
     selectedPagoStates,
+    selectedFamilies,
     searchTerm,
     searchProvider,
     invoicesdata,
   ]);
-
-  const getEstadoDocOptions = () => {
-    const estados = invoicesdata.map((invoice) => invoice.rawData.estadoDoc);
-    const uniqueEstados = [...new Set(estados)];
-    return uniqueEstados.map((estado) => ({ value: estado, label: estado }));
-  };
-
-  const getEstadoPagoOptions = () => {
-    const estados = invoicesdata.map((invoice) => invoice.rawData.estadoPago);
-    const uniqueEstados = [...new Set(estados)];
-    return uniqueEstados.map((estado) => ({ value: estado, label: estado }));
-  };
 
   return (
     <div className="flex bg-gradient-to-r from-blue-500 ">
@@ -259,64 +208,53 @@ const InvicesMasterTable = () => {
         <h1 className="text-lg text-center font-semibold">
           MAESTRO DE FACTURAS
         </h1>
-        <div className="grid grid-cols-3">
+        <Link to={"/informe/InvoicesReport/listadofacturas"}>
+          <div className="mt-3 mr-3 ml-2 shadow-xl flex justify-center text-white p-2 rounded-lg bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500">
+            Ir a maestro de facturas
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              class="size-6"
+              className="w-5 h-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
+              />
+            </svg>
+          </div>
+        </Link>
+        <div className="grid grid-cols-3" style={{ width: "1350px" }}>
           <div className="text-center p-2 bg-gradient-to-r from-indigo-500 to-blue-500 grid grid-rows-2 rounded-xl shadow-xl mt-4 mb-4 mr-3">
-            <h2 className="text-white">Total Facturado:</h2>
+            <h2 className="text-white">
+              Total Facturado ({countsByCategory.total}):
+            </h2>
             <h1 className="text-white">
               {formatCurrency(totalInvoicedAmount)}
             </h1>
           </div>
           <div className="text-center bg-gradient-to-r from-indigo-500 to-blue-500 grid grid-rows-2 rounded-xl shadow-xl mt-4 mb-4 mr-3">
-            <h2 className="text-white">Total Pagado:</h2>
+            <h2 className="text-white">
+              Total Pagado ({countsByCategory.paid}):
+            </h2>
             <h1 className="text-white">{formatCurrency(totalPaidAmount)}</h1>
           </div>
           <div className="text-center bg-gradient-to-r from-indigo-500 to-blue-500 grid grid-rows-2 rounded-xl shadow-xl mt-4 mb-4 mr-3">
-            <h2 className="text-white">Total Por Pagar:</h2>
+            <h2 className="text-white">
+              Total Por Pagar ({countsByCategory.unpaid}):
+            </h2>
             <h1 className="text-white">
               {formatCurrency(totalInvoicedAmount - totalPaidAmount)}
             </h1>
           </div>
         </div>
-        <div className="p-5 grid grid-cols-3 gap-4">
-          <Select
-            isMulti
-            options={getEstadoPagoOptions()}
-            value={selectedPagoStates}
-            onChange={handlePagoStateChange}
-            styles={customStyles}
-            className="basic-multi-select"
-            classNamePrefix="select"
-            placeholder="Pagado / Sin Pagar"
-            noOptionsMessage={() => "No hay opciones disponibles"}
-          />
-          <Select
-            isMulti
-            options={getEstadoDocOptions()}
-            value={selectedDocStates}
-            onChange={handleDocStateChange}
-            styles={customStyles}
-            className="basic-multi-select"
-            classNamePrefix="select"
-            placeholder="Seleccione Estado de Factura"
-            noOptionsMessage={() => "No hay opciones disponibles"}
-          />
-          <div>
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Buscar por N° de Factura"
-              className="border p-2 rounded-md"
-            />
-            <input
-              type="text"
-              value={searchProvider}
-              onChange={(e) => setSearchProvider(e.target.value)}
-              placeholder="Buscar por Proveedor"
-              className="border p-2 rounded-md"
-            />
-          </div>
-        </div>
+        {/* <CardsTotalInvoicesInformation /> */}
+        <InvoicesStatusChart />
+        <InvoicePieCharts invoicesdata={invoicesdata} />
         <div className="grid grid-cols-3">
           {Object.entries(totalsByState).map(([state, total]) => (
             <div
@@ -327,93 +265,6 @@ const InvicesMasterTable = () => {
               <h1 className="text-white">{formatCurrency(total)}</h1>
             </div>
           ))}
-        </div>
-        <div
-          className="overflow-auto text-center"
-          style={{ width: "1300px", height: "1000px" }}
-        >
-          <table className="w-full">
-            <thead className="sticky top-0 bg-blue-500 text-white">
-              <tr className="border border-slate-300 text-xxs">
-                <th className="border border-slate-300 p-2">ProjectId</th>
-                <th className="border border-slate-300 px-2">Familia</th>
-                <th className="border border-slate-300 px-2">SubFamila</th>
-                <th className="border border-slate-300 px-2">N° Factura</th>
-                <th className="border border-slate-300 px-2">
-                  Fecha de emision
-                </th>
-                <th className="border border-slate-300 px-4">Proveedor</th>
-                <th className="border border-slate-300 px-2">$ Factura</th>
-                <th className="border border-slate-300 px-2">Estado</th>
-                <th className="border border-slate-300 px-2">Estado Factura</th>
-                <th className="border border-slate-300 px-2">
-                  Fecha Vencimiento
-                </th>
-                <th className="border border-slate-300 px-2">Editar</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredInvoices.map((invoices, y) => (
-                <tr key={y} className="text-xxs">
-                  <td className="border border-slate-300 px-2">
-                    {invoices.projectId}
-                  </td>
-                  <td className="border border-slate-300 px-2">
-                    {invoices.family}
-                  </td>
-                  <td className="border border-slate-300 px-2">
-                    {invoices.subfamily}
-                  </td>
-                  <td className="border border-slate-300 px-2">
-                    {invoices.invoices}
-                  </td>
-                  <td className="border border-slate-300 px-2">
-                    {formatedDate(invoices.dateInvoices)}
-                  </td>
-                  <td className="border border-slate-300 px-2">
-                    {invoices.description}
-                  </td>
-                  <td className="border border-slate-300 px-2">
-                    {formatCurrency(invoices.totalInvoices)}
-                  </td>
-                  <td className="border border-slate-300 px-2">
-                    {invoices.rawData.estadoDoc}
-                  </td>
-                  <td className="border border-slate-300 px-2">
-                    {invoices.rawData.estadoPago}
-                  </td>
-                  <td className="border border-slate-300 px-2">
-                    {formatedDate(invoices.dueDate)}
-                  </td>
-                  <td className="border border-slate-300">
-                    <button
-                      className="bg-green-500 p-1 text-white rounded-lg text-xs"
-                      onClick={() =>
-                        openFormAndCurrentInvloiceId(
-                          invoices._id || invoices.id
-                        )
-                      }
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-3 h-3"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                        />
-                      </svg>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </div>
       </div>
     </div>

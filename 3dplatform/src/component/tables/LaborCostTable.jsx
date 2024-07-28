@@ -173,7 +173,7 @@ const LaborCostTable = () => {
                     <Cell>
                       <input
                         type="text"
-                        value={item.realmonthcost}
+                        value={formatCurrency(item.realmonthcost)}
                         onChange={(e) =>
                           handleInputChange(e, index, "realmonthcost")
                         }

@@ -93,6 +93,7 @@ const ViewerProvider = ({ children }) => {
   const [realMonthCostGgpublico, setRealMonthCostGgpublico] = useState(0);
   const [realMonthCostPrivado, setRealMonthCostPrivado] = useState(0);
   const [realMonthCostPublico, setRealMonthCostPublico] = useState(0);
+  const [filteredInvoices, setFilteredInvoices] = useState([]);
 
   const [filters, setFilters] = useState({
     projectId: "",
@@ -403,6 +404,8 @@ const ViewerProvider = ({ children }) => {
         setRealMonthCostPrivado,
         realMonthCostPublico,
         setRealMonthCostPublico,
+        filteredInvoices,
+        setFilteredInvoices,
       }}
     >
       {children}
