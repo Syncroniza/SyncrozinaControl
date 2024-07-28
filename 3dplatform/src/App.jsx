@@ -11,26 +11,37 @@ import ReportControlSheet from "./component/sheetcontrol/ReportControlSheet";
 import MonthCostaLaborTable from "./component/tables/MonthCostaLaborTable";
 import EarnValeuManagementTable from "./component/tables/EarnValeuManagementTable";
 import InvoicesReport from "./component/sheetcontrol/InvoicesReport";
+import MasterInvoicesListsTable from "./component/tables/MasterInvoicesListsTable";
 
 function App() {
   return (
-      <BrowserRouter>
-        <ViewerProvider>
-          <Routes>
-            <Route path="/ifcviewer" element={<div className="flex h-min-screen"></div>} />
-            <Route path="/" element={<ControlSheet />} />
-            <Route path="/Manodeobra" element={<LaborCostControl />} />
-            <Route path="/hojadecontrol" element={<HojadeControl />} />
-            <Route path="/masterfacturas" element={<InvicesMasterTable />} />
-            <Route path="/oc" element={<MainPurchaseOrdes />} />
-            <Route path="/informe" element={<Informegerencial />} />
-            <Route path="/informe/informeHC" element={<ReportControlSheet />} />
-            <Route path="/informe/informeMO" element={<MonthCostaLaborTable />} />
-            <Route path="/informe/EV" element={<EarnValeuManagementTable />} />
-            <Route path="/informe/InvoicesReport" element={<InvoicesReport />} />
-          </Routes>
-        </ViewerProvider>
-      </BrowserRouter>
+    <BrowserRouter>
+      <ViewerProvider>
+        <Routes>
+          <Route
+            path="/ifcviewer"
+            element={<div className="flex h-min-screen"></div>}
+          />
+          <Route path="/" element={<ControlSheet />} />
+          <Route path="/Manodeobra" element={<LaborCostControl />} />
+          <Route path="/hojadecontrol" element={<HojadeControl />} />
+          <Route path="/masterfacturas" element={<InvicesMasterTable />} />
+          <Route path="/oc" element={<MainPurchaseOrdes />} />
+          <Route path="/informe" element={<Informegerencial />} />
+          <Route path="/informe/informeHC" element={<ReportControlSheet />} />
+          <Route path="/informe/informeMO" element={<MonthCostaLaborTable />} />
+          <Route path="/informe/EV" element={<EarnValeuManagementTable />} />
+          <Route
+            path="/informe/InvoicesReport/proveedor"
+            element={<InvoicesReport />}
+          />
+          <Route
+            path="/informe/InvoicesReport/listadofacturas"
+            element={<MasterInvoicesListsTable />}
+          />
+        </Routes>
+      </ViewerProvider>
+    </BrowserRouter>
   );
 }
 

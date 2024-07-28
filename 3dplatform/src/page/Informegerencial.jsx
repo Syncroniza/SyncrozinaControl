@@ -25,9 +25,9 @@ function Informegerencial() {
               VALOR GANADO
             </h1>
           </Link>
-          {/* <Link to={"/informe/InvoicesReport"}>
-          <h1 className="flex justify-center ml-6 mt-6 bg-blue-500  bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded-lg p-4 text-white text-sm">
-            FACTURAS
+          {/* <Link to={"/informe/InvoicesReport/proveedor"}>
+            <h1 className="flex justify-center ml-6 mt-6 bg-blue-500  bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500 rounded-lg p-4 text-white text-sm">
+              FACTURAS
             </h1>
           </Link> */}
           {/* <Link to={"/informe/dispobible"}>
