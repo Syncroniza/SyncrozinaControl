@@ -7,6 +7,8 @@ import { BASE_URL } from "../../constants.js";
 import InvoicesStatusChart from "./InvoicesStatusTable.jsx";
 import InvoicePieCharts from "../charts/InvoicePieCharts.jsx";
 import { Link } from "react-router-dom";
+import TableInvoices from "./TableInvoices.jsx";
+import CardsTotalInvoicesInformation from '../Cards/CardsTotalInvoicesInformation.jsx'
 
 const InvicesMasterTable = () => {
   const {
@@ -208,9 +210,9 @@ const InvicesMasterTable = () => {
         <h1 className="text-lg text-center font-semibold">
           MAESTRO DE FACTURAS
         </h1>
-        <Link to={"/informe/InvoicesReport/listadofacturas"}>
+        <Link to={"/informe/Facturas"}>
           <div className="mt-3 mr-3 ml-2 shadow-xl flex justify-center text-white p-2 rounded-lg bg-gradient-to-r from-green-400 to-blue-500 hover:from-pink-500 hover:to-yellow-500">
-            Ir a maestro de facturas
+            Ir a Informe estado de Facturas 
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -252,9 +254,8 @@ const InvicesMasterTable = () => {
             </h1>
           </div>
         </div>
-        {/* <CardsTotalInvoicesInformation /> */}
-        <InvoicesStatusChart />
-        <InvoicePieCharts invoicesdata={invoicesdata} />
+        <CardsTotalInvoicesInformation />
+
         <div className="grid grid-cols-3">
           {Object.entries(totalsByState).map(([state, total]) => (
             <div
@@ -266,6 +267,7 @@ const InvicesMasterTable = () => {
             </div>
           ))}
         </div>
+        <TableInvoices />
       </div>
     </div>
   );

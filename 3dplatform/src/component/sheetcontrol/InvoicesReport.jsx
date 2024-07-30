@@ -1,80 +1,86 @@
 import { useContext, useEffect, useState } from "react";
 import { ViewerContext } from "../Context";
 import Sidebardb from "../dashboard/Sidebardb";
+import InvoicesStatusChart from "../tables/InvoicesStatusTable";
+import InvoicePieCharts from "../charts/InvoicePieCharts";
 
 const InvoicesReport = () => {
-  const { invoicesdata, formatCurrency } =
-    useContext(ViewerContext);
-  console.log("🚀 ~ InvoicesReport ~ invoicesdata:", invoicesdata);
-  const [reportData, setReportData] = useState([]);
-  const [selectedProvider, setSelectedProvider] = useState("");
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
+  // const { invoicesdata, formatCurrency } =
+  //   useContext(ViewerContext);
+  // const [reportData, setReportData] = useState([]);
+  // const [selectedProvider, setSelectedProvider] = useState("");
+  // const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
-  useEffect(() => {
-    if (invoicesdata) {
-      // Agrupar datos por proveedor
-      const groupedData = invoicesdata.reduce((acc, invoice) => {
-        const { rawData } = invoice;
-        const { nomProveedor, montoTotal, estadoPago, rutProveedor } = rawData;
+  // useEffect(() => {
+  //   if (invoicesdata) {
+  //     // Agrupar datos por proveedor
+  //     const groupedData = invoicesdata.reduce((acc, invoice) => {
+  //       const { rawData } = invoice;
+  //       const { nomProveedor, montoTotal, estadoPago, rutProveedor } = rawData;
 
-        if (!acc[nomProveedor]) {
-          acc[nomProveedor] = {
-            nomProveedor,
-            rutProveedor,
-            totalComprado: 0,
-            totalPagado: 0,
-            totalSinPagar: 0,
-          };
-        }
-        acc[nomProveedor].totalComprado += montoTotal;
-        if (estadoPago === "Pagada") {
-          acc[nomProveedor].totalPagado += montoTotal;
-        } else if (estadoPago === "Sin Pagos") {
-          acc[nomProveedor].totalSinPagar += montoTotal;
-        }
-        return acc;
-      }, {});
+  //       if (!acc[nomProveedor]) {
+  //         acc[nomProveedor] = {
+  //           nomProveedor,
+  //           rutProveedor,
+  //           totalComprado: 0,
+  //           totalPagado: 0,
+  //           totalSinPagar: 0,
+  //         };
+  //       }
+  //       acc[nomProveedor].totalComprado += montoTotal;
+  //       if (estadoPago === "Pagada") {
+  //         acc[nomProveedor].totalPagado += montoTotal;
+  //       } else if (estadoPago === "Sin Pagos") {
+  //         acc[nomProveedor].totalSinPagar += montoTotal;
+  //       }
+  //       return acc;
+  //     }, {});
 
-      // Convertir el objeto agrupado en un array
-      const reportArray = Object.values(groupedData);
-      setReportData(reportArray);
-    }
-  }, [invoicesdata]);
+  //     // Convertir el objeto agrupado en un array
+  //     const reportArray = Object.values(groupedData);
+  //     setReportData(reportArray);
+  //   }
+  // }, [invoicesdata]);
 
-  const handleProviderChange = (e) => {
-    setSelectedProvider(e.target.value);
-  };
+  // const handleProviderChange = (e) => {
+  //   setSelectedProvider(e.target.value);
+  // };
 
-  const handleSort = (key) => {
-    let direction = "asc";
-    if (sortConfig.key === key && sortConfig.direction === "asc") {
-      direction = "desc";
-    }
-    setSortConfig({ key, direction });
-  };
+  // const handleSort = (key) => {
+  //   let direction = "asc";
+  //   if (sortConfig.key === key && sortConfig.direction === "asc") {
+  //     direction = "desc";
+  //   }
+  //   setSortConfig({ key, direction });
+  // };
 
-  const sortedData = [...reportData].sort((a, b) => {
-    if (sortConfig.key) {
-      const order = sortConfig.direction === "asc" ? 1 : -1;
-      if (a[sortConfig.key] < b[sortConfig.key]) return -order;
-      if (a[sortConfig.key] > b[sortConfig.key]) return order;
-      return 0;
-    }
-    return 0;
-  });
+  // const sortedData = [...reportData].sort((a, b) => {
+  //   if (sortConfig.key) {
+  //     const order = sortConfig.direction === "asc" ? 1 : -1;
+  //     if (a[sortConfig.key] < b[sortConfig.key]) return -order;
+  //     if (a[sortConfig.key] > b[sortConfig.key]) return order;
+  //     return 0;
+  //   }
+  //   return 0;
+  // });
 
-  const filteredData = selectedProvider
-    ? sortedData.filter((item) => item.nomProveedor === selectedProvider)
-    : sortedData;
+  // const filteredData = selectedProvider
+  //   ? sortedData.filter((item) => item.nomProveedor === selectedProvider)
+  //   : sortedData;
 
-  const sortedProviders = [...reportData].sort((a, b) =>
-    a.nomProveedor.localeCompare(b.nomProveedor)
-  );
+  // const sortedProviders = [...reportData].sort((a, b) =>
+  //   a.nomProveedor.localeCompare(b.nomProveedor)
+  // );
 
   return (
     <div className="flex bg-gradient-to-r from-blue-500 min-h-screen">
       <Sidebardb />
-      <div className="b-4 bg-white mt-4 ml-3 mb-6 p-4 rounded-lg">
+      <div className="bg-white mt-4" style={{width:'1350px'}}>
+      <InvoicesStatusChart />
+      <InvoicePieCharts />
+
+      </div>
+      {/* <div className="b-4 bg-white mt-4 ml-3 mb-6 p-4 rounded-lg">
         <h1 className="text-lg text-center font-semibold">
           INFORME FACTURAS POR PROVEEDOR
         </h1>
@@ -158,7 +164,7 @@ const InvoicesReport = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

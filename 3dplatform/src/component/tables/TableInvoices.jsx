@@ -1,10 +1,22 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext } from "react";
 import { ViewerContext } from "../Context";
+import FormInvoices from "../sheetcontrol/FormInvoices";
 
 function TableInvoices() {
-  const { filteredInvoices, formatCurrency } = useContext(ViewerContext);
+  const {
+    filteredInvoices,
+    formatCurrency,
+    openFormAndCurrentInvloiceId,
+    isModalOpenBudget,
+  } = useContext(ViewerContext);
 
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+
+  const [sortConfig, setSortConfig] = useState({
+    key: null,
+    direction: "ascending",
+  });
+
+const openModal = () => setIsModalOpenBudget(true);
 
   const formatedDate = (isoDate) => {
     if (!isoDate) return "";
@@ -30,22 +42,22 @@ function TableInvoices() {
         let bValue = b[sortConfig.key];
 
         // Handle nested properties
-        if (sortConfig.key.includes('.')) {
-          const keys = sortConfig.key.split('.');
+        if (sortConfig.key.includes(".")) {
+          const keys = sortConfig.key.split(".");
           aValue = keys.reduce((obj, key) => obj[key], a);
           bValue = keys.reduce((obj, key) => obj[key], b);
         }
 
-        if (typeof aValue === 'string') {
+        if (typeof aValue === "string") {
           aValue = aValue?.toLowerCase();
           bValue = bValue?.toLowerCase();
         }
 
         if (aValue < bValue) {
-          return sortConfig.direction === 'ascending' ? -1 : 1;
+          return sortConfig.direction === "ascending" ? -1 : 1;
         }
         if (aValue > bValue) {
-          return sortConfig.direction === 'ascending' ? 1 : -1;
+          return sortConfig.direction === "ascending" ? 1 : -1;
         }
         return 0;
       });
@@ -54,15 +66,16 @@ function TableInvoices() {
   }, [filteredInvoices, sortConfig]);
 
   const requestSort = (key) => {
-    let direction = 'ascending';
-    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
-      direction = 'descending';
+    let direction = "ascending";
+    if (sortConfig.key === key && sortConfig.direction === "ascending") {
+      direction = "descending";
     }
     setSortConfig({ key, direction });
   };
 
   return (
     <div>
+      <FormInvoices />
       <div
         className="overflow-auto text-center"
         style={{ width: "1300px", height: "1000px" }}
@@ -70,20 +83,72 @@ function TableInvoices() {
         <table className="w-full">
           <thead className="sticky top-0 bg-blue-500 text-white">
             <tr className="border border-slate-300 text-xxs">
-              <th className="border border-slate-300 px-2 cursor-pointer" onClick={() => requestSort('family')}>Familia</th>
-              <th className="border border-slate-300 px-2 cursor-pointer" onClick={() => requestSort('subfamily')}>SubFamilia</th>
-              <th className="border border-slate-300 px-2 cursor-pointer" onClick={() => requestSort('invoices')}>N° Factura</th>
-              <th className="border border-slate-300 px-2 cursor-pointer" onClick={() => requestSort('dateInvoices')}>Fecha de emision</th>
-              <th className="border border-slate-300 px-2 cursor-pointer" onClick={() => requestSort('rawData.rutProveedor')}>RUT Proveedor</th>
-              <th className="border border-slate-300 px-4 cursor-pointer" onClick={() => requestSort('description')}>Proveedor</th>
-              <th className="border border-slate-300 px-2 cursor-pointer" onClick={() => requestSort('totalInvoices')}>$ Factura</th>
-              <th className="border border-slate-300 px-2 cursor-pointer" onClick={() => requestSort('rawData.estadoDoc')}>Estado</th>
-              <th className="border border-slate-300 px-2 cursor-pointer" onClick={() => requestSort('rawData.estadoPago')}>Estado Factura</th>
-              <th className="border border-slate-300 px-2 cursor-pointer" onClick={() => requestSort('dueDate')}>Fecha Vencimiento</th>
+              <th
+                className="border border-slate-300 px-2 cursor-pointer"
+                onClick={() => requestSort("family")}
+              >
+                Familia
+              </th>
+              <th
+                className="border border-slate-300 px-2 cursor-pointer"
+                onClick={() => requestSort("subfamily")}
+              >
+                SubFamilia
+              </th>
+              <th
+                className="border border-slate-300 px-2 cursor-pointer"
+                onClick={() => requestSort("invoices")}
+              >
+                N° Factura
+              </th>
+              <th
+                className="border border-slate-300 px-2 cursor-pointer"
+                onClick={() => requestSort("dateInvoices")}
+              >
+                Fecha de emision
+              </th>
+              <th
+                className="border border-slate-300 px-2 cursor-pointer"
+                onClick={() => requestSort("rawData.rutProveedor")}
+              >
+                RUT Proveedor
+              </th>
+              <th
+                className="border border-slate-300 px-4 cursor-pointer"
+                onClick={() => requestSort("description")}
+              >
+                Proveedor
+              </th>
+              <th
+                className="border border-slate-300 px-2 cursor-pointer"
+                onClick={() => requestSort("totalInvoices")}
+              >
+                $ Factura
+              </th>
+              <th
+                className="border border-slate-300 px-2 cursor-pointer"
+                onClick={() => requestSort("rawData.estadoDoc")}
+              >
+                Estado
+              </th>
+              <th
+                className="border border-slate-300 px-2 cursor-pointer"
+                onClick={() => requestSort("rawData.estadoPago")}
+              >
+                Estado Factura
+              </th>
+              <th
+                className="border border-slate-300 px-2 cursor-pointer"
+                onClick={() => requestSort("dueDate")}
+              >
+                Fecha Vencimiento
+              </th>
               <th className="border border-slate-300">
                 <button
                   className="bg-green-500 p-1 text-white rounded-lg text-xs"
-                  onClick={() => openFormAndCurrentInvloiceId(invoice._id || invoice.id)}
+                  onClick={() =>
+                    openFormAndCurrentInvloiceId(invoice._id || invoice.id)
+                  }
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

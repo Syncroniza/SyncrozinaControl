@@ -37,8 +37,8 @@ const InvoicesStatusChart = () => {
 
   return (
     <div>
-      <h2>Detalle Estados de Facturas</h2>
-      <table>
+      <h2 className="mt-4 ml-2">Detalle Estados de Facturas</h2>
+      <table className="ml-20 mt-6">
       <thead className="sticky top-0 bg-blue-500 text-white">
           <tr className="text-sm border border-3">
             <th>Estado</th>
