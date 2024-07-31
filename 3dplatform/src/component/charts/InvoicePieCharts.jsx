@@ -43,7 +43,7 @@ const InvoicePieCharts = () => {
 
   return (
     <div>
-      <h2 className="mt-4 text-lg">Gráfica Facturas según Estado</h2>
+      <h2 className="mt-4 ml-2  mb-4 text-lg">Gráfica Facturas según Estado</h2>
       <div style={{ display: "flex", justifyContent: "space-around" }}>
         <div className="bg-gray-200 rounded-lg shadow-xl">
           <h3 className="text-center">Pagada</h3>

@@ -32,7 +32,7 @@ function App() {
           <Route path="/informe/informeMO" element={<MonthCostaLaborTable />} />
           <Route path="/informe/EV" element={<EarnValeuManagementTable />} />
           <Route
-            path="/informe/InvoicesReport/proveedor"
+            path="/informe/Facturas"
             element={<InvoicesReport />}
           />
           <Route
