@@ -338,4 +338,5 @@ mongoConnect().then(async () => {
     await getInvoices();
     // await createAlieas();
     console.log("Se fini")
+    process.exit(0)
 });
