@@ -19,7 +19,7 @@ services:
       dockerfile: Dockerfile
     image: syncroniza/api
     ports:
-      - "8000:8000"
+      - "8000:8001"
     command:
       - npm
       - run
