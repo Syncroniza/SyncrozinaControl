@@ -13,6 +13,19 @@ services:
       - dev
     env_file:
       - ./server/.env
+  demo-api:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: syncroniza/api
+    ports:
+      - "8000:8000"
+    command:
+      - npm
+      - run
+      - dev
+    env_file:
+      - ./server/.env.demo
   nginx:
     restart: always
     build:
