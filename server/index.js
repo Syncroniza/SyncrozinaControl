@@ -25,7 +25,10 @@ app.use(express.urlencoded({ extended: true }));
 const whitelist = [
     "http://localhost:5173",
     "http://localhost:5174",
-    "https://appsyncroniza.cl"
+    "https://appsyncroniza.cl",
+    "https://demo.syncroniza.cl",
+    "https://www.syncroniza.cl",
+    "https://syncroniza.cl",
 ];
 
 app.use(
