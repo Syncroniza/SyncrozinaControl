@@ -60,6 +60,9 @@ const ProjectInformation = () => {
 
   const porcentajeGastado = ((totalActualCost / grandTotal) * 100).toFixed(2); // Calcula el porcentaje gastado
 
+  const disponible = grandTotal - totalActualCost - accumulatedRealMonthCost;
+  const porcentajeDisponible = ((disponible / grandTotal) * 100).toFixed(2); // Calcula el porcentaje disponible
+
   return (
     <div className="" style={{ width: "1330px" }}>
       <h1 className=" text-lg text-center font-semibold p-2 mb-2 ml-4 bg-white  mr-2 mt-6 shadow-xl rounded-lg ">
@@ -182,9 +185,10 @@ const ProjectInformation = () => {
           <div className=" text-center bg-blue-500 bg-gradient-to-r from-indigo-500  grid grid-rows-2 px-1  rounded-xl shadow-xl mt-4 mb-4 mr-3 ">
             <h1 className=" text-lg mt-2 text-white px-2">Disponible:</h1>
             <div className="text-lg text-white ">
-              {formatCurrency(
-                grandTotal - totalActualCost - accumulatedRealMonthCost
-              )}
+              {formatCurrency(disponible)}
+              <div className="text-sm text-white mt-2">
+                Disponible: {porcentajeDisponible}%
+              </div>
             </div>
           </div>
         </div>
