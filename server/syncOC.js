@@ -176,7 +176,7 @@ const getInvoices = async () => {
         await new Promise((resolve) => {
           setTimeout(() => {
             resolve();
-          }, 450);
+          }, 500);
         });
 
         let datum = res.data[i];

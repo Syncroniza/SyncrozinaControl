@@ -4,7 +4,8 @@ import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AF19FF"];
 
-const renderTooltipContent = (value) => `$${value.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+const renderTooltipContent = (value) =>
+  `$${value.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 
 const InvoicePieCharts = () => {
   const { invoicesdata } = useContext(ViewerContext);
@@ -18,15 +19,18 @@ const InvoicePieCharts = () => {
       const unpaidMap = {};
 
       invoicesdata.forEach((invoice) => {
-        const amount = invoice.rawData.montoTotal / 1.19; // Quitar IVA
-        const subStatus = invoice.rawData.estadoDoc;
+        const amount = invoice?.rawData?.montoTotal / 1.19; // Quitar IVA
+        const subStatus = invoice?.rawData?.estadoDoc;
 
         if (invoice.invoiceStatus === "Pagada") {
           if (!paidMap[subStatus]) {
             paidMap[subStatus] = { name: subStatus, value: 0 };
           }
           paidMap[subStatus].value += amount;
-        } else if (invoice.invoiceStatus === "Sin Pagos" || invoice.invoiceStatus === "Sin pagos") {
+        } else if (
+          invoice.invoiceStatus === "Sin Pagos" ||
+          invoice.invoiceStatus === "Sin pagos"
+        ) {
           if (!unpaidMap[subStatus]) {
             unpaidMap[subStatus] = { name: subStatus, value: 0 };
           }
@@ -65,7 +69,13 @@ const InvoicePieCharts = () => {
               ))}
             </Pie>
             <Tooltip formatter={renderTooltipContent} />
-            <Legend formatter={(value, entry) => `${entry.payload.name}: ${renderTooltipContent(entry.payload.value)}`} />
+            <Legend
+              formatter={(value, entry) =>
+                `${entry.payload.name}: ${renderTooltipContent(
+                  entry.payload.value
+                )}`
+              }
+            />
           </PieChart>
         </div>
         <div className="bg-gray-200 rounded-lg shadow-xl">
@@ -88,7 +98,13 @@ const InvoicePieCharts = () => {
               ))}
             </Pie>
             <Tooltip formatter={renderTooltipContent} />
-            <Legend formatter={(value, entry) => `${entry.payload.name}: ${renderTooltipContent(entry.payload.value)}`} />
+            <Legend
+              formatter={(value, entry) =>
+                `${entry.payload.name}: ${renderTooltipContent(
+                  entry.payload.value
+                )}`
+              }
+            />
           </PieChart>
         </div>
       </div>

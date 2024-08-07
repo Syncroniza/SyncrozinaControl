@@ -11,8 +11,8 @@ const InvoicesStatusChart = () => {
 
       invoicesdata.forEach((invoice) => {
         const status = invoice.invoiceStatus;
-        const subStatus = invoice.rawData.estadoDoc;
-        const amount = invoice.rawData.montoTotal / 1.19;
+        const subStatus = invoice?.rawData?.estadoDoc;
+        const amount = invoice?.rawData?.montoTotal / 1.19;
 
         if (!statusMap[status]) {
           statusMap[status] = { count: 0, total: 0, subStatuses: {} };
@@ -39,7 +39,7 @@ const InvoicesStatusChart = () => {
     <div>
       <h2 className="mt-4 ml-2">Detalle Estados de Facturas</h2>
       <table className="ml-20 mt-6">
-      <thead className="sticky top-0 bg-blue-500 text-white">
+        <thead className="sticky top-0 bg-blue-500 text-white">
           <tr className="text-sm border border-3">
             <th>Estado</th>
             <th>Sub-Estado</th>
@@ -50,18 +50,34 @@ const InvoicesStatusChart = () => {
         <tbody>
           {statusData.map(([status, data]) => (
             <>
-              <tr key={status} className="text-xs border border-slate-500 bg-slate-300">
-                <td className="border border-slate-500 bg-slate-300">{status}</td>
+              <tr
+                key={status}
+                className="text-xs border border-slate-500 bg-slate-300"
+              >
+                <td className="border border-slate-500 bg-slate-300">
+                  {status}
+                </td>
                 <td></td>
-                <td className="border border-slate-500 text-center">{data.count}</td>
-                <td className="border border-slate-500">{formatCurrency(data.total)}</td>
+                <td className="border border-slate-500 text-center">
+                  {data.count}
+                </td>
+                <td className="border border-slate-500">
+                  {formatCurrency(data.total)}
+                </td>
               </tr>
               {Object.entries(data.subStatuses).map(([subStatus, subData]) => (
-                <tr key={subStatus} className="text-xs border border-slate-500 ">
+                <tr
+                  key={subStatus}
+                  className="text-xs border border-slate-500 "
+                >
                   <td></td>
                   <td className="borde border-slate-500">{subStatus}</td>
-                  <td className="borde border-slate-500 text-center">{subData.count}</td>
-                  <td className="borde border-slate-500">{formatCurrency(subData.total)}</td>
+                  <td className="borde border-slate-500 text-center">
+                    {subData.count}
+                  </td>
+                  <td className="borde border-slate-500">
+                    {formatCurrency(subData.total)}
+                  </td>
                 </tr>
               ))}
             </>
