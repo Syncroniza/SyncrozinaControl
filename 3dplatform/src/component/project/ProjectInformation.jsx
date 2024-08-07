@@ -18,6 +18,7 @@ const ProjectInformation = () => {
     grandTotal,
     accumulatedRealMonthCost,
     totalActualCost,
+    formatedDate,
   } = useContext(ViewerContext);
 
   const openModal = () => setIsMoldalOpen(true);
@@ -57,6 +58,8 @@ const ProjectInformation = () => {
     return passesProjectId;
   });
 
+  const porcentajeGastado = ((totalActualCost / grandTotal) * 100).toFixed(2); // Calcula el porcentaje gastado
+
   return (
     <div className="" style={{ width: "1330px" }}>
       <h1 className=" text-lg text-center font-semibold p-2 mb-2 ml-4 bg-white  mr-2 mt-6 shadow-xl rounded-lg ">
@@ -65,7 +68,7 @@ const ProjectInformation = () => {
 
       <div className="flex bg-white ml-4 mr-2 mt-6 shadow-xl rounded-lg ">
         <div className="col-span-4 mr-2">
-          {/* --------------------  NO BORRRAR SE OCULTO AL USUARIO ------------------ */}
+          {/* --------------------  NO BORRAR SE OCULTO AL USUARIO ------------------ */}
           {/* <button
             onClick={openModal}
             type="button"
@@ -124,10 +127,10 @@ const ProjectInformation = () => {
                   {selectedProject?.projectName || "N/A"}
                 </td>
                 <td className="border border-slate-300 px-4 text-xs text-gray-500 ">
-                  {selectedProject?.startDate || "N/A"}
+                  {formatedDate(selectedProject?.startDate || "N/A")}
                 </td>
                 <td className="border border-slate-300 px-4 text-xs text-gray-500 ">
-                  {selectedProject?.endDate || "N/A"}
+                  {formatedDate(selectedProject?.endDate || "N/A")}
                 </td>
               </tr>
             </tbody>
@@ -164,6 +167,9 @@ const ProjectInformation = () => {
             </h1>
             <div className="text-lg text-white ">
               {formatCurrency(totalActualCost)}
+              <div className="text-sm text-white mt-2">
+                Gastado: {porcentajeGastado}%
+              </div>
             </div>
           </div>
           <ReactTooltip
