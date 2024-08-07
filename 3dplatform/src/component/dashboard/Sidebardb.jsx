@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import logo from "../../assets/Logo_Alta_Constructora (002).png"
+import syncLogo from "/Syncroniza_transparente.png"
 
 const Sidebardb = () => {
   return (
     <main>
       <div className=" text-sm  w-60 mt-4 mb-4 p-2 rounded-lg ml-2 shadow-xl">
         <h2 className="flex gap-2 mb-2 text-white mr-3"></h2>
-        <img src={logo} alt="Logo" className="h-20 w-20 ml-10" />
+        <img src={import.meta.env.VITE_DEMO === "1" ? syncLogo : logo} alt="Logo" className="h-20 w-20 ml-10" />
 
         <Link
           to={"/"}
