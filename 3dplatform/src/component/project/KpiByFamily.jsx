@@ -77,12 +77,15 @@ const KpiByFamily = () => {
 
   const renderFamilyCard = (family, total, actual, disponible) => {
     const isGG = family === "GG";
+    const porcentajeGastado = ((actual / total) * 100).toFixed(2); // Calcula el porcentaje gastado
     return (
       <div
         key={family}
         className="bg-blue-500 bg-gradient-to-r from-indigo-500  ml-2 rounded-lg text-white shadow-lg"
         data-tooltip-id={isGG ? "tooltip-gg" : undefined}
-        data-tooltip-content={isGG ? "FacturasGG + MOgg + Rol Privado" : undefined}
+        data-tooltip-content={
+          isGG ? "FacturasGG + MOgg + Rol Privado" : undefined
+        }
       >
         <p className="text-center text-sm shadow-xl">{family}</p>
         <div className="text-center text-sm mt-2">
@@ -93,6 +96,9 @@ const KpiByFamily = () => {
         </div>
         <div className="text-center mt-2 text-sm">
           Disponible: {formatCurrency(disponible)}
+        </div>
+        <div className="text-center mt-2 text-sm">
+          Gastado: {porcentajeGastado}%
         </div>
         <div className="mt-4 p-1 rounded-lg"></div>
       </div>
