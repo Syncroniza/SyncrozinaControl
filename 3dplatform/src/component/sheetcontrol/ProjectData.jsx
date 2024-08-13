@@ -19,6 +19,7 @@ const ProjectData = () => {
   } = useContext(ViewerContext);
 
   const [allSheets, setAllSheets] = useState([]);
+  console.log("🚀 ~ ProjectData ~ allSheets:", allSheets)
   const openModal = () => {
     setIsModalOpenBudget(true);
     setIsEditMode(false);
@@ -206,7 +207,7 @@ const ProjectData = () => {
                     ))}
                   </td>
                   <td className="border border-slate-300">
-                    {formatCurrency(item.total)}
+                    {formatCurrency(item.rawData?.subTotal)}
                   </td>
                   {/* <td className=" border border-slate-300">
                     <button

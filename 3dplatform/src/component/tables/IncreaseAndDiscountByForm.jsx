@@ -22,6 +22,7 @@ const IncreaseAndDiscountByForm = () => {
     setDataIncreaseDiscount,
     setDataincreaseDisccountwhithoutfilter,
   } = useContext(ViewerContext);
+    console.log("🚀 ~ IncreaseAndDiscountByForm ~ dataIncreaseDiscount:", dataIncreaseDiscount)
 
   const openModal = () => setIsModalOpenBudget(true);
 
@@ -31,6 +32,7 @@ const IncreaseAndDiscountByForm = () => {
         const response = await axios.get(
           BASE_URL + "/increasediscount/"
         );
+        console.log("🚀 ~ fetchContract ~ response:", response)
 
         if (
           Array.isArray(response.data.data) &&

@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import Modal from "../Modal";
 import axios from "axios";
 import { ViewerContext } from "../Context";
-import {BASE_URL} from "../../constants.js";
+import { BASE_URL } from "../../constants.js";
 
 function FormIncreaseAndDiscount() {
   const {
@@ -74,7 +74,6 @@ function FormIncreaseAndDiscount() {
     "KIT DE COCINA",
     "CORNISA",
     "GRUPO ELECTROGENO",
-    "PAPEL MURAL",
     "YESO PUENTE ADHERENTE",
     "MORTEROS EN GENERAL",
     "MITIGACION DE RUIDOS",
@@ -208,6 +207,8 @@ function FormIncreaseAndDiscount() {
               <select
                 className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-1 text-white border-solid border-4 border-gray-500"
                 name="subfamily"
+                value={subfamily}
+                onChange={(e) => setSubfamily(e.target.value)}
               >
                 {subFamilies.map((subFamily) => (
                   <option key={subFamily} value={subFamily}>
