@@ -166,7 +166,7 @@ const ProjectInformation = () => {
 
           <div className=" text-center bg-blue-500 bg-gradient-to-r from-indigo-500  grid grid-rows-2 px-1  rounded-xl shadow-xl mt-4 mb-4 mr-3">
             <h1 data-tooltip-id="my-tooltip-1">
-              <h1 className="text-lg mt-2 text-white px-2">Valor Actual :</h1>
+              <h1 className="text-lg mt-2 text-white px-2">Avance :</h1>
             </h1>
             <div className="text-lg text-white ">
               {formatCurrency(totalActualCost)}

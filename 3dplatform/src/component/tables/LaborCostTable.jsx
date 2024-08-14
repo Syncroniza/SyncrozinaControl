@@ -13,7 +13,7 @@ import {
 
 import { useTheme } from "@table-library/react-table-library/theme";
 import axios from "axios";
-import {BASE_URL} from "../../constants.js";
+import { BASE_URL } from "../../constants.js";
 
 const LaborCostTable = () => {
   const {
@@ -95,10 +95,7 @@ const LaborCostTable = () => {
         };
       });
 
-      const response = await axios.post(
-        BASE_URL + "/labor/",
-        requestData
-      );
+      const response = await axios.post(BASE_URL + "/labor/", requestData);
 
       let newNodes = [...dataNode.nodes];
 
@@ -118,13 +115,18 @@ const LaborCostTable = () => {
     }
   };
 
+  const cleanValue = (value) => {
+    return parseFloat(value.replace(/[^0-9.-]+/g, "")) || 0;
+  };
+
   const handleInputChange = (event, index, columnId) => {
     const { value } = event.target;
+    const numericValue = cleanValue(value);
 
     setTotalsWithAccumulated((prevTotals) =>
       prevTotals.map((item, idx) => {
         if (idx === index) {
-          return { ...item, [columnId]: value };
+          return { ...item, [columnId]: numericValue };
         }
         return item;
       })
@@ -132,7 +134,7 @@ const LaborCostTable = () => {
 
     setEditables((prev) => ({
       ...prev,
-      [`${index}-${columnId}`]: value,
+      [`${index}-${columnId}`]: numericValue,
     }));
   };
 
@@ -173,7 +175,7 @@ const LaborCostTable = () => {
                     <Cell>
                       <input
                         type="text"
-                        value={formatCurrency(item.realmonthcost)}
+                        value={item.realmonthcost}
                         onChange={(e) =>
                           handleInputChange(e, index, "realmonthcost")
                         }
@@ -181,7 +183,10 @@ const LaborCostTable = () => {
                     </Cell>
                     <Cell>{formatCurrency(item.realAccumulated)}</Cell>
                     <Cell>
-                      {formatCurrency(item.totalLabor - item.realmonthcost)}
+                      {formatCurrency(
+                        parseFloat(item.totalLabor) -
+                          parseFloat(item.realmonthcost)
+                      )}
                     </Cell>
                     {/* <Cell>{formatCurrency(item.realAccumulated)}</Cell> */}
                     <Cell>

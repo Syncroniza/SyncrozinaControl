@@ -112,7 +112,7 @@ function FormIncreaseAndDiscount() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("Subfamily:", subfamily);  
     const increaseAndDiscountData = {
       projectId: projectId || undefined,
       family: family || undefined,
