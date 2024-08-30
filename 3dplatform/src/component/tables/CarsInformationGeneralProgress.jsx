@@ -32,21 +32,21 @@ function CarsInformationGeneralProgress() {
       ); // Última fecha de fin del proyecto
       const days = calculateDays(startDate, endDate); // Calcular la duración en días corridos
 
-      const now = new Date();
-      let currentWeek = aernValueAccumalated.filter((data) => {
-        return (
-          now >= new Date(data.dateStart) && now <= new Date(data.finishdate)
-        );
-      });
-      if (currentWeek.length > 0) {
-        setSelectedWeek(formatedDate(currentWeek[0].finishdate));
-      }
-
       setProjectDuration(days);
     }
   }, [selectedWeek, aernValueAccumalated]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const now = new Date();
+    let currentWeek = aernValueAccumalated.filter((data) => {
+      return (
+          now >= new Date(data.dateStart) && now <= new Date(data.finishdate)
+      );
+    });
+    if (currentWeek.length > 0) {
+      setSelectedWeek(formatedDate(currentWeek[0].finishdate));
+    }
+  }, []);
   const calculatePercentage = (value, total) => {
     return total !== 0 ? ((value / total) * 100).toFixed(2) : 0;
   };
