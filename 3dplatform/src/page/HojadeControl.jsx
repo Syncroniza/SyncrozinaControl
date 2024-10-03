@@ -42,7 +42,7 @@ const HojadeControl = () => {
           <IdentificationHeader />
           <CarsInformationSheets />
           <ContractObservationByForm />
-          {/*<IncreaseAndDiscountByForm />*/}
+          <IncreaseAndDiscountByForm />
           <Invoices />
           <PurchaseOrderTable />
         </div>

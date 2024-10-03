@@ -18,6 +18,10 @@ function FormIncreaseAndDiscount() {
     setIsEditMode,
     currentIdIncreaseDiscount,
   } = useContext(ViewerContext);
+
+  const [dataFamily, setDataFamily] = useState(family);
+  const [dataSubfamily, setDataSubfamily] = useState("");
+  const [dataProjectId, setDataProjectId] = useState(projectId);
   const [detalle, setDetalle] = useState("");
   const [aumentodisminucion, setAumentoDisminucion] = useState("");
   const [real, setReal] = useState("");
@@ -110,19 +114,21 @@ function FormIncreaseAndDiscount() {
     "SEGUROS Y OTROS",
   ].sort();
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Subfamily:", subfamily);  
     const increaseAndDiscountData = {
-      projectId: projectId || undefined,
-      family: family || undefined,
-      subfamily: subfamily || undefined,
+      projectId: dataProjectId || undefined,
+      family: dataFamily || undefined,
+      subfamily: dataSubfamily || undefined,
       Detalle: detalle || undefined,
       Aumentodisminucion: aumentodisminucion || undefined,
       Real: real || undefined,
       Recuperable: recuperable || undefined,
       Observaciones: observaciones || undefined,
     };
+
 
     try {
       if (isEditMode) {
@@ -172,8 +178,8 @@ function FormIncreaseAndDiscount() {
                     className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-1 text-white border-solid border-4 border-gray-500"
                     placeholder="ProjectId"
                     type="text"
-                    value={projectId}
-                    onChange={(e) => setProjectId(e.target.value)}
+                    value={dataProjectId}
+                    onChange={(e) => setDataProjectId(e.target.value)}
                   >
                     <option value="Proyecto">Proyecto</option>
                     <option value="PT-101">PT-101</option>
@@ -188,8 +194,8 @@ function FormIncreaseAndDiscount() {
                     className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-1 text-white border-solid border-4 border-gray-500"
                     placeholder="familia"
                     type="text"
-                    value={family}
-                    onChange={(e) => setFamily(e.target.value)}
+                    value={dataFamily}
+                    onChange={(e) => setDataFamily(e.target.value)}
                   >
                     <option value="Elegir Familia">Elegir Familia</option>
                     <option value="Subcontrato">Subcontrato</option>
@@ -205,15 +211,16 @@ function FormIncreaseAndDiscount() {
             <label className="text-xs text-white font-bold mb-2">
               Subfamilia
               <select
-                className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-1 text-white border-solid border-4 border-gray-500"
-                name="subfamily"
-                value={subfamily}
-                onChange={(e) => setSubfamily(e.target.value)}
+                  className="bg-slate-700 rounded-lg mb-2 mt-2 flex mr-2 p-1 text-white border-solid border-4 border-gray-500"
+                  name="subfamily"
+                  value={dataSubfamily}
+                  onChange={(e) => setDataSubfamily(e.target.value)}
               >
+                <option value="">Elegir Subfamilia</option>
                 {subFamilies.map((subFamily) => (
-                  <option key={subFamily} value={subFamily}>
-                    {subFamily}
-                  </option>
+                    <option key={subFamily} value={subFamily}>
+                      {subFamily}
+                    </option>
                 ))}
               </select>
             </label>
