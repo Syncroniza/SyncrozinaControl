@@ -114,7 +114,7 @@ function CardsTotalInvoicesInformation() {
 
     if (searchProvider) {
       filtered = filtered.filter((invoice) =>
-        invoice.description.toLowerCase().includes(searchProvider.toLowerCase())
+          invoice.description && invoice.description.toLowerCase().includes(searchProvider.toLowerCase())
       );
     }
 
