@@ -106,93 +106,131 @@ function CarsInformationGeneralProgress() {
     <div>
       <div className="mt-3 ml-4 mr-2">
         {selectedWeek && (
-          <div className="bg-white  grid grid-cols-7 rounded-lg shadow-lg ">
-            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 rounded-lg text-center shadow-xl m-2">
-              <h1 className="text-sm font-semibold text-white mr-4 mt-3 ">
-                VALOR GANADO A:
-              </h1>
-              {/* <h1 className="text-sm font-semibold text-white mt-4">
+            <div className="bg-white  grid grid-cols-7 rounded-lg shadow-lg ">
+              <div
+                  className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 rounded-lg text-center shadow-xl m-2">
+                <h1 className="text-sm font-semibold text-white mr-4 mt-3 ">
+                  VALOR GANADO A:
+                </h1>
+                {/* <h1 className="text-sm font-semibold text-white mt-4">
                 SEMANA DEL PROYECTO
                 </h1>
                 <h1 className="text-xl font-semibold mt-4 text-white">
                 {formatedDate(selectedWeek)}
               </h1> */}
-              <select
-                className=" text-white text-center text-xs "
-                value={selectedWeek}
-                onChange={(e) => setSelectedWeek(e.target.value)}
-              >
-                <option className="" value="">
-                  Seleccione una semana
-                </option>
-                {aernValueAccumalated.map((data, index) => (
-                  <option
-                    className=""
-                    key={index}
-                    value={formatedDate(data.finishdate)}
-                  >
-                    {formatedDate(data.finishdate)}
+                <select
+                    className=" text-white text-center text-xs "
+                    value={selectedWeek}
+                    onChange={(e) => setSelectedWeek(e.target.value)}
+                >
+                  <option className="" value="">
+                    Seleccione una semana
                   </option>
-                ))}
-              </select>
-            </div>
+                  {aernValueAccumalated.map((data, index) => (
+                      <option
+                          className=""
+                          key={index}
+                          value={formatedDate(data.finishdate)}
+                      >
+                        {formatedDate(data.finishdate)}
+                      </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 m-2 p-1 grid grid-rows-2 rounded-xl text-center shadow-xl">
-              <h1 className="text-sm mt-2 font-semibold text-white">
-                % AVANCE PLANIFICADO
-              </h1>
-              <h1 className="text-sm font-semibold text-white mt-2">
-                {((currentPlanValue / totalPlanValue) * 100).toFixed(2)} %
-              </h1>
+              <div
+                  className="bg-blue-500 bg-gradient-to-r from-indigo-500 m-2 p-1 grid grid-rows-2 rounded-xl text-center shadow-xl">
+                <h1 className="text-sm mt-2 font-semibold text-white">
+                  % AVANCE PLANIFICADO
+                </h1>
+                <h1 className="text-sm font-semibold text-white mt-2">
+                  {((currentPlanValue / totalPlanValue) * 100).toFixed(2)} %
+                </h1>
+              </div>
+              <div
+                  className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 m-2 p-1 rounded-xl text-center shadow-xl">
+                <h1 className="text-sm font-semibold text-white mt-2">
+                  % AVANCE REAL
+                </h1>
+                <h1 className="text-sm font-semibold text-white mt-2">
+                  {calculatePercentage(totalEarnValue, totalPlanValue)} %
+                </h1>
+              </div>
+              <div
+                  className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 m-2 p-1 rounded-xl text-center shadow-xl">
+                <h1 className="text-sm font-semibold text-white mt-2">
+                  % COSTO ACTUAL
+                </h1>
+                <h1 className="text-sm font-semibold text-white mt-2">
+                  {calculatePercentage(totalActualCost, totalPlanValue)} %
+                </h1>
+              </div>
+              <div
+                  className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 m-2 p-1 rounded-xl text-center shadow-xl">
+                <h1 data-tooltip-id="tooltip-spi">
+                  <h1 className="text-sm font-semibold text-white mt-2">SPI</h1>
+                </h1>
+                <h1 className="text-sm font-semibold text-white mt-2">
+                  {SPI.toFixed(2)} %
+                </h1>
+              </div>
+              <div
+                  className="bg-blue-500 bg-gradient-to-r from-indigo-500  grid grid-rows-2 m-2 p-1 rounded-xl text-center shadow-xl">
+                <h1 className="text-sm font-semobold text-white mt-2">
+                  Duración del Proyecto
+                </h1>
+                <h1 className="text-sm font-semibold text-white mt-2">
+                  {projectDuration} días corridos
+                </h1>
+              </div>
+              <div
+                  className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 ml-2 mr-2 mt-2 mb-2 p-1 rounded-xl text-center shadow-xl">
+                <h1 className="text-sm font-light text-white">
+                  Proyeccion a termino
+                </h1>
+                <h1 className="text-sm font-semibold text-white mt-2">
+                  {(projectDuration / SPI).toFixed(0)} días corridos
+                </h1>
+              </div>
+
+              <div
+                  className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 ml-2 mr-2 mt-2 mb-2 p-1 rounded-xl text-center shadow-xl">
+                <h1 className="text-sm font-light text-white">
+                  Utilidad esperada
+                </h1>
+                <h1 className="text-sm font-semibold text-white mt-2">
+                  18.349 UF
+                </h1>
+              </div>
+              <div
+                  className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 ml-2 mr-2 mt-2 mb-2 p-1 rounded-xl text-center shadow-xl">
+                <h1 className="text-sm font-light text-white">
+                  Sobre Utilidad
+                </h1>
+                <span className="font-light text-white text-xxs" >
+                  EAC = BAC/(CPI * SPI)</span>
+                <h1 className="text-sm font-semibold text-white mt-2">
+                  12.271 UD
+                </h1>
+              </div>
+              <div
+                  className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 ml-2 mr-2 mt-2 mb-2 p-1 rounded-xl text-center shadow-xl">
+                <h1 className="text-sm font-light text-white">
+                  Utilidad Total
+                </h1>
+                <h1 className="text-sm font-semibold text-white mt-2">
+                    30.620 UF
+                </h1>
+              </div>
+
             </div>
-            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 m-2 p-1 rounded-xl text-center shadow-xl">
-              <h1 className="text-sm font-semibold text-white mt-2">
-                % AVANCE REAL
-              </h1>
-              <h1 className="text-sm font-semibold text-white mt-2">
-                {calculatePercentage(totalEarnValue, totalPlanValue)} %
-              </h1>
-            </div>
-            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 m-2 p-1 rounded-xl text-center shadow-xl">
-              <h1 className="text-sm font-semibold text-white mt-2">
-                % COSTO ACTUAL
-              </h1>
-              <h1 className="text-sm font-semibold text-white mt-2">
-                {calculatePercentage(totalActualCost, totalPlanValue)} %
-              </h1>
-            </div>
-            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 m-2 p-1 rounded-xl text-center shadow-xl">
-              <h1 data-tooltip-id="tooltip-spi">
-                <h1 className="text-sm font-semibold text-white mt-2">SPI</h1>
-              </h1>
-              <h1 className="text-sm font-semibold text-white mt-2">
-                {SPI.toFixed(2)} %
-              </h1>
-            </div>
-            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500  grid grid-rows-2 m-2 p-1 rounded-xl text-center shadow-xl">
-              <h1 className="text-sm font-semobold text-white mt-2">
-                Duración del Proyecto
-              </h1>
-              <h1 className="text-sm font-semibold text-white mt-2">
-                {projectDuration} días corridos
-              </h1>
-            </div>
-            <div className="bg-blue-500 bg-gradient-to-r from-indigo-500 grid grid-rows-2 ml-2 mr-2 mt-2 mb-2 p-1 rounded-xl text-center shadow-xl">
-              <h1 className="text-sm font-light text-white">
-                Proyeccion a termino
-              </h1>
-              <h1 className="text-sm font-semibold text-white mt-2">
-                {(projectDuration / SPI).toFixed(0)} días corridos
-              </h1>
-            </div>
-          </div>
         )}
       </div>
       <ReactTooltip
-        id="tooltip-spi"
-        place="top"
-        content="Avance Real/Avance planificado"
-        className="!bg-black !text-white !text-xxs !rounded-lg !p-2"
+          id="tooltip-spi"
+          place="top"
+          content="Avance Real/Avance planificado"
+          className="!bg-black !text-white !text-xxs !rounded-lg !p-2"
       />
     </div>
   );
