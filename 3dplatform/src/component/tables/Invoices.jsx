@@ -13,7 +13,7 @@ const Invoices = () => {
     setTotalUnpaidInvoices,
   } = useContext(ViewerContext);
 
-  const [newfilteredInvoices, setNewFilteredInvoices] = useState([]);
+  const [newfilteredInvoices,setNewFilteredInvoices] = useState([]);
   const [totalInvoices, setTotalInvoices] = useState(0);
 
   const formatedDate = (isoDate) => {

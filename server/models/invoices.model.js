@@ -24,6 +24,12 @@ const InvoicesSchema = new mongoose.Schema(
       type: String,
     },
 
+      preTotal: {
+        type: Number,
+      },
+      nnccTotal: {
+        type: Number,
+      },
     totalInvoices: {
       type: Number,
     },
@@ -39,6 +45,9 @@ const InvoicesSchema = new mongoose.Schema(
     accumulatedTotal: {
       type: Number,
     },
+      nncc: {
+          type: [Object]
+      },
     observations: {
       type: String,
     },

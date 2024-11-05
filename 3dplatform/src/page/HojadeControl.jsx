@@ -7,6 +7,7 @@ import Invoices from "../component/tables/Invoices";
 import PurchaseOrderTable from "../component/tables/PurchaseOrderTable";
 import ContractObservationByForm from "../component/tables/ContractObservationByForm";
 import IncreaseAndDiscountByForm from "../component/tables/IncreaseAndDiscountByForm";
+import NNCC from "../component/tables/TableNNCC.jsx";
 
 const HojadeControl = () => {
   const [refreshKey, setRefreshKey] = useState(0);
@@ -44,6 +45,7 @@ const HojadeControl = () => {
           <ContractObservationByForm />
           <IncreaseAndDiscountByForm />
           <Invoices />
+          <NNCC />
           <PurchaseOrderTable />
         </div>
       </div>

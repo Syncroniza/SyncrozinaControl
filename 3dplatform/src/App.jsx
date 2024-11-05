@@ -12,17 +12,21 @@ import MonthCostaLaborTable from "./component/tables/MonthCostaLaborTable";
 import EarnValeuManagementTable from "./component/tables/EarnValeuManagementTable";
 import InvoicesReport from "./component/sheetcontrol/InvoicesReport";
 import MasterInvoicesListsTable from "./component/tables/MasterInvoicesListsTable";
+import LoginPage from "./page/Login.jsx";
+import NNCCPage from "./page/NNCC.jsx";
 
 function App() {
   return (
     <BrowserRouter>
       <ViewerProvider>
         <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/home" element={<ControlSheet />} />
           <Route
             path="/ifcviewer"
             element={<div className="flex h-min-screen"></div>}
           />
-          <Route path="/" element={<ControlSheet />} />
+          <Route path="/masternncc" element={<NNCCPage />} />
           <Route path="/Manodeobra" element={<LaborCostControl />} />
           <Route path="/hojadecontrol" element={<HojadeControl />} />
           <Route path="/masterfacturas" element={<InvicesMasterTable />} />

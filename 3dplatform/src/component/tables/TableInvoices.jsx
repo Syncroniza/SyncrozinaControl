@@ -82,94 +82,106 @@ const openModal = () => setIsModalOpenBudget(true);
       >
         <table className="w-full">
           <thead className="sticky top-0 bg-blue-500 text-white">
-            <tr className="border border-slate-300 text-xxs">
-              <th
+          <tr className="border border-slate-300 text-xxs">
+            <th
                 className="border border-slate-300 px-2 cursor-pointer"
                 onClick={() => requestSort("family")}
-              >
-                Familia
-              </th>
-              <th
+            >
+              Familia
+            </th>
+            <th
                 className="border border-slate-300 px-2 cursor-pointer"
                 onClick={() => requestSort("subfamily")}
-              >
-                SubFamilia
-              </th>
-              <th
+            >
+              SubFamilia
+            </th>
+            <th
                 className="border border-slate-300 px-2 cursor-pointer"
                 onClick={() => requestSort("invoices")}
-              >
-                N° Factura
-              </th>
-              <th
+            >
+              N° Factura
+            </th>
+            <th
                 className="border border-slate-300 px-2 cursor-pointer"
                 onClick={() => requestSort("dateInvoices")}
-              >
-                Fecha de emision
-              </th>
-              <th
+            >
+              Fecha de emision
+            </th>
+            <th
                 className="border border-slate-300 px-2 cursor-pointer"
                 onClick={() => requestSort("rawData.rutProveedor")}
-              >
-                RUT Proveedor
-              </th>
-              <th
+            >
+              RUT Proveedor
+            </th>
+            <th
                 className="border border-slate-300 px-4 cursor-pointer"
                 onClick={() => requestSort("description")}
-              >
-                Proveedor
-              </th>
-              <th
+            >
+              Proveedor
+            </th>
+            <th
                 className="border border-slate-300 px-2 cursor-pointer"
                 onClick={() => requestSort("totalInvoices")}
-              >
-                $ Factura
-              </th>
-              <th
+            >
+              $ NN. CC
+            </th>
+            <th
+                className="border border-slate-300 px-2 cursor-pointer"
+                onClick={() => requestSort("totalInvoices")}
+            >
+              $ Factura
+            </th>
+            <th
+                className="border border-slate-300 px-2 cursor-pointer"
+                onClick={() => requestSort("totalInvoices")}
+            >
+              $ Total Factura
+            </th>
+            <th
                 className="border border-slate-300 px-2 cursor-pointer"
                 onClick={() => requestSort("rawData.estadoDoc")}
-              >
-                Estado
-              </th>
-              <th
+            >
+              Estado
+            </th>
+            <th
                 className="border border-slate-300 px-2 cursor-pointer"
                 onClick={() => requestSort("rawData.estadoPago")}
-              >
-                Estado Factura
-              </th>
-              <th
+            >
+              Estado Factura
+            </th>
+            <th
                 className="border border-slate-300 px-2 cursor-pointer"
                 onClick={() => requestSort("dueDate")}
-              >
-                Fecha Vencimiento
-              </th>
-              <th className="border border-slate-300">
-                <button
+            >
+              Fecha Vencimiento
+            </th>
+            <th className="border border-slate-300">
+              <button
                   className="bg-green-500 p-1 text-white rounded-lg text-xs"
                   onClick={() =>
-                    openFormAndCurrentInvloiceId(invoice._id || invoice.id)
+                      openFormAndCurrentInvloiceId(invoice._id || invoice.id)
                   }
-                >
-                  <svg
+              >
+                <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                     stroke="currentColor"
                     className="w-3 h-3"
-                  >
-                    <path
+                >
+                  <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
-                    />
-                  </svg>
-                </button>
-              </th>
-            </tr>
+                  />
+                </svg>
+              </button>
+            </th>
+          </tr>
           </thead>
           <tbody>
-            {sortedInvoices.map((invoice, y) => (
+          {sortedInvoices.map((invoice, y) => (
               <tr key={y} className="text-xxs">
                 <td className="border border-slate-300 px-2">
                   {invoice.family || "Sin Familia"}
@@ -190,6 +202,12 @@ const openModal = () => setIsModalOpenBudget(true);
                   {invoice.description}
                 </td>
                 <td className="border border-slate-300 px-2">
+                  {formatCurrency(invoice.nnccTotal)}
+                </td>
+                <td className="border border-slate-300 px-2">
+                  {formatCurrency(invoice.preTotal)}
+                </td>
+                <td className="border border-slate-300 px-2">
                   {formatCurrency(invoice.totalInvoices)}
                 </td>
                 <td className="border border-slate-300 px-2">
@@ -203,29 +221,29 @@ const openModal = () => setIsModalOpenBudget(true);
                 </td>
                 <td className="border border-slate-300">
                   <button
-                    className="bg-green-500 p-1 text-white rounded-lg text-xs"
-                    onClick={() =>
-                      openFormAndCurrentInvloiceId(invoice._id || invoice.id)
-                    }
+                      className="bg-green-500 p-1 text-white rounded-lg text-xs"
+                      onClick={() =>
+                          openFormAndCurrentInvloiceId(invoice._id || invoice.id)
+                      }
                   >
                     <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-3 h-3"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-3 h-3"
                     >
                       <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
                       />
                     </svg>
                   </button>
                 </td>
               </tr>
-            ))}
+          ))}
           </tbody>
         </table>
       </div>

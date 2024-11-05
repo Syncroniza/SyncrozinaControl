@@ -288,6 +288,62 @@ const getInvoices = async () => {
     }
 }
 
+const syncNC = async () => {
+
+    let axiosClient = axios.create({
+        baseURL: "https://api.iconstruye.com",
+        timeout: 30000,
+        headers: {
+            "Ocp-Apim-Subscription-Key": "155bcbb40e44403e90a03b9d03457a87"
+        }
+    })
+
+    let startDate = new Date("2023-03-21 00:00:00");
+    let endDate = new Date("2023-04-24 23:59:59");
+
+    while (startDate <= new Date()) {
+        console.log(startDate, endDate);
+
+        let url = `/cvbf/api/NotasCorreccion/Buscar?IdOrgc=66002&FechaRecepDesde=${dateToString(startDate)}&FechaRecepHasta=${dateToString(endDate)}&api-version=1.0`;
+
+        let res = await axiosClient.get(
+            url
+        );
+
+        if (res.data.length > 0) {
+            for (let i = 0; i < res.data.length; i++) {
+                // add waiting time to avoid 429 error
+                await new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve();
+                    }, 450);
+                });
+            }
+
+            // console.log(res.data)
+            res.data.map(async (datum) => {
+                if (datum.factAsociada) {
+                    let invoice = await InvoicesModel.findOne({invoices: datum.factAsociada});
+                    if (invoice) {
+                        invoice.nncc.push(datum);
+                        invoice.nnccTotal += datum.montoTotal;
+                        invoice.totalInvoices = invoice.preTotal - invoice.nnccTotal;
+                        await invoice.save();
+                    }
+                    console.log("NC", datum.factAsociada)
+                } else {
+                    console.log("NC sin factura asociada", datum)
+                }
+            });
+
+
+        }
+
+        startDate = endDate;
+        endDate = new Date(endDate.getTime() + 90 * 24 * 60 * 60 * 1000);
+    }
+}
+
 const createAlieas = async () => {
     let aliases = {
         "MOLDAJE": "ARRIENDO DE MOLDAJE",
@@ -341,8 +397,9 @@ mongoConnect().then(async () => {
         controlsheetsCods[cs.cod] = cs;
     })
     // await getOC()
-    await getInvoices();
+    // await getInvoices();
     // await createAlieas();
+    await syncNC();
     console.log("Se fini")
     process.exit(0)
 });
