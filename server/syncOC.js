@@ -91,11 +91,11 @@ const getOC = async () => {
             for (let i = 0; i < response.data.length; i++){
                 let datum = response.data[i];
 
-                let url = `/ordencompra/api/ConectorOrdenCompraCreada?IdDoc=${datum.idDocumento}&api-version=1,0`;
+                    let url = `/ordencompra/api/ConectorOrdenCompraCreada?IdDoc=${datum.idDocumento}&api-version=1,0`;
 
-                let rsp = await axiosClient.get(
-                    url
-                );
+                    let rsp = await axiosClient.get(
+                        url
+                    );
 
                 let oc = rsp.data[0];
 

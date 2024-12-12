@@ -13,19 +13,24 @@ services:
       - dev
     env_file:
       - ./server/.env
-  demo-api:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
-    image: syncroniza/api
+  api-planner:
+    image: syncroniza/api-planner
     ports:
-      - "8001:8000"
+      - "8002:8000"
     command:
       - npm
       - run
       - dev
+  new-api:
+    image: syncroniza/api
+    ports:
+      - "8003:3000"
+    command:
+      - npm
+      - run
+      - start
     env_file:
-      - ./server/.env.demo
+      - ./server/.env
   nginx:
     restart: always
     build:
