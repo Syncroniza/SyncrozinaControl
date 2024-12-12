@@ -22,7 +22,7 @@ services:
       - run
       - dev
   new-api:
-    image: syncroniza/api
+    image: syncroniza/new-api
     ports:
       - "8003:3000"
     command:
